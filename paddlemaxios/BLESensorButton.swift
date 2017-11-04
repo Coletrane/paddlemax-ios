@@ -1,11 +1,3 @@
-//
-//  BLESensorButton.swift
-//  Adafruit Bluefruit LE Connect
-//
-//  Created by Collin Cunningham on 2/3/15.
-//  Copyright (c) 2015 Adafruit Industries. All rights reserved.
-//
-
 import UIKit
 
 class BLESensorButton: UIButton {

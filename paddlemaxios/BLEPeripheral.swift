@@ -1,13 +1,3 @@
-//
-//  BLEPeripheral.swift
-//  Adafruit Bluefruit LE Connect
-//
-//  Represents a connected peripheral
-//
-//  Created by Collin Cunningham on 10/29/14.
-//  Copyright (c) 2014 Adafruit Industries. All rights reserved.
-//
-
 import Foundation
 import CoreBluetooth
 

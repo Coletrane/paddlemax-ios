@@ -1,13 +1,3 @@
-//
-//  DeviceInfoViewController.swift
-//  Adafruit Bluefruit LE Connect
-//
-//  Displays CBPeripheral Services & Characteristics in a UITableView
-//
-//  Created by Collin Cunningham on 10/24/14.
-//  Copyright (c) 2014 Adafruit Industries. All rights reserved.
-//
-
 import UIKit
 import CoreBluetooth
 

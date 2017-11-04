@@ -1,11 +1,3 @@
-//
-//  ControllerViewController.swift
-//  Adafruit Bluefruit LE Connect
-//
-//  Created by Collin Cunningham on 11/25/14.
-//  Copyright (c) 2014 Adafruit Industries. All rights reserved.
-//
-
 import UIKit
 import CoreMotion
 import CoreLocation

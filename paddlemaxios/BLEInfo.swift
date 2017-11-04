@@ -1,13 +1,3 @@
-//
-//  BLEInfo.swift
-//  Adafruit Bluefruit LE Connect
-//
-//  Data for display in Info mode/list
-//
-//  Created by Collin Cunningham on 10/28/14.
-//  Copyright (c) 2014 Adafruit Industries. All rights reserved.
-//
-
 import Foundation
 
 

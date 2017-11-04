@@ -1,11 +1,3 @@
-//
-//  SensorValueCell.swift
-//  Adafruit Bluefruit LE Connect
-//
-//  Created by Collin Cunningham on 12/5/14.
-//  Copyright (c) 2014 Adafruit Industries. All rights reserved.
-//
-
 import UIKit
 
 class SensorValueCell: UITableViewCell {
