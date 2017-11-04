@@ -8,7 +8,7 @@ protocol PinIOViewControllerDelegate: HelpViewControllerDelegate {
 }
 
 
-class PinIOViewController : UIViewController, UITableViewDataSource, UITableViewDelegate, PinCellDelegate {
+class PinIOViewController : UIViewController {
     
     fileprivate let SYSEX_START:UInt8 = 0xF0
     fileprivate let SYSEX_END:UInt8 = 0xF7
@@ -25,21 +25,18 @@ class PinIOViewController : UIViewController, UITableViewDataSource, UITableView
     fileprivate let LAST_ANALOG_PIN = 19
     fileprivate let PORT_COUNT = 3
     fileprivate let CAPABILITY_QUERY_TIMEOUT = 5.0
-    
+
+    fileprivate let PIN = 14
+
     var delegate : PinIOViewControllerDelegate!
-    @IBOutlet var pinTable : UITableView!
-    @IBOutlet var headerLabel : UILabel!
-    @IBOutlet var digitalPinCell : PinCell!
+
+    
+    @IBOutlet var powerType: UILabel?
+    @IBOutlet var powerLevel: UILabel?
     @IBOutlet var helpViewController : HelpViewController!
+
     @IBOutlet var debugConsole : UITextView? = nil
-    
-    
-    fileprivate let invalidCellPath = IndexPath(item: -1, section: -1)
-    fileprivate var openCellPath : IndexPath = IndexPath(item: -1, section: -1)
-    fileprivate var cells : [PinCell?] = []
-    fileprivate var tableVisibleBounds : CGRect = CGRect.zero
-    fileprivate var tableOffScreenBounds : CGRect = CGRect.zero
-    fileprivate var pinTableAnimating : Bool = false
+
     fileprivate var readReportsSent : Bool =  false
     fileprivate var capabilityQueryAlert : UIAlertController?
     fileprivate var pinQueryTimer : Timer?
@@ -73,8 +70,8 @@ class PinIOViewController : UIViewController, UITableViewDataSource, UITableView
         self.init(nibName: nibName as String, bundle: Bundle.main)
         
         self.delegate = aDelegate
-        self.title = "Pin I/O"
-        self.helpViewController?.title = "Pin I/O Help"
+        self.title = "Power Reading"
+        self.helpViewController?.title = "Power Reading Help"
         readReportsSent = false
         
     }
@@ -83,6 +80,8 @@ class PinIOViewController : UIViewController, UITableViewDataSource, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.powerType!.text = "Torque"
+        self.powerLevel!.text = "50"
         helpViewController!.delegate = self.delegate
 
     }
@@ -128,102 +127,6 @@ class PinIOViewController : UIViewController, UITableViewDataSource, UITableView
     
     }
     
-    
-    func initializeDefaultCells(_ reloadTable:Bool){
-        
-        //••Default to this function when no capability response received••
-        
-        //Create & configure each table view cell
-        
-        var newCells:[PinCell?] = []
-        
-        for i in 0 ..< DEFAULT_CELL_COUNT {
-            
-            var cell:PinCell?
-
-            //unused pins
-            if (i > LAST_DIGITAL_PIN) && (i < FIRST_ANALOG_PIN) {
-                cell = nil
-            }
-            
-            //PWM pins
-            else if ((i == 3) || (i == 5) || (i == 6)) {
-                //setup PWM pin
-                cell = createPinCell(i, isDigital: true, isAnalog: false, isPWM: true)
-            }
-
-            //Digital pins
-            else if (i >= FIRST_DIGITAL_PIN && i <= LAST_DIGITAL_PIN) {
-                //setup digital pin
-                cell = createPinCell(i, isDigital: true, isAnalog: false, isPWM: false)
-                
-            }
-                
-                //Analog pins
-            else if (i >= FIRST_ANALOG_PIN && i <= LAST_ANALOG_PIN){
-                //setup analog pin
-                cell = createPinCell(i, isDigital: true, isAnalog: true, isPWM: false)
-                cell?.analogPin = i - FIRST_ANALOG_PIN
-            }
-            
-            if cell != nil {
-                newCells.append(cell)
-            }
-            
-        }
-        
-        cells = newCells
-        
-        if reloadTable {
-            pinTable.reloadData()
-        }
-        
-    }
-    
-    
-    func createPinCell(_ digitalPinNumber:Int, isDigital:Bool, isAnalog:Bool, isPWM:Bool)->PinCell {
-        
-        let cellData = NSKeyedArchiver.archivedData(withRootObject: digitalPinCell!)
-        let cell:PinCell = NSKeyedUnarchiver.unarchiveObject(with: cellData) as! PinCell
-        
-        //Assign properties via tags
-        cell.pinLabel = cell.viewWithTag(100) as! UILabel
-        cell.modeLabel = cell.viewWithTag(101) as! UILabel
-        cell.valueLabel = cell.viewWithTag(102) as! UILabel
-        
-        cell.toggleButton = cell.viewWithTag(103) as! UIButton
-        cell.toggleButton.addTarget(self, action: #selector(PinIOViewController.cellButtonTapped(_:)), for: UIControlEvents.touchUpInside)
-        //set tag to indicate digital pin number
-        cell.toggleButton.tag = digitalPinNumber
-        
-        cell.modeControl = cell.viewWithTag(104) as! UISegmentedControl
-        cell.modeControl.addTarget(self, action: #selector(PinIOViewController.modeControlChanged(_:)), for: UIControlEvents.valueChanged)
-        //set tag to indicate digital pin number
-        cell.modeControl.tag = digitalPinNumber
-        
-        cell.digitalControl = cell.viewWithTag(105) as! UISegmentedControl
-        cell.digitalControl.addTarget(self, action: #selector(PinIOViewController.digitalControlChanged(_:)), for: UIControlEvents.valueChanged)
-        //set tag to indicate digital pin number
-        cell.digitalControl.tag = digitalPinNumber
-        
-        cell.valueSlider = cell.viewWithTag(106) as! UISlider
-        cell.valueSlider.addTarget(self, action: #selector(PinIOViewController.valueControlChanged(_:)), for: UIControlEvents.valueChanged)
-        //set tag to indicate digital pin number
-        cell.valueSlider.tag = digitalPinNumber
-        
-        cell.delegate = self
-        
-        cell.digitalPin = digitalPinNumber
-        cell.isDigital = isDigital
-        cell.isPWM = isPWM
-        cell.isAnalog = isAnalog
-        cell.setDefaultsWithMode(PinMode.input)
-        
-        return cell
-        
-    }
-    
-    
     func queryCapabilities(){
         
         printLog(self, funcName: (#function), logString: "BEGIN PIN QUERY")
@@ -242,9 +145,7 @@ class PinIOViewController : UIViewController, UITableViewDataSource, UITableView
     
     
     func queryAnalogPinMapping(){
-        
-//        printLog(self, funcName: (#function), logString: "ANALOG MAPPING QUERY")
-        
+
         //send command 0xF0 0x69 0xF7
         let bytes:[UInt8] = [SYSEX_START, 0x69, SYSEX_END]
         let newData:Data = Data(bytes: UnsafePointer<UInt8>(bytes), count: 3)
@@ -257,9 +158,7 @@ class PinIOViewController : UIViewController, UITableViewDataSource, UITableView
         
         //stop receiving query data
         pinQueryStatus = PinQueryStatus.complete
-        
-        //initialize default cells for arduino uno
-        
+
         
         //dismiss prev alert
         capabilityQueryAlert?.dismiss(animated: false, completion: nil)
@@ -272,7 +171,6 @@ class PinIOViewController : UIViewController, UITableViewDataSource, UITableView
         }
         alert.addAction(aOk)
         self.present(alert, animated: true) { () -> Void in
-            self.initializeDefaultCells(true)
             self.enableReadReports()
         }
         
@@ -298,12 +196,6 @@ class PinIOViewController : UIViewController, UITableViewDataSource, UITableView
             let bytes:[UInt8] = [data0, data1]
             let newData = Data(bytes: UnsafePointer<UInt8>(bytes), count: 2)
             delegate!.sendData(newData)
-        }
-        
-        
-        //Set all pin modes active
-        for cell in cells {
-            modeControlChanged(cell!.modeControl)
         }
         
         
@@ -398,108 +290,46 @@ class PinIOViewController : UIViewController, UITableViewDataSource, UITableView
         delegate!.sendData(newData)
         
     }
-    
       
     //MARK: Pin I/O Controls
     
     @objc func digitalControlChanged(_ sender:UISegmentedControl){
-    
-    //Respond to user setting a digital pin high/low
-    
-    //Change relevant cell's value label
-        let cell:PinCell? = pinCellForPin(Int(sender.tag))
-        if cell == nil {
-            return
-        }
+
     
     let state = Int(sender.selectedSegmentIndex)
     
-        cell?.setDigitalValue(state)
+//        cell?.setDigitalValue(state)
     
     //Send value change to BLEBB
-        let pin = cell?.digitalPin
-        writePinState(pinStateForInt(Int(state)), pin: UInt8(pin!))
-        
+//        let pin = cell?.digitalPin
+//        writePinState(pinStateForInt(Int(state)), pin: UInt8(pin!))
+
 //        printLog(self, "digitalControlChanged", "state = \(state) : pin = \(pin)")
     
     }
     
     
-    func pinStateForInt(_ stateInt:Int) ->PinState{
-        
-        var state:PinState
-        
-        switch stateInt {
-         
-        case PinState.high.rawValue:
-            state = PinState.high
-            break
-        case PinState.low.rawValue:
-            state = PinState.low
-            break
-        default:
-            state = PinState.high
-            break
-        }
-        
-        return state
-    }
-    
-    
-    @objc func cellButtonTapped(_ sender:UIButton!){
-        
-        //Respond to user tapping a cell's top area to open/close cell
-        
-        //find relevant indexPath
-        let indexPath:IndexPath = indexPathForSubview(sender)
-        
-        //if same button is tapped as previous, close the cell
-        if ((indexPath as NSIndexPath).compare(openCellPath) == ComparisonResult.orderedSame) {
-            openCellPath = invalidCellPath
-        }
-        else {
-            openCellPath = indexPath
-        }
-        
-        updateTable()
-        
-        //if opening, scroll table until cell is visible after delay
-        delay(0.25, closure: { () -> () in
-            self.scrollToIndexPath(indexPath)
-            return
-        })
-        
-    }
-    
-    
-    @objc func modeControlChanged(_ sender:UISegmentedControl){
-        
-        //Change relevant cell's mode
-        
-        let cell:PinCell? = pinCellForPin(sender.tag)!
-        
-        if (cell == nil) {
-            return
-        }
-        
-        let mode:PinMode = pinModeforControl(sender)
-        let prevMode:PinMode = cell!.mode
-        cell?.mode = mode
-        
-        //Write pin
-        writePinMode(mode, pin: UInt8(cell!.digitalPin))
-        
-        //Update reporting for Analog pins
-        if cell?.mode == PinMode.analog {
-            setAnalogValueReportingforPin(Int(cell!.analogPin), enabled: true)
-//            setAnalogValueReportingforPin(Int(cell!.digitalPin), enabled: true)
-        }
-        else if prevMode == PinMode.analog{
-            setAnalogValueReportingforPin(Int(cell!.analogPin), enabled: false)
-//            setAnalogValueReportingforPin(Int(cell!.digitalPin), enabled: false)
-        }
-        
-    }
+//    @objc func modeControlChanged(_ sender:UISegmentedControl){
+//
+//
+//        let mode:PinMode = pinModeforControl(sender)
+//        let prevMode:PinMode = cell!.mode
+//        cell?.mode = mode
+//
+//        //Write pin
+//        writePinMode(mode, pin: UInt8(cell!.digitalPin))
+//
+//        //Update reporting for Analog pins
+//        if cell?.mode == PinMode.analog {
+//            setAnalogValueReportingforPin(Int(cell!.analogPin), enabled: true)
+////            setAnalogValueReportingforPin(Int(cell!.digitalPin), enabled: true)
+//        }
+//        else if prevMode == PinMode.analog{
+//            setAnalogValueReportingforPin(Int(cell!.analogPin), enabled: false)
+////            setAnalogValueReportingforPin(Int(cell!.digitalPin), enabled: false)
+//        }
+//
+//    }
     
     
     @IBAction func toggleDebugConsole(_ sender:AnyObject) {
@@ -544,34 +374,34 @@ class PinIOViewController : UIViewController, UITableViewDataSource, UITableView
     }
     
     
-    @objc func valueControlChanged(_ sender:UISlider){
-        
-        //Respond to PWM value slider changes
-        
-        //Limit the amount of messages we send over BLE
-        let time = CACurrentMediaTime() //Get current time
-        if (time - lastTime < 0.05) {       //Bail if we're trying to send a value too soon
-            return
-        }
-        
-        lastTime = time
-        
-        //Find relevant cell based on slider control's tag
-        let cell:PinCell = pinCellForPin(sender.tag)!
-        
-        //Bail if we have a redundant value
-        if (Int(cell.valueLabel.text!) == Int(sender.value)) {
-            return
-        }
-        
-        //Update the cell UI for the new value
-        cell.setPwmValue(Int(sender.value))
-        
-        //Send the new value over BLE
-        writePWMValue(UInt8(sender.value), pin: UInt8(cell.digitalPin))
-        
-    }
-    
+//    @objc func valueControlChanged(_ sender:UISlider){
+//
+//        //Respond to PWM value slider changes
+//
+//        //Limit the amount of messages we send over BLE
+//        let time = CACurrentMediaTime() //Get current time
+//        if (time - lastTime < 0.05) {       //Bail if we're trying to send a value too soon
+//            return
+//        }
+//
+//        lastTime = time
+//
+//        //Find relevant cell based on slider control's tag
+////        let cell:PinCell = pinCellForPin(sender.tag)!
+//
+//        //Bail if we have a redundant value
+//        if (Int(cell.valueLabel.text!) == Int(sender.value)) {
+//            return
+//        }
+//
+//        //Update the cell UI for the new value
+//        cell.setPwmValue(Int(sender.value))
+//
+//        //Send the new value over BLE
+//        writePWMValue(UInt8(sender.value), pin: UInt8(cell.digitalPin))
+//
+//    }
+//
     
     //MARK: Outgoing Data
     
@@ -722,8 +552,9 @@ class PinIOViewController : UIViewController, UITableViewDataSource, UITableView
                     //0x0 0x0   0x1 0x0   0x3 0x8   0x7F    pin 2 can do i/o + pwm (8 bit)
                     //0x7F                                  pin 3 is unavailable
                     //0xF7                                  end report
-                    
-                    return
+
+                    setAnalogValueReportingforPin(PIN, enabled: true)
+                return
                     
             }
                 //Analog pin mapping query response - starts w 0xF0 0x6A
@@ -757,42 +588,38 @@ class PinIOViewController : UIViewController, UITableViewDataSource, UITableView
             let pin = data[2]
             let pinMode = data[3]
             let pinState = data[4]
-            
-            for cell in cells {
-                if cell?.digitalPin == Int(pin) {
-                    cell?.setMode(pinMode)
+
                     
                     if (pinMode > 1 ) && (data.count > 5){
                         let val = Int(data[4]) + (Int(data[5])<<7);
-                        cell?.setAnalogValue(val)
+//                        cell?.setAnalogValue(val)
                     }
                     else {
-                        cell?.setDigitalValue(Int(pinState))
+//                        cell?.setDigitalValue(Int(pinState))
                     }
-                }
-            }
+
             return
         }
         
-        //each pin state message is 3 bytes long
-        for i in stride(from: 0, to: length, by: 3) {
-            
-            //Digital Reporting (per port)
-            if ((data[i] >= 0x90) && (data[i] <= 0x9F)){
-                var pinStates = Int(data[i+1])
-                let port = Int(data[i]) - 0x90
-                pinStates |= Int(data[i+2]) << 7    //PORT 0: use LSB of third byte for pin7, PORT 1: pins 14 & 15
-                updateForPinStates(pinStates, port: port)
-            }
-            
-            //Analog Reporting (per pin)
-            else if ((data[i] >= 0xE0) && (data[i] <= 0xEF)) {
-                let pin = Int(data[i]) - 0xE0
-                let val = Int(data[i+1]) + (Int(data[i+2])<<7);
-                let cell:PinCell? = pinCellForAnalogPin(Int(pin))
-                cell?.setAnalogValue(val)
-            }
-        }
+//        //each pin state message is 3 bytes long
+//        for i in stride(from: 0, to: length, by: 3) {
+//
+//            //Digital Reporting (per port)
+//            if ((data[i] >= 0x90) && (data[i] <= 0x9F)){
+//                var pinStates = Int(data[i+1])
+//                let port = Int(data[i]) - 0x90
+//                pinStates |= Int(data[i+2]) << 7    //PORT 0: use LSB of third byte for pin7, PORT 1: pins 14 & 15
+//                updateForPinStates(pinStates, port: port)
+//            }
+//
+//            //Analog Reporting (per pin)
+//            else if ((data[i] >= 0xE0) && (data[i] <= 0xEF)) {
+//                let pin = Int(data[i]) - 0xE0
+//                let val = Int(data[i+1]) + (Int(data[i+2])<<7);
+////                let cell:PinCell? = pinCellForAnalogPin(Int(pin))
+//                cell?.setAnalogValue(val)
+//            }
+//        }
         
     }
     
@@ -907,36 +734,13 @@ class PinIOViewController : UIViewController, UITableViewDataSource, UITableView
             
             //create cell for pin and add to array
             if isAvailable {
-                newCells.append(createPinCell(pinNumber, isDigital: (isInput && isOutput), isAnalog: isAnalog, isPWM: isPWM))
+//                newCells.append(createPinCell(pinNumber, isDigital: (isInput && isOutput), isAnalog: isAnalog, isPWM: isPWM))
             }
             
             //prep vars for next cell
             isAvailable = true; isInput = false; isOutput = false; isAnalog = false; isPWM = false
             pinNumber += 1
         }
-        
-        cells = newCells
-        
-        //debug
-//        print(message)
-//        //debug with alert view
-//        let paragraphStyle = NSMutableParagraphStyle()
-//        paragraphStyle.alignment = NSTextAlignment.Left
-//        let messageText = NSMutableAttributedString(
-//            string: message,
-//            attributes: [
-//                NSParagraphStyleAttributeName: paragraphStyle,
-//                NSFontAttributeName : UIFont.preferredFontForTextStyle(UIFontTextStyleCaption1),
-//                NSForegroundColorAttributeName : UIColor.blackColor()
-//            ]
-//        )
-//        let alert = UIAlertController(title: "received pin capabilities:", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
-//        alert.setValue(messageText, forKey: "attributedMessage")
-//        let aOk = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
-//        alert.addAction(aOk)
-//        self.presentViewController(alert, animated: true, completion: nil)
-        //end debug
-        
     }
     
     
@@ -968,8 +772,8 @@ class PinIOViewController : UIViewController, UITableViewDataSource, UITableView
             
             if analogMappingData[i] != 0x7F {
                 let analogPin = analogMappingData[i]
-//                printLog(self, funcName: (#function), logString: "pin\(i) = \(analogPin)")
-                pinCellForPin(i)?.analogPin = Int(analogPin)
+                printLog(self, funcName: (#function), logString: "pin\(i) = \(analogPin)")
+//                pinCellForPin(i)?.analogPin = Int(analogPin)
             }
         }
         
@@ -977,29 +781,9 @@ class PinIOViewController : UIViewController, UITableViewDataSource, UITableView
         
         //reload table cells after delay
         delay(0.5) { () -> () in
-            self.pinTable.reloadData()
+//            self.pinTable.reloadData()
         }
         
-    }
-    
-    
-    func updateDebugConsoleWithData(_ newData:Data) {
-    
-        //For debugging in dev
-    
-        let hexString:NSString = newData.hexRepresentationWithSpaces(true)
-    
-        debugConsole!.text = debugConsole!.text + "\n \(hexString)"
-    
-        //scroll output to bottom
-        if (debugConsole!.isHidden == false) {
-            let range = NSMakeRange(debugConsole!.text.characters.count, 0)
-            debugConsole!.scrollRangeToVisible(range)
-            
-            debugConsole!.isScrollEnabled = false
-            debugConsole!.isScrollEnabled = true
-        }
-    
     }
     
     
@@ -1021,240 +805,12 @@ class PinIOViewController : UIViewController, UITableViewDataSource, UITableView
             
             let cellIndex = i + Int(offset)
             
-            pinCellForPin(cellIndex)?.setDigitalValue(state)
+//            pinCellForPin(cellIndex)?.setDigitalValue(state)
         }
         
         //Save reference state mask
         portMasks[port] = UInt8(pinStates)
         
-    }
-    
-    
-    //MARK: Table view data source
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        
-        return 1
-    }
-    
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-
-            return "Available Pins"
-    }
-    
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        return cells.count;
-        
-    }
-    
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        //Return appropriate cell for a row index
-        
-        var cell:PinCell?
-        
-        if indexPath.row < cells.count {
-//            print("requesting cell for row \(indexPath.row)")
-            cell = cells[indexPath.row]
-        }
-        
-        if (cell == nil){
-//            print("-------> making a placeholder cell")
-            cell = PinCell()
-        }
-        
-        return cell!
-    }
-    
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
-        //Return height appropriate for cell state - open/closed
-        
-        var height = pinTable?.rowHeight
-        let cellIndex = indexPath.row
-        
-        if (cellIndex >= cells.count) {
-            return 0
-        }
-        
-        var cell:PinCell?
-        cell = cells[cellIndex]
-        
-        if (cell == nil) {
-            return 0
-        }
-        
-        //selected
-        if ((indexPath as NSIndexPath).compare(openCellPath) == ComparisonResult.orderedSame) {
-            let mode = cell?.mode
-            if (mode == PinMode.input || mode == PinMode.analog) {
-                height = ROW_HEIGHT_INPUT
-            }
-            else {
-                height = ROW_HEIGHT_OUTPUT
-            }
-            
-            cell?.backgroundColor = UIColor.white
-        }
-        
-        //not selected
-        else {
-            cell?.backgroundColor = UIColor(white: 0.8, alpha: 1.0)
-        }
-        
-        return height!
-    }
-    
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        
-        //return height for title rows
-        return HEADER_HEIGHT
-        
-    }
-    
-    
-    func pinCellForPin(_ pin:Int) -> PinCell?{
-        
-        //Retrieve appropriate cell for a pin number
-        
-        var matchingCell:PinCell?
-        
-        for cell in cells {
-            
-            if cell == nil {
-                continue
-            }
-            if Int(cell!.digitalPin) == pin {
-                matchingCell = cell
-                break
-            }
-        }
-        
-//        if matchingCell == nil {
-//            printLog(self, funcName: "pinCellForPin", logString: "unable to find matching cell for pin \(pin)")
-//        }
-        
-        return matchingCell
-        
-    }
-    
-    
-    func pinCellForAnalogPin(_ pin:Int) -> PinCell?{
-        
-        //Retrieve appropriate cell for a pin number
-        
-        var matchingCell:PinCell?
-        
-        for cell in cells {
-            
-            if cell == nil {
-                continue
-            }
-            if Int(cell!.analogPin) == pin {
-                matchingCell = cell
-                break
-            }
-        }
-        
-        //        if matchingCell == nil {
-        //            printLog(self, funcName: "pinCellForPin", logString: "unable to find matching cell for pin \(pin)")
-        //        }
-        
-        return matchingCell
-        
-    }
-    
-    
-    //MARK: Helper methods
-    
-    func indexPathForSubview(_ theView:UIView) ->IndexPath{
-        
-        //Find the indexpath for the cell which contains theView
-        
-        var indexPath: IndexPath?
-        var counter = 0
-        let limit = 20
-        var aView:UIView? = theView
-        
-        while (indexPath == nil) {
-            if (counter > limit) {
-                break
-            }
-            if aView?.superview is UITableViewCell {
-                let theCell = aView?.superview as! UITableViewCell
-                indexPath = pinTable?.indexPath(for: theCell)
-            }
-            else {
-                aView = theView.superview
-            }
-            counter += 1;
-        }
-        
-        return indexPath!
-        
-    }
-
-    
-    func updateTable(){
-        
-        //Animate row height changes for user selection
-        
-        pinTable!.beginUpdates()
-        pinTable!.endUpdates()
-        
-    }
-    
-    
-    func scrollToIndexPath(_ indexPath:IndexPath){
-        
-        //Scroll to a particular row on the table
-        
-        pinTable!.scrollToRow(at: indexPath, at: UITableViewScrollPosition.none, animated: true)
-    }
-    
-    
-    func cellModeUpdated(_ sender:AnyObject){
-        
-        //Respond to mode change for a cell
-        
-        self.updateTable()
-        
-    }
-    
-    
-    func stringForPinMode(_ mode:PinMode)->NSString{
-    
-        var modeString: NSString
-        
-        switch mode {
-        case PinMode.input:
-            modeString = "Input"
-            break
-        case PinMode.output:
-            modeString = "Output"
-            break
-        case PinMode.analog:
-            modeString = "Analog"
-            break
-        case PinMode.pwm:
-            modeString = "PWM"
-            break
-        case PinMode.servo:
-            modeString = "Servo"
-            break
-        default:
-            modeString = "NOT FOUND"
-            break
-        }
-    
-    return modeString
-    
     }
     
 }

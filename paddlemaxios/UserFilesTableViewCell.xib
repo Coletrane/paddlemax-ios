@@ -1,8 +1,13 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="15A282b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UserFilesTableViewCell"/>
@@ -16,16 +21,14 @@
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AfR-Ka-YUu">
                         <rect key="frame" x="8" y="7" width="304" height="30"/>
-                        <animations/>
                         <state key="normal" title="Use Custom Firmware">
-                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </state>
                         <connections>
                             <action selector="onClickButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Q4a-39-NIL"/>
                         </connections>
                     </button>
                 </subviews>
-                <animations/>
                 <constraints>
                     <constraint firstAttribute="trailingMargin" secondItem="AfR-Ka-YUu" secondAttribute="trailing" id="8Za-dm-UFH"/>
                     <constraint firstAttribute="centerX" secondItem="AfR-Ka-YUu" secondAttribute="centerX" id="TXD-Tx-PiK"/>
@@ -33,7 +36,6 @@
                     <constraint firstItem="AfR-Ka-YUu" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="dqk-K1-NCh"/>
                 </constraints>
             </tableViewCellContentView>
-            <animations/>
         </tableViewCell>
     </objects>
 </document>
