@@ -5,6 +5,8 @@ import UserNotifications
 
 @UIApplicationMain
 class BLEAppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
+
+    // TODO: Implement these
     @available(iOS 9.3, *)
     func sessionDidDeactivate(_ session: WCSession) {
 //        super.sessionDidDeactivate(session: WCSession)

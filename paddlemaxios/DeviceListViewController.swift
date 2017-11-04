@@ -103,70 +103,15 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
     
     
     @objc func connectButtonTapped(_ sender: UIButton) {
-        
-        printLog(self, funcName: "connectButtonTapped", logString: "\(sender.tag)")
-        
-        if tableIsLoading == true {
-            printLog(self, funcName: "connectButtonTapped", logString: "ignoring button while table loads")
-        }
-        
         let device = devices[sender.tag]
-        
-        /*
-        // If device is not uart capable, go straight to Info mode
-        if device.isUART == false {
-            connectInMode(ConnectionMode.Info, peripheral: device.peripheral)
-            return
-        }
-*/
-        
-        //Show connection options for UART capable devices
-        var style = UIAlertControllerStyle.actionSheet
-        if IS_IPAD {
-            style = UIAlertControllerStyle.alert
-        }
-        let alertController = UIAlertController(title: "Connect to \(device.name)", message: "Choose mode:", preferredStyle: style)
-        
-        
-        // Cancel button
-        let aaCancel = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel) { (aa:UIAlertAction!) -> Void in }
-        alertController.addAction(aaCancel)
-        
-        // Info button
-        let aaInfo = UIAlertAction(title: "Info", style: UIAlertActionStyle.default) { (aa:UIAlertAction!) -> Void in
-            self.connectInMode(ConnectionMode.info, peripheral: device.peripheral)
-        }
-        alertController.addAction(aaInfo)
-        
         if (device.isUART) {
-            //UART button
-            let aaUART = UIAlertAction(title: "UART", style: UIAlertActionStyle.default) { (aa:UIAlertAction!) -> Void in
-                self.connectInMode(ConnectionMode.uart, peripheral: device.peripheral)
-            }
-            alertController.addAction(aaUART)
-            
-            //Pin I/O button
-            let aaPinIO = UIAlertAction(title: "Pin I/O", style: UIAlertActionStyle.default) { (aa:UIAlertAction!) -> Void in
-                self.connectInMode(ConnectionMode.pinIO, peripheral: device.peripheral)
-            }
-            alertController.addAction(aaPinIO)
-            
-            //Controller Button
-            let aaController = UIAlertAction(title: "Controller", style: UIAlertActionStyle.default) { (aa:UIAlertAction!) -> Void in
-                self.connectInMode(ConnectionMode.controller, peripheral: device.peripheral)
-            }
-            alertController.addAction(aaController)
+            self.connectInMode(ConnectionMode.pinIO, peripheral: device.peripheral)
         }
-        
-        self.present(alertController, animated: true) { () -> Void in
-        }
-    
     }
     
     
     func connectInMode(_ mode:ConnectionMode, peripheral:CBPeripheral) {
         
-//        println("\(self.classForCoder.description()) connectInMode")
         switch mode {
         case ConnectionMode.uart,
              ConnectionMode.pinIO,

@@ -1,7 +1,7 @@
 import Foundation
 import CoreBluetooth
 
-protocol BLEPeripheralDelegate: Any {
+protocol BLEPeripheralDelegate: AnyObject {
     
     var connectionMode:ConnectionMode { get }
     func didReceiveData(_ newData:Data)

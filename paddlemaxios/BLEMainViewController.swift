@@ -125,7 +125,6 @@ BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, 
             view.addSubview(navController.view)
         }
         
-        // Create core bluetooth manager on launch
         if (cm == nil) {
             cm = CBCentralManager(delegate: self, queue: cbcmQueue)
             
@@ -144,15 +143,6 @@ BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, 
             addChildViewController(navController)
             view.addSubview(navController.view)
         }
-        
-        
-        //FOR SCREENSHOTS
-        //        connectionMode = ConnectionMode.Info
-        //        connectionStatus = ConnectionStatus.Connected
-        //        deviceInfoViewController = DeviceInfoViewController(cbPeripheral: <#CBPeripheral#>, delegate: <#HelpViewControllerDelegate#>)
-        //        uartViewController.navigationItem.rightBarButtonItem = infoBarButton
-        //        pushViewController(uartViewController)
-        
     }
     
     
@@ -218,12 +208,9 @@ BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, 
     
     @objc func toggleScan(_ sender:UIBarButtonItem?){
         
-        // Stop scan
         if connectionStatus == ConnectionStatus.scanning {
             stopScan()
         }
-            
-            // Start scan
         else {
             startScan()
         }
@@ -237,9 +224,7 @@ BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, 
             cm?.stopScan()
             scanIndicator?.stopAnimating()
             
-            //If scan indicator is in toolbar items, remove it
             let count:Int = deviceListViewController.toolbarItems!.count
-//            var index = -1
             for i in 0...(count-1) {
                 if deviceListViewController.toolbarItems?[i] === scanIndicatorItem {
                     deviceListViewController.toolbarItems?.remove(at: i)
@@ -250,12 +235,7 @@ BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, 
             connectionStatus = ConnectionStatus.idle
             scanButtonItem?.title = "Scan for peripherals"
         }
-        
-        
-        //        else if (connectionMode == ConnectionMode.UART) {
-        //
-        //        }
-        
+
     }
     
     
@@ -329,27 +309,13 @@ BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, 
     
     
     @IBAction func showInfo(_ sender:AnyObject) {
-        
-        // Show help info view on iPhone via flip transition, called via "i" button in navbar
-        
+
         if (IS_IPHONE) {
             present(currentHelpViewController(), animated: true, completion: nil)
         }
             
             //iPad
         else if (IS_IPAD) {
-            
-            //close popover it is being shown
-            //            if helpPopoverController != nil {
-            //                if helpPopoverController!.popoverVisible {
-            //                    helpPopoverController?.dismissPopoverAnimated(true)
-            //                    helpPopoverController = nil
-            //                }
-            //
-            //            }
-            
-            //show popover if it isn't shown
-            //            else {
             helpPopoverController?.dismiss(animated: true)
             
             helpPopoverController = UIPopoverController(contentViewController: currentHelpViewController())
@@ -361,7 +327,6 @@ BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, 
                 in: rightBBI.customView!.superview!,
                 permittedArrowDirections: UIPopoverArrowDirection.any,
                 animated: true)
-            //            }
         }
     }
     
@@ -410,42 +375,6 @@ BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, 
         
         // Start connection timeout timer
         connectionTimer = Timer.scheduledTimer(timeInterval: connectionTimeOutIntvl, target: self, selector: #selector(BLEMainViewController.connectionTimedOut(_:)), userInfo: nil, repeats: false)
-    }
-    
-    
-    func connectPeripheralForDFU(_ peripheral:CBPeripheral) {
-        
-        //        connect device w services: dfuServiceUUID, deviceInfoServiceUUID
-        
-        printLog(self, funcName: (#function), logString: self.description)
-        
-        if cm == nil {
-            //            println(self.description)
-            printLog(self, funcName: (#function), logString: "No central Manager found, unable to connect peripheral")
-            return
-        }
-        
-        stopScan()
-        
-        dfuPeripheral = peripheral
-        
-        //Show connection activity alert view
-        //        currentAlertView = UIAlertView(title: "Connecting …", message: nil, delegate: self, cancelButtonTitle: nil)
-        //        currentAlertView!.show()
-        
-        //Cancel any current or pending connection to the peripheral
-        if peripheral.state == CBPeripheralState.connected || peripheral.state == CBPeripheralState.connecting {
-            cm!.cancelPeripheralConnection(peripheral)
-        }
-        
-        //Connect
-        //        currentPeripheral = BLEPeripheral(peripheral: peripheral, delegate: self)
-        cm!.connect(peripheral, options: [CBConnectPeripheralOptionNotifyOnDisconnectionKey: NSNumber(value: true as Bool)])
-        
-        connectionMode = ConnectionMode.dfu
-        connectionStatus = ConnectionStatus.connecting
-        
-        
     }
     
     
@@ -518,11 +447,6 @@ BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, 
     
     
     func alertDismissedOnError() {
-        
-        //        if buttonIndex == 77 {
-        //            currentAlertView = nil
-        //        }
-        
         if (connectionStatus == ConnectionStatus.connected) {
             disconnect()
         }
@@ -602,18 +526,6 @@ BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, 
                     disconnect()
                 }
             }
-                
-                // Returning from DFU
-            else if connectionMode == ConnectionMode.dfu {
-                //                if connectionStatus == ConnectionStatus.Connected {
-                disconnect()
-                //                }
-                //return cbcentralmanager delegation to self
-                cm?.delegate = self
-                connectionMode = ConnectionMode.none
-                dereferenceModeController()
-            }
-                
                 // Starting in device list
                 // Start scaning if bluetooth is enabled
             else if (connectionStatus == ConnectionStatus.idle) && (cm?.state != CBManagerState.poweredOff) {
@@ -817,13 +729,6 @@ BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, 
             || (anObject.title == "Color Picker") {
                 verdict = true
         }
-        
-        //all controllers are modules except BLEMainViewController - weak
-        //        var verdict = true
-        //        if anObject.isMemberOfClass(BLEMainViewController) {
-        //            verdict = false
-        //        }
-        
         return verdict
         
     }
@@ -848,47 +753,20 @@ BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, 
         connectionTimer?.invalidate()
         
         connectionStatus = ConnectionStatus.connected
-        
-    }
-    
 
-    func launchViewControllerForSelectedMode() {
-        //Push appropriate viewcontroller onto the navcontroller
-        var vc:UIViewController? = nil
-        switch connectionMode {
-        case ConnectionMode.pinIO:
-            pinIoViewController = PinIOViewController(delegate: self)
-            pinIoViewController.didConnect()
-            vc = pinIoViewController
-            break
-        case ConnectionMode.uart:
-            uartViewController = UARTViewController(aDelegate: self)
-            uartViewController.didConnect()
-            vc = uartViewController
-            break
-        case ConnectionMode.info:
-            deviceInfoViewController = DeviceInfoViewController(cbPeripheral: currentPeripheral!.currentPeripheral, delegate: self)
-            vc = deviceInfoViewController
-            break
-        case ConnectionMode.controller:
-            controllerViewController = ControllerViewController(aDelegate: self)
-            vc = controllerViewController
-        case ConnectionMode.dfu:
-            printLog(self, funcName: (#function), logString: "DFU mode")
-        default:
-            printLog(self, funcName: (#function), logString: "No connection mode set")
-            break
-        }
-        
-        if (vc != nil) {
-            vc?.navigationItem.rightBarButtonItem = infoBarButton
-            DispatchQueue.main.async(execute: { () -> Void in
-                self.pushViewController(vc!)
-            })
-        }
+        self.launchPinIOViewController()
     }
-    
-    
+
+    func launchPinIOViewController() {
+        pinIoViewController = PinIOViewController(delegate: self)
+        pinIoViewController.didConnect()
+        pinIoViewController.navigationItem.rightBarButtonItem = infoBarButton
+        let weakPiovc = pinIoViewController
+        DispatchQueue.main.async(execute: { () -> Void in
+            self.pushViewController(weakPiovc!)
+        })
+    }
+
     func uartDidEncounterError(_ error: NSString) {
         
         //Dismiss "scanning …" alert view if shown
@@ -907,30 +785,17 @@ BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, 
     
     
     func didReceiveData(_ newData: Data) {
-        
-        //Data incoming from UART peripheral, forward to current view controller
-        
         printLog(self, funcName: "didReceiveData", logString: "\(newData.hexRepresentationWithSpaces(true))")
         
         if (connectionStatus == ConnectionStatus.connected ) {
-            //UART
-            if (connectionMode == ConnectionMode.uart) {
-                //send data to UART Controller
-                uartViewController.receiveData(newData)
-            }
-                
-                //Pin I/O
-            else if (connectionMode == ConnectionMode.pinIO) {
-                //send data to PIN IO Controller
-                pinIoViewController.receiveData(newData)
-            }
+            pinIoViewController.receiveData(newData)
         }
         else {
             printLog(self, funcName: "didReceiveData", logString: "Received data without connection")
         }
         
     }
-    
+
     
     func peripheralDidDisconnect() {
         
@@ -1033,14 +898,6 @@ BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, 
 //        navController.popToRootViewControllerAnimated(true)
         
     }
-    
-    func dfuServiceNotFound() {
-        printLog(self, funcName: "dfuServiceNotFound", logString: "")
-        
-        cm?.delegate = self
-        launchViewControllerForSelectedMode()
-    }
-    
 }
 
 

@@ -84,8 +84,7 @@ class PinIOViewController : UIViewController, UITableViewDataSource, UITableView
         super.viewDidLoad()
 
         helpViewController!.delegate = self.delegate
-//        initializeCells()
-        
+
     }
     
     
