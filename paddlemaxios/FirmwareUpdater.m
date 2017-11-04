@@ -10,7 +10,7 @@
 #import "ReleasesParser.h"
 #import "LogHelper.h"
 //#import "BleManager.h"
-#import "Adafruit_Bluefruit_LE_Connect-Swift.h"
+#import "paddlemaxios-Swift.h"
 
 #pragma mark - DeviceInfoData
 @implementation DeviceInfoData

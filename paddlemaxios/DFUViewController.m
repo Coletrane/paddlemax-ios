@@ -14,7 +14,7 @@
 #import "UpdateDialogViewController.h"
 #import "UserFilesTableViewCell.h"
 #import "FilesPickerViewController.h"
-#import "Adafruit_Bluefruit_LE_Connect-Swift.h"
+#import "paddlemaxios-Swift.h"
 
 @interface DFUViewController () <UITableViewDataSource, UITableViewDelegate, FirmwareUpdaterDelegate, UpdateDialogViewControllerDelegate, UserFilesTableViewCellDelegate, FilesPickerViewControllerDelegate
 //    BleManagerDelegate

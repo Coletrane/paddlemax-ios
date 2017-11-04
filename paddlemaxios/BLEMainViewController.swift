@@ -19,7 +19,7 @@ enum ConnectionMode:Int {
     case dfu
 }
 
-protocol BLEMainViewControllerDelegate : Any {
+protocol BLEMainViewControllerDelegate : AnyObject {
     func onDeviceConnectionChange(_ peripheral:CBPeripheral)
 }
 
@@ -829,11 +829,11 @@ class BLEMainViewController : UIViewController, UINavigationControllerDelegate, 
     func isModuleController(_ anObject:AnyObject)->Bool{
         
         var verdict = false
-        if     anObject.isMember(of: PinIOViewController())
-            || anObject.isMember(of: UARTViewController())
-            || anObject.isMember(of: DeviceInfoViewController())
-            || anObject.isMember(of: ControllerViewController())
-            || anObject.isMember(of: DFUViewController)
+        if     anObject.isMember(of: PinIOViewController.self)
+            || anObject.isMember(of: UARTViewController.self)
+            || anObject.isMember(of: DeviceInfoViewController.self)
+            || anObject.isMember(of: ControllerViewController.self)
+            || anObject.isMember(of: DFUViewController.self)
             || (anObject.title == "Control Pad")
             || (anObject.title == "Color Picker") {
                 verdict = true

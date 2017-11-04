@@ -300,7 +300,7 @@ class ControllerViewController: UIViewController, UITableViewDataSource, UITable
                 if cmm.isAccelerometerAvailable == true {
                     cmm.accelerometerUpdateInterval = pollInterval
                     cmm.startAccelerometerUpdates(to: OperationQueue.main, withHandler: { (data:CMAccelerometerData?, error:NSError?) -> Void in
-                        self.didReceiveAccelData( CMAccelerometerData, error: error )
+                        self.didReceiveAccelData(data, error: error )
                     } as! CMAccelerometerHandler)
                     
                     sender.isSelected = true
@@ -347,7 +347,7 @@ class ControllerViewController: UIViewController, UITableViewDataSource, UITable
 //                    let handler = { (data:CMGyroData?, error:NSError?) -> Void in
 //                        self.didReceiveGyroData( <#CMGyroData!#>, error: error )
 //                    } as! CMGyroHandler
-                    cmm.startGyroUpdates(to: OperationQueue.main)
+//                    cmm.startGyroUpdates(to: OperationQueue.main)
                     sender.isSelected = true
                     //add rows for sensor values
                     controlTable.beginUpdates()
@@ -387,7 +387,7 @@ class ControllerViewController: UIViewController, UITableViewDataSource, UITable
 //                    let handler = { (data:CMMagnetometerData?, error:NSError?) -> Void in
 //                        self.didReceiveMagnetometerData( <#CMMagnetometerData!#>, error: error )
 //                        } as! CMMagnetometerHandler
-                    cmm.startMagnetometerUpdates(to: OperationQueue.main)
+//                    cmm.startMagnetometerUpdates(to: OperationQueue.main)
                     sender.isSelected = true
                     //add rows for sensor values
                     controlTable.beginUpdates()
@@ -499,7 +499,7 @@ class ControllerViewController: UIViewController, UITableViewDataSource, UITable
 //                    let handler = { (cmdm:CMDeviceMotion?, error:NSError?) -> Void in
 //                        self.didReceivedDeviceMotion( <#CMDeviceMotion!#>, error: error )
 //                        } as! CMDeviceMotionHandler
-                    cmm.startDeviceMotionUpdates(to: OperationQueue.main)
+//                    cmm.startDeviceMotionUpdates(using: OperationQueue.main)
                     
                     sender.isSelected = true
                     //add rows for sensor values
@@ -622,14 +622,10 @@ class ControllerViewController: UIViewController, UITableViewDataSource, UITable
         
         let eventDate = loc?.timestamp
         let howRecent = eventDate?.timeIntervalSinceNow
-        if (abs(howRecent) < 15)
+        if (abs(Int(howRecent!)) < 15)
 //            || (gpsFlag == true)
         {
 //            gpsFlag = false
-            //Check for invalid accuracy
-            if loc?.horizontalAccuracy < 0.0 || loc?.verticalAccuracy < 0.0 {
-                return
-            }
             
             //Debug
             //            let lat = loc.coordinate.latitude
@@ -951,8 +947,12 @@ class ControllerViewController: UIViewController, UITableViewDataSource, UITable
     func controlPadButtonPressedWithTag(_ tag:Int) {
         
         let str = NSString(string: buttonPrefix + "\(tag)" + "1")
-        let data = Data(bytes: UnsafePointer<UInt8>(str.utf8String!), count: str.length)
-        
+
+        let strPtr = UnsafePointer(str.utf8String!).withMemoryRebound(to: UInt8.self, capacity: 8) {
+            return $0
+        }
+        let data = Data(bytes: strPtr, count: str.length)
+
         delegate?.sendData(appendCRC(data) as Data)
         
     }
@@ -971,8 +971,13 @@ class ControllerViewController: UIViewController, UITableViewDataSource, UITable
     func controlPadButtonReleasedWithTag(_ tag:Int) {
         
         let str = NSString(string: buttonPrefix + "\(tag)" + "0")
-        let data = Data(bytes: UnsafePointer<UInt8>(str.utf8String!), count: str.length)
-        
+
+        let strPtr = UnsafePointer(str.utf8String!).withMemoryRebound(to: UInt8.self, capacity: 8) {
+            return $0
+        }
+
+        let data = Data(bytes: strPtr, count: str.length)
+
         delegate?.sendData(appendCRC(data) as Data)
     }
     

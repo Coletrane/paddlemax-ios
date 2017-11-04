@@ -36,7 +36,8 @@ extension Data {
         let string = NSMutableString(capacity: dataLength*2)
         let dataBytes:UnsafeRawPointer = (self as NSData).bytes
         for idx in 0..<dataLength {
-            string.appendFormat("%02x", [UInt(dataBytes[idx])] )
+            let byteArr = [UInt(dataBytes.load(fromByteOffset: idx, as: UInt8.self))]
+            string.appendFormat("%02x",  byteArr)
         }
         
         return string as String
