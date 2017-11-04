@@ -171,22 +171,7 @@ class BLEDevice {
         advertisementArray = array
         
         var nameString = peripheral.name
-        
-        
-        //FOR SCREENSHOTS v
-//        if nameString == "Apple TV" {
-//            var rand:String = "\(random())"
-//            rand = rand.stringByPaddingToLength(2, withString: " ", startingAtIndex: 0)
-//            nameString = "UP_\(rand)"
-//        }
-//        else if nameString == "UART" {
-//            var rand:String = "\(random())"
-//            rand = rand.stringByPaddingToLength(1, withString: " ", startingAtIndex: 2)
-//            nameString = nameString + "-\(rand)"
-//        }
-        //FOR SCREENSHOTS ^
-        
-        
+
         
         if nameString == nil || nameString == "" {
             nameString = "N/A"
@@ -210,11 +195,12 @@ class BLEDevice {
         
         var idStringArray = [String](repeating: "", count: idArray.count)
         
-        idArray.enumerateObjects({ (obj:AnyObject!, idx:Int, stop:UnsafeMutablePointer<ObjCBool>) -> Void in
+        idArray.enumerateObjects({ (obj:Any!, idx:Int, stop:UnsafeMutablePointer<ObjCBool>) -> Void in
             let objUUID = obj as? CBUUID
             let idStr = objUUID!.uuidString
             idStringArray[idx] = idStr
-        } as! (Any, Int, UnsafeMutablePointer<ObjCBool>) -> Void)
+        })
+        
         return idStringArray
         
     }

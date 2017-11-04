@@ -22,7 +22,7 @@
 		648F265935B891A9E87C49A8 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F225A24F1A688F30BC824 /* Extensions.swift */; };
 		648F26EED99FC774535AD6B5 /* PinIOViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F2E3A85ED450362C60362 /* PinIOViewController.swift */; };
 		648F2734D3B25119FD2025ED /* DeviceListViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 648F2504F80ADFE3D9B8BDF4 /* DeviceListViewController_iPhone.xib */; };
-		648F277359B9A8D0898574EB /* BluetoothLE Test-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 648F2B80F86CFE9E8D59E109 /* BluetoothLE Test-Info.plist */; };
+		648F27779D9617148AAC7029 /* BLEMainViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 648F222BAE05DE846FFAC071 /* BLEMainViewController_iPad.xib */; };
 		648F27DE75C250CF2A949E06 /* ReleasesParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 648F285BFE4ED83EEFB7C647 /* ReleasesParser.m */; };
 		648F28179D2B32E9AE414070 /* DeviceInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F20238A854F87EE475A95 /* DeviceInfoViewController.swift */; };
 		648F2832BDC064030B2ABCD9 /* ControllerViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 648F2AE97A3813A0D35B99B0 /* ControllerViewController_iPhone.xib */; };
@@ -36,6 +36,7 @@
 		648F2B787CC1D191B0AD9ABD /* XMLDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 648F2574A915AAD6C6066E60 /* XMLDictionary.m */; };
 		648F2BBFFF23288DD31EA055 /* FilesPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 648F296993583EA9E9B17889 /* FilesPickerViewController.xib */; };
 		648F2BDCEBDE7DA8923E1EC4 /* ControllerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F27C5CEB6B52AA5535550 /* ControllerViewController.swift */; };
+		648F2C131297796770D2CC23 /* BLEMainViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 648F2E84DD561D98AF191E2B /* BLEMainViewController_iPhone.xib */; };
 		648F2C93F71B3DDF8EACE8F6 /* DeviceInfoViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 648F2377CF810C6577AFAC72 /* DeviceInfoViewController_iPhone.xib */; };
 		648F2CAABAB0415C5EF1A08F /* BLEInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F2BB3F2A28AEEE7FC9869 /* BLEInfo.swift */; };
 		648F2CD6571E1AF3883A960D /* BLEOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 648F22483BF60C5985D922DA /* BLEOperations.m */; };
@@ -81,6 +82,7 @@
 		648F21F10A82DFE4A7892EBB /* FilesPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilesPickerViewController.h; sourceTree = "<group>"; };
 		648F2205592FBCC9CE304770 /* UARTViewController_iPhone.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UARTViewController_iPhone.xib; sourceTree = "<group>"; };
 		648F220BBD8C0393281BEB21 /* IntelHex2BinConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntelHex2BinConverter.h; sourceTree = "<group>"; };
+		648F222BAE05DE846FFAC071 /* BLEMainViewController_iPad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BLEMainViewController_iPad.xib; sourceTree = "<group>"; };
 		648F2240345098A0867EFFC7 /* BLEMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEMainViewController.swift; sourceTree = "<group>"; };
 		648F22483BF60C5985D922DA /* BLEOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLEOperations.m; sourceTree = "<group>"; };
 		648F225A24F1A688F30BC824 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -93,11 +95,9 @@
 		648F2574A915AAD6C6066E60 /* XMLDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLDictionary.m; sourceTree = "<group>"; };
 		648F25803D43C33B0CD7A922 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		648F25E287FA3A89F8A2B318 /* BLESensorButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLESensorButton.swift; sourceTree = "<group>"; };
-		648F26F551B51F6B906AF399 /* BluetoothLE Test-prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BluetoothLE Test-prefix.pch"; sourceTree = "<group>"; };
 		648F2785CAEE6383E90E3BEB /* FileOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileOperations.h; sourceTree = "<group>"; };
 		648F27A96F09FED80DD7B4AC /* PinCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinCell.swift; sourceTree = "<group>"; };
 		648F27C5CEB6B52AA5535550 /* ControllerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControllerViewController.swift; sourceTree = "<group>"; };
-		648F27E4C842E770D3DB765A /* BluetoothLE Test-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BluetoothLE Test-Bridging-Header.h"; sourceTree = "<group>"; };
 		648F2815AE0ACF43943E5FC5 /* ReleasesParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReleasesParser.h; sourceTree = "<group>"; };
 		648F285BFE4ED83EEFB7C647 /* ReleasesParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReleasesParser.m; sourceTree = "<group>"; };
 		648F28D6C755EC0C67E8389E /* UARTViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UARTViewController.swift; sourceTree = "<group>"; };
@@ -109,7 +109,6 @@
 		648F2AAC43ADFB294E907D9A /* SensorValueCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SensorValueCell.swift; sourceTree = "<group>"; };
 		648F2AE97A3813A0D35B99B0 /* ControllerViewController_iPhone.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ControllerViewController_iPhone.xib; sourceTree = "<group>"; };
 		648F2B27B3474158B9B863C2 /* FileOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileOperations.m; sourceTree = "<group>"; };
-		648F2B80F86CFE9E8D59E109 /* BluetoothLE Test-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.info; path = "BluetoothLE Test-Info.plist"; sourceTree = "<group>"; };
 		648F2BB3F2A28AEEE7FC9869 /* BLEInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEInfo.swift; sourceTree = "<group>"; };
 		648F2CD19DF3D6620C85F536 /* BLEPeripheral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEPeripheral.swift; sourceTree = "<group>"; };
 		648F2D13C958779CA82191AD /* UserFilesTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserFilesTableViewCell.xib; sourceTree = "<group>"; };
@@ -120,6 +119,7 @@
 		648F2DF8F3F024A5ED51311D /* SensorValueCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SensorValueCell.xib; sourceTree = "<group>"; };
 		648F2E3A85ED450362C60362 /* PinIOViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinIOViewController.swift; sourceTree = "<group>"; };
 		648F2E4D09F95F489C7BDF72 /* FilesPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilesPickerViewController.m; sourceTree = "<group>"; };
+		648F2E84DD561D98AF191E2B /* BLEMainViewController_iPhone.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BLEMainViewController_iPhone.xib; sourceTree = "<group>"; };
 		648F2EBCCB4C689400F5B991 /* GATT-characteristics.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = "GATT-characteristics.plist"; sourceTree = "<group>"; };
 		648F2EFEB1DB61E86D665DCE /* ControllerViewController_iPad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ControllerViewController_iPad.xib; sourceTree = "<group>"; };
 		648F2F2A3CED08FFC9322E5D /* XMLDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLDictionary.h; sourceTree = "<group>"; };
@@ -196,9 +196,6 @@
 				648F22483BF60C5985D922DA /* BLEOperations.m */,
 				648F2CD19DF3D6620C85F536 /* BLEPeripheral.swift */,
 				648F25E287FA3A89F8A2B318 /* BLESensorButton.swift */,
-				648F27E4C842E770D3DB765A /* BluetoothLE Test-Bridging-Header.h */,
-				648F2B80F86CFE9E8D59E109 /* BluetoothLE Test-Info.plist */,
-				648F26F551B51F6B906AF399 /* BluetoothLE Test-prefix.pch */,
 				648F25803D43C33B0CD7A922 /* Constants.swift */,
 				648F27C5CEB6B52AA5535550 /* ControllerViewController.swift */,
 				648F2EFEB1DB61E86D665DCE /* ControllerViewController_iPad.xib */,
@@ -241,6 +238,8 @@
 				648F2F2A3CED08FFC9322E5D /* XMLDictionary.h */,
 				648F2574A915AAD6C6066E60 /* XMLDictionary.m */,
 				7984B8F61FAD38E900C911E8 /* paddlemaxios-Bridging-Header.h */,
+				648F2E84DD561D98AF191E2B /* BLEMainViewController_iPhone.xib */,
+				648F222BAE05DE846FFAC071 /* BLEMainViewController_iPad.xib */,
 			);
 			path = paddlemaxios;
 			sourceTree = "<group>";
@@ -374,7 +373,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7984B8D01FAD341B00C911E8 /* Assets.xcassets in Resources */,
-				648F277359B9A8D0898574EB /* BluetoothLE Test-Info.plist in Resources */,
 				648F2ECAA55520EE151F29BC /* ControllerViewController_iPad.xib in Resources */,
 				648F2832BDC064030B2ABCD9 /* ControllerViewController_iPhone.xib in Resources */,
 				648F2A80F5F7FC659332E249 /* DeviceInfoViewController_iPad.xib in Resources */,
@@ -389,6 +387,8 @@
 				648F2B1C05204210B05BD0E5 /* UARTViewController_iPad.xib in Resources */,
 				648F212FA3EDBDB3B53F3E75 /* UARTViewController_iPhone.xib in Resources */,
 				648F214C0B4352F9387255B0 /* UserFilesTableViewCell.xib in Resources */,
+				648F2C131297796770D2CC23 /* BLEMainViewController_iPhone.xib in Resources */,
+				648F27779D9617148AAC7029 /* BLEMainViewController_iPad.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

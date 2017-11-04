@@ -1,6 +1,7 @@
 import Foundation
 import UIKit
 import WatchConnectivity
+import UserNotifications
 
 @UIApplicationMain
 class BLEAppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
@@ -32,23 +33,21 @@ class BLEAppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         window = UIWindow(frame: UIScreen.main.bounds)
-        
+
         self.mainViewController = BLEMainViewController.sharedInstance
         
         window!.rootViewController = mainViewController
         window!.makeKeyAndVisible()
-        
+
+        UIApplication.shared.statusBarStyle = .lightContent
+
         // Ask user for permision to show local notifications
-        if(UIApplication.instancesRespond(to: #selector(UIApplication.registerUserNotificationSettings(_:))))
-        {
-            let settings = UIUserNotificationSettings(types: [.sound, .alert, .badge], categories: nil)
-            application.registerUserNotificationSettings(settings)
-        }
-        else
-        {
-            //do iOS 7 stuff, which is pretty much nothing for local notifications.
-        }
-        
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options: [.sound, .alert, .badge],
+            completionHandler: { (bool, err) in
+                // TODO: handle them saying no
+            })
+
         // Register Settings bundle and set default values
         var appDefaults = Dictionary<String, AnyObject>()
         appDefaults["updatescheck_preference"] = true as AnyObject;
