@@ -16,7 +16,7 @@ protocol ControllerViewControllerDelegate: HelpViewControllerDelegate {
     
 }
 
-class ControllerViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate, ColorPickerViewControllerDelegate {
+class ControllerViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate {
     
     
     var delegate:UARTViewControllerDelegate?
@@ -930,9 +930,6 @@ class ControllerViewController: UIViewController, UITableViewDataSource, UITable
         else if indexPath.section == (sensorArray.count + 1) {
             tableView.deselectRow(at: indexPath, animated: false)
             
-            let colorPicker = ColorPickerViewController(aDelegate: self)
-            
-            self.navigationController?.pushViewController(colorPicker, animated: true)
         }
         
     }

@@ -175,7 +175,7 @@ class BLEMainViewController : UIViewController, UINavigationControllerDelegate, 
         // Application returned from background state
         
         // Adjust warning label
-        if cm?.state == CBCentralManagerState.poweredOff {
+        if cm?.state == CBManagerState.poweredOff {
             
             warningLabel.text = "Bluetooth disabled"
             
@@ -275,7 +275,7 @@ class BLEMainViewController : UIViewController, UINavigationControllerDelegate, 
     
     func startScan() {
         //Check if Bluetooth is enabled
-        if cm?.state == CBCentralManagerState.poweredOff {
+        if cm?.state == CBManagerState.poweredOff {
             onBluetoothDisabled()
             return
         }
@@ -383,7 +383,7 @@ class BLEMainViewController : UIViewController, UINavigationControllerDelegate, 
     func connectPeripheral(_ peripheral:CBPeripheral, mode:ConnectionMode) {
         
         //Check if Bluetooth is enabled
-        if cm?.state == CBCentralManagerState.poweredOff {
+        if cm?.state == CBManagerState.poweredOff {
             onBluetoothDisabled()
             return
         }
@@ -630,7 +630,7 @@ class BLEMainViewController : UIViewController, UINavigationControllerDelegate, 
                 
                 // Starting in device list
                 // Start scaning if bluetooth is enabled
-            else if (connectionStatus == ConnectionStatus.idle) && (cm?.state != CBCentralManagerState.poweredOff) {
+            else if (connectionStatus == ConnectionStatus.idle) && (cm?.state != CBManagerState.poweredOff) {
                 startScan()
             }
             
@@ -654,12 +654,12 @@ class BLEMainViewController : UIViewController, UINavigationControllerDelegate, 
     
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         
-        if (central.state == CBCentralManagerState.poweredOn){
+        if (central.state == CBManagerState.poweredOn){
             
             //respond to powered on
         }
             
-        else if (central.state == CBCentralManagerState.poweredOff){
+        else if (central.state == CBManagerState.poweredOff){
             
             //respond to powered off
         }
@@ -829,10 +829,10 @@ class BLEMainViewController : UIViewController, UINavigationControllerDelegate, 
     func isModuleController(_ anObject:AnyObject)->Bool{
         
         var verdict = false
-        if     anObject.isMember(of: PinIOViewController)
-            || anObject.isMember(of: UARTViewController)
-            || anObject.isMember(of: DeviceInfoViewController)
-            || anObject.isMember(of: ControllerViewController)
+        if     anObject.isMember(of: PinIOViewController())
+            || anObject.isMember(of: UARTViewController())
+            || anObject.isMember(of: DeviceInfoViewController())
+            || anObject.isMember(of: ControllerViewController())
             || anObject.isMember(of: DFUViewController)
             || (anObject.title == "Control Pad")
             || (anObject.title == "Color Picker") {

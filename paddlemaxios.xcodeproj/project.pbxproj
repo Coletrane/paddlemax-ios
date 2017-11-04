@@ -23,7 +23,6 @@
 		648F2470809B6B3F99D32C8A /* DFUOperationsDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 648F2A9016077CC0DC4A299B /* DFUOperationsDetails.m */; };
 		648F25393EF86A5D22AE019D /* FirmwareUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = 648F29CAC4F33CA657FA69C6 /* FirmwareUpdater.m */; };
 		648F255C8DF02AEB54BC3DBB /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 648F20B008B44D8BF9BB82AB /* Utility.m */; };
-		648F25F0FFE4631A0D076434 /* ColorPickerViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 648F2D128B38C65BCB94A679 /* ColorPickerViewController_iPhone.xib */; };
 		648F25FCBD6DB62ED26767ED /* AttributeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F2A0EC4E9C328A85D9733 /* AttributeCell.swift */; };
 		648F265935B891A9E87C49A8 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F225A24F1A688F30BC824 /* Extensions.swift */; };
 		648F26EED99FC774535AD6B5 /* PinIOViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F2E3A85ED450362C60362 /* PinIOViewController.swift */; };
@@ -36,13 +35,11 @@
 		648F28DD237CF47DB27480AE /* GATT-characteristics.plist in Resources */ = {isa = PBXBuildFile; fileRef = 648F2EBCCB4C689400F5B991 /* GATT-characteristics.plist */; };
 		648F2944EB60415BC9BDEAC8 /* BLEMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F2240345098A0867EFFC7 /* BLEMainViewController.swift */; };
 		648F296E5EC081B294488CFA /* IntelHex2BinConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 648F2D7FA54AE2E0E3A36070 /* IntelHex2BinConverter.m */; };
-		648F2A2FD91B0F3582F7A21B /* ColorPickerViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 648F20750D362CA7201F8C01 /* ColorPickerViewController_iPad.xib */; };
 		648F2A35604C8EC0838ED838 /* DFUOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 648F27DB2377A628977A536E /* DFUOperations.m */; };
 		648F2A80F5F7FC659332E249 /* DeviceInfoViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 648F297A7353D4C2C2711F57 /* DeviceInfoViewController_iPad.xib */; };
 		648F2B1207EAB22054FCD2A7 /* BLEAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F20C93AFC396D372BDAE0 /* BLEAppDelegate.swift */; };
 		648F2B1C05204210B05BD0E5 /* UARTViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 648F237D991A21CCB6998657 /* UARTViewController_iPad.xib */; };
 		648F2B787CC1D191B0AD9ABD /* XMLDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 648F2574A915AAD6C6066E60 /* XMLDictionary.m */; };
-		648F2BBCBAAA25DD7002653D /* ColorPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F26B48588062CD1755BB2 /* ColorPickerViewController.swift */; };
 		648F2BBFFF23288DD31EA055 /* FilesPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 648F296993583EA9E9B17889 /* FilesPickerViewController.xib */; };
 		648F2BDCEBDE7DA8923E1EC4 /* ControllerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F27C5CEB6B52AA5535550 /* ControllerViewController.swift */; };
 		648F2C93F71B3DDF8EACE8F6 /* DeviceInfoViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 648F2377CF810C6577AFAC72 /* DeviceInfoViewController_iPhone.xib */; };
@@ -84,7 +81,6 @@
 /* Begin PBXFileReference section */
 		648F2004577F9C5362D328A6 /* BLEDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEDevice.swift; sourceTree = "<group>"; };
 		648F20238A854F87EE475A95 /* DeviceInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceInfoViewController.swift; sourceTree = "<group>"; };
-		648F20750D362CA7201F8C01 /* ColorPickerViewController_iPad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorPickerViewController_iPad.xib; sourceTree = "<group>"; };
 		648F20B008B44D8BF9BB82AB /* Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utility.m; sourceTree = "<group>"; };
 		648F20C93AFC396D372BDAE0 /* BLEAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEAppDelegate.swift; sourceTree = "<group>"; };
 		648F20E620DD183A0DBC05C9 /* Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
@@ -106,7 +102,6 @@
 		648F2574A915AAD6C6066E60 /* XMLDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLDictionary.m; sourceTree = "<group>"; };
 		648F25803D43C33B0CD7A922 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		648F25E287FA3A89F8A2B318 /* BLESensorButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLESensorButton.swift; sourceTree = "<group>"; };
-		648F26B48588062CD1755BB2 /* ColorPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorPickerViewController.swift; sourceTree = "<group>"; };
 		648F26F551B51F6B906AF399 /* BluetoothLE Test-prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BluetoothLE Test-prefix.pch"; sourceTree = "<group>"; };
 		648F2785CAEE6383E90E3BEB /* FileOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileOperations.h; sourceTree = "<group>"; };
 		648F27A96F09FED80DD7B4AC /* PinCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinCell.swift; sourceTree = "<group>"; };
@@ -132,7 +127,6 @@
 		648F2B80F86CFE9E8D59E109 /* BluetoothLE Test-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.info; path = "BluetoothLE Test-Info.plist"; sourceTree = "<group>"; };
 		648F2BB3F2A28AEEE7FC9869 /* BLEInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEInfo.swift; sourceTree = "<group>"; };
 		648F2CD19DF3D6620C85F536 /* BLEPeripheral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEPeripheral.swift; sourceTree = "<group>"; };
-		648F2D128B38C65BCB94A679 /* ColorPickerViewController_iPhone.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorPickerViewController_iPhone.xib; sourceTree = "<group>"; };
 		648F2D13C958779CA82191AD /* UserFilesTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserFilesTableViewCell.xib; sourceTree = "<group>"; };
 		648F2D2EB93868CE57A5B9CF /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		648F2D61A196C62EC6B52CA4 /* HelpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpViewController.swift; sourceTree = "<group>"; };
@@ -159,6 +153,7 @@
 		7984B8E41FAD341B00C911E8 /* paddlemaxiosUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = paddlemaxiosUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7984B8E81FAD341B00C911E8 /* paddlemaxiosUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = paddlemaxiosUITests.swift; sourceTree = "<group>"; };
 		7984B8EA1FAD341B00C911E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7984B8F61FAD38E900C911E8 /* paddlemaxios-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "paddlemaxios-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -223,9 +218,6 @@
 				648F27E4C842E770D3DB765A /* BluetoothLE Test-Bridging-Header.h */,
 				648F2B80F86CFE9E8D59E109 /* BluetoothLE Test-Info.plist */,
 				648F26F551B51F6B906AF399 /* BluetoothLE Test-prefix.pch */,
-				648F26B48588062CD1755BB2 /* ColorPickerViewController.swift */,
-				648F20750D362CA7201F8C01 /* ColorPickerViewController_iPad.xib */,
-				648F2D128B38C65BCB94A679 /* ColorPickerViewController_iPhone.xib */,
 				648F25803D43C33B0CD7A922 /* Constants.swift */,
 				648F27C5CEB6B52AA5535550 /* ControllerViewController.swift */,
 				648F2EFEB1DB61E86D665DCE /* ControllerViewController_iPad.xib */,
@@ -279,6 +271,7 @@
 				648F20B008B44D8BF9BB82AB /* Utility.m */,
 				648F2F2A3CED08FFC9322E5D /* XMLDictionary.h */,
 				648F2574A915AAD6C6066E60 /* XMLDictionary.m */,
+				7984B8F61FAD38E900C911E8 /* paddlemaxios-Bridging-Header.h */,
 			);
 			path = paddlemaxios;
 			sourceTree = "<group>";
@@ -413,8 +406,6 @@
 			files = (
 				7984B8D01FAD341B00C911E8 /* Assets.xcassets in Resources */,
 				648F277359B9A8D0898574EB /* BluetoothLE Test-Info.plist in Resources */,
-				648F2A2FD91B0F3582F7A21B /* ColorPickerViewController_iPad.xib in Resources */,
-				648F25F0FFE4631A0D076434 /* ColorPickerViewController_iPhone.xib in Resources */,
 				648F2ECAA55520EE151F29BC /* ControllerViewController_iPad.xib in Resources */,
 				648F2832BDC064030B2ABCD9 /* ControllerViewController_iPhone.xib in Resources */,
 				648F2A80F5F7FC659332E249 /* DeviceInfoViewController_iPad.xib in Resources */,
@@ -463,7 +454,6 @@
 				648F2CD6571E1AF3883A960D /* BLEOperations.m in Sources */,
 				648F202623A5492D94B99B46 /* BLEPeripheral.swift in Sources */,
 				648F2D8D260B05A645628BC9 /* BLESensorButton.swift in Sources */,
-				648F2BBCBAAA25DD7002653D /* ColorPickerViewController.swift in Sources */,
 				648F2F6A18A7EB499E2EF141 /* Constants.swift in Sources */,
 				648F2BDCEBDE7DA8923E1EC4 /* ControllerViewController.swift in Sources */,
 				648F20AC7FDB3C614BDC0FC0 /* DeviceCell.swift in Sources */,
@@ -627,6 +617,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.paddlemax.paddlemaxios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(PROJECT_DIR)/$(PROJECT_NAME)/$(PROJECT_NAME)-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -640,6 +631,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.paddlemax.paddlemaxios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(PROJECT_DIR)/$(PROJECT_NAME)/$(PROJECT_NAME)-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
@@ -717,6 +709,7 @@
 				7984B8EF1FAD341C00C911E8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7984B8F01FAD341C00C911E8 /* Build configuration list for PBXNativeTarget "paddlemaxiosTests" */ = {
 			isa = XCConfigurationList;
@@ -725,6 +718,7 @@
 				7984B8F21FAD341C00C911E8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7984B8F31FAD341C00C911E8 /* Build configuration list for PBXNativeTarget "paddlemaxiosUITests" */ = {
 			isa = XCConfigurationList;
@@ -733,6 +727,7 @@
 				7984B8F51FAD341C00C911E8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

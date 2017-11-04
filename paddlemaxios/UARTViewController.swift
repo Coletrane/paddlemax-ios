@@ -366,7 +366,10 @@ class UARTViewController: UIViewController, UITextFieldDelegate, UITextViewDeleg
     
     func sendUartMessage(_ message: NSString) {
         // Send to uart
-        let data = Data(bytes: UnsafePointer<UInt8>(message.utf8String!)withMemoryRebound(to: UInt16.self, capacity: 1), count: message.length)
+        let messageStringPtr = UnsafePointer(message.utf8String!).withMemoryRebound(to: UInt8.self, capacity: 8) {
+            return $0
+        }
+        let data = Data(bytes: messageStringPtr, count:message.length)
         delegate?.sendData(data)
         
         // Show on UI

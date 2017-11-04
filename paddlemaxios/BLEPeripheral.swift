@@ -78,8 +78,10 @@ class BLEPeripheral: NSObject, CBPeripheralDelegate {
         
         //Send string to peripheral
         
-        let data = Data(bytes: UnsafePointer<UInt8>(string.utf8String!).withMemoryRebound(to: UInt16.self, capacity: 1), count: string.length)
-
+        let stringPtr = UnsafePointer(string.utf8String!).withMemoryRebound(to: UInt8.self, capacity: 8) {
+            return $0
+        }
+        let data = Data(bytes: stringPtr, count: string.length)
         writeRawData(data)
     }
     
