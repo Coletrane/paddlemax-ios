@@ -262,7 +262,7 @@ class PinIOViewController : UIViewController, UITableViewDataSource, UITableView
     }
     
     
-    func abortCapabilityQuery(){
+    @objc func abortCapabilityQuery(){
         
         //stop receiving query data
         pinQueryStatus = PinQueryStatus.complete
@@ -411,7 +411,7 @@ class PinIOViewController : UIViewController, UITableViewDataSource, UITableView
       
     //MARK: Pin I/O Controls
     
-    func digitalControlChanged(_ sender:UISegmentedControl){
+    @objc func digitalControlChanged(_ sender:UISegmentedControl){
     
     //Respond to user setting a digital pin high/low
     
@@ -455,7 +455,7 @@ class PinIOViewController : UIViewController, UITableViewDataSource, UITableView
     }
     
     
-    func cellButtonTapped(_ sender:UIButton!){
+    @objc func cellButtonTapped(_ sender:UIButton!){
         
         //Respond to user tapping a cell's top area to open/close cell
         
@@ -481,7 +481,7 @@ class PinIOViewController : UIViewController, UITableViewDataSource, UITableView
     }
     
     
-    func modeControlChanged(_ sender:UISegmentedControl){
+    @objc func modeControlChanged(_ sender:UISegmentedControl){
         
         //Change relevant cell's mode
         
@@ -553,7 +553,7 @@ class PinIOViewController : UIViewController, UITableViewDataSource, UITableView
     }
     
     
-    func valueControlChanged(_ sender:UISlider){
+    @objc func valueControlChanged(_ sender:UISlider){
         
         //Respond to PWM value slider changes
         

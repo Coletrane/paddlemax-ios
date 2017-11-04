@@ -98,8 +98,8 @@ class UARTViewController: UIViewController, UITextFieldDelegate, UITextViewDeleg
 
         //retrieve console font
         let consoleFont = consoleView.font
-        blueFontDict = NSDictionary(objects: [consoleFont!, UIColor.blue], forKeys: [NSFontAttributeName as NSCopying,NSForegroundColorAttributeName as NSCopying])
-        redFontDict = NSDictionary(objects: [consoleFont!, UIColor.red], forKeys: [NSFontAttributeName as NSCopying,NSForegroundColorAttributeName as NSCopying])
+        blueFontDict = NSDictionary(objects: [consoleFont!, UIColor.blue], forKeys: [NSAttributedStringKey.font as NSCopying,NSAttributedStringKey.foregroundColor as NSCopying])
+        redFontDict = NSDictionary(objects: [consoleFont!, UIColor.red], forKeys: [NSAttributedStringKey.font as NSCopying,NSAttributedStringKey.foregroundColor as NSCopying])
 
         //fix for UITextView
         consoleView.layoutManager.allowsNonContiguousLayout = false
@@ -143,7 +143,6 @@ class UARTViewController: UIViewController, UITextFieldDelegate, UITextViewDeleg
     
     
     override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
         
         scrollTimer?.invalidate()
     }
@@ -195,12 +194,12 @@ class UARTViewController: UIViewController, UITextFieldDelegate, UITextViewDeleg
             
             //Update ASCII text on background thread A
             let appendString = "" // or "\n"
-            let attrAString = NSAttributedString(string: ((newString! as String)+appendString), attributes: self.redFontDict as? [String : AnyObject])
+            let attrAString = NSAttributedString(string: ((newString! as String)+appendString), attributes: self.redFontDict as? [NSAttributedStringKey : Any])
             let newAsciiText = NSMutableAttributedString(attributedString: self.consoleAsciiText!)
             newAsciiText.append(attrAString)
             
             let newHexString = newData.hexRepresentationWithSpaces(true)
-            let attrHString = NSAttributedString(string: newHexString as String, attributes: self.redFontDict as? [String : AnyObject])
+            let attrHString = NSAttributedString(string: newHexString as String, attributes: self.redFontDict as? [NSAttributedStringKey : Any])
             let newHexText = NSMutableAttributedString(attributedString: self.consoleHexText!)
             newHexText.append(attrHString)
             
@@ -248,7 +247,7 @@ class UARTViewController: UIViewController, UITextFieldDelegate, UITextViewDeleg
     }
     
     
-    func scrollConsoleToBottom(_ timer:Timer) {
+    @objc func scrollConsoleToBottom(_ timer:Timer) {
     
 //        printLog(self, "scrollConsoleToBottom", "")
         
@@ -399,7 +398,7 @@ class UARTViewController: UIViewController, UITextFieldDelegate, UITextViewDeleg
     }
     
     
-    func keyboardWillHide(_ sender : Notification) {
+    @objc func keyboardWillHide(_ sender : Notification) {
         
         if let keyboardSize = (sender.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             
@@ -429,7 +428,7 @@ class UARTViewController: UIViewController, UITextFieldDelegate, UITextViewDeleg
     }
     
     
-    func keyboardWillShow(_ sender : Notification) {
+    @objc func keyboardWillShow(_ sender : Notification) {
     
         //Raise input view when keyboard shows
     

@@ -174,7 +174,7 @@ class ControllerViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     
-    func checkLocationServices()->Bool {
+    @objc func checkLocationServices()->Bool {
         
         var verdict = false
         if (CLLocationManager.locationServicesEnabled() && CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedWhenInUse) {
@@ -260,7 +260,7 @@ class ControllerViewController: UIViewController, UITableViewDataSource, UITable
     }
     
 
-    func sensorButtonTapped(_ sender: UIButton) {
+    @objc func sensorButtonTapped(_ sender: UIButton) {
         
         
 //        print("--------> button \(sender.tag) state is ")
@@ -673,7 +673,7 @@ class ControllerViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     
-    func sendSensorData(_ timer:Timer) {
+    @objc func sendSensorData(_ timer:Timer) {
         
         let startIdx = sendSensorIndex
         
@@ -701,7 +701,7 @@ class ControllerViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     
-    func gpsIntervalComplete(_ timer:Timer) {
+    @objc func gpsIntervalComplete(_ timer:Timer) {
         
         //set last gpsdata sent as next gpsdata to send
         for i in 0...(sensorArray.count-1) {

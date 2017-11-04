@@ -230,7 +230,7 @@ class BLEMainViewController : UIViewController, UINavigationControllerDelegate, 
     }
     
     
-    func toggleScan(_ sender:UIBarButtonItem?){
+    @objc func toggleScan(_ sender:UIBarButtonItem?){
         
         // Stop scan
         if connectionStatus == ConnectionStatus.scanning {
@@ -463,7 +463,7 @@ class BLEMainViewController : UIViewController, UINavigationControllerDelegate, 
     }
     
     
-    func connectionTimedOut(_ timer:Timer) {
+    @objc func connectionTimedOut(_ timer:Timer) {
         
         if connectionStatus != ConnectionStatus.connecting {
             return
@@ -1095,7 +1095,7 @@ class BLEMainViewController : UIViewController, UINavigationControllerDelegate, 
                 // Dismiss current dialog
                 self.currentAlertView = nil
                 if (self.presentedViewController != nil) {
-                    self.presentedViewController!.dismiss(animated: true, completion: { _ in
+                    self.presentedViewController!.dismiss(animated: true, completion: {
                         self.currentAlertView = nil
                         self.showUpdateAvailableForRelease(latestRelease)
                     })

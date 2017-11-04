@@ -75,7 +75,7 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
     }
     
     
-    func cellButtonTapped(_ sender: UIButton) {
+    @objc func cellButtonTapped(_ sender: UIButton) {
         
 //        println("\(self.classForCoder.description()) cellButtonTapped: \(sender.tag)")
         
@@ -111,7 +111,7 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
     }
     
     
-    func connectButtonTapped(_ sender: UIButton) {
+    @objc func connectButtonTapped(_ sender: UIButton) {
         
         printLog(self, funcName: "connectButtonTapped", logString: "\(sender.tag)")
         
@@ -233,7 +233,7 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
     }
     
     
-    func refreshWasPulled(_ sender:UIRefreshControl) {
+    @objc func refreshWasPulled(_ sender:UIRefreshControl) {
         
         delegate?.stopScan()
         
@@ -436,7 +436,7 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
     }
     
     
-    func selectAttributeCell(_ sender: UIButton){
+    @objc func selectAttributeCell(_ sender: UIButton){
         
         let indexPath = indexPathForSubview(sender)
         

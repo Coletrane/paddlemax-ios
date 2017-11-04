@@ -66,7 +66,7 @@ class BLEAppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
         
         if WCSession.isSupported() {
             print("creating WCSession …")
-            let session = WCSession.default()
+            let session = WCSession.default
             session.delegate = self
             session.activate()
             
