@@ -12,5 +12,3 @@
 
 #endif /* paddlemaxios_Bridging_Header_h */
 
-#import "DFUViewController.h"
-#import "FirmwareUpdater.h"

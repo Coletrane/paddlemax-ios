@@ -24,7 +24,9 @@ protocol BLEMainViewControllerDelegate : AnyObject {
 }
 
 class BLEMainViewController : UIViewController, UINavigationControllerDelegate, HelpViewControllerDelegate, CBCentralManagerDelegate,
-                              BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, DeviceListViewControllerDelegate, FirmwareUpdaterDelegate {
+BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, DeviceListViewControllerDelegate {
+
+    
     
     enum ConnectionStatus:Int {
         case idle = 0
@@ -42,7 +44,6 @@ class BLEMainViewController : UIViewController, UINavigationControllerDelegate, 
     var deviceListViewController:DeviceListViewController!
     var deviceInfoViewController:DeviceInfoViewController!
     var controllerViewController:ControllerViewController!
-    var dfuViewController:DFUViewController!
     var delegate:BLEMainViewControllerDelegate?
     
     @IBOutlet var infoButton:UIButton!
@@ -61,7 +62,6 @@ class BLEMainViewController : UIViewController, UINavigationControllerDelegate, 
     fileprivate let cbcmQueue = DispatchQueue(label: "com.adafruit.bluefruitconnect.cbcmqueue", attributes: DispatchQueue.Attributes.concurrent)
     fileprivate let connectionTimeOutIntvl:TimeInterval = 30.0
     fileprivate var connectionTimer:Timer?
-    fileprivate var firmwareUpdater : FirmwareUpdater?
     
     static let sharedInstance = BLEMainViewController()
     
@@ -142,12 +142,6 @@ class BLEMainViewController : UIViewController, UINavigationControllerDelegate, 
             currentAlertView = nil
         }
         
-        //refresh updates for DFU
-        FirmwareUpdater.refreshSoftwareUpdatesDatabase()
-        let areAutomaticFirmwareUpdatesEnabled = UserDefaults.standard.bool(forKey: "updatescheck_preference");
-        if (areAutomaticFirmwareUpdatesEnabled) {
-            firmwareUpdater = FirmwareUpdater()
-        }
     }
     
     
@@ -637,11 +631,6 @@ class BLEMainViewController : UIViewController, UINavigationControllerDelegate, 
             //All modes hide toolbar except for device list
             navController.setToolbarHidden(false, animated: true)
         }
-            //DFU mode doesn't maintain a connection, so back button sez "Back"!
-        else if dfuViewController != nil && viewController == dfuViewController {
-            deviceListViewController.navigationItem.backBarButtonItem?.title = "Back"
-        }
-            
             //All modes hide toolbar except for device list
         else {
             deviceListViewController.navigationItem.backBarButtonItem?.title = "Disconnect"
@@ -822,7 +811,6 @@ class BLEMainViewController : UIViewController, UINavigationControllerDelegate, 
         uartViewController = nil
         deviceInfoViewController = nil
         controllerViewController = nil
-        dfuViewController = nil
     }
     
     
@@ -833,7 +821,6 @@ class BLEMainViewController : UIViewController, UINavigationControllerDelegate, 
             || anObject.isMember(of: UARTViewController.self)
             || anObject.isMember(of: DeviceInfoViewController.self)
             || anObject.isMember(of: ControllerViewController.self)
-            || anObject.isMember(of: DFUViewController.self)
             || (anObject.title == "Control Pad")
             || (anObject.title == "Color Picker") {
                 verdict = true
@@ -870,16 +857,6 @@ class BLEMainViewController : UIViewController, UINavigationControllerDelegate, 
         
         connectionStatus = ConnectionStatus.connected
         
-        // Check if automatic update should be presented to the user
-        if (firmwareUpdater != nil && connectionMode != .dfu) {
-            // Wait till an updates are checked
-             printLog(self, funcName: "connectionFinalized", logString: "Check if updates are available")
-            firmwareUpdater!.checkUpdates(for: currentPeripheral!.currentPeripheral, delegate: self)
-        }
-        else {
-            // Automatic updates not enabled. Just go to the mode selected by the user
-            launchViewControllerForSelectedMode()
-        }
     }
     
 
@@ -917,22 +894,6 @@ class BLEMainViewController : UIViewController, UINavigationControllerDelegate, 
                 self.pushViewController(vc!)
             })
         }
-    }
-    
-    
-    func launchDFU(_ peripheral:CBPeripheral){
-        
-        printLog(self, funcName: (#function), logString: self.description)
-        
-        connectionMode = ConnectionMode.dfu
-        dfuViewController = DFUViewController()
-        dfuViewController.peripheral = peripheral
-        //        dfuViewController.navigationItem.rightBarButtonItem = infoBarButton
-        
-        DispatchQueue.main.async(execute: { () -> Void in
-            self.pushViewController(self.dfuViewController!)
-        })
-        
     }
     
     
@@ -1081,59 +1042,11 @@ class BLEMainViewController : UIViewController, UINavigationControllerDelegate, 
         
     }
     
-    
-    // MARK: - FirmwareUpdaterDelegate
-    
-    func onFirmwareUpdatesAvailable(_ isUpdateAvailable: Bool, latestRelease: FirmwareInfo!, deviceInfoData: DeviceInfoData!, allReleases: [AnyHashable: Any]!) {
-        printLog(self, funcName: "onFirmwareUpdatesAvailable", logString: "\(isUpdateAvailable)")
-        
-        cm?.delegate = self
-        
-        if (isUpdateAvailable) {
-            DispatchQueue.main.async(execute: { [unowned self] in
-                
-                // Dismiss current dialog
-                self.currentAlertView = nil
-                if (self.presentedViewController != nil) {
-                    self.presentedViewController!.dismiss(animated: true, completion: {
-                        self.currentAlertView = nil
-                        self.showUpdateAvailableForRelease(latestRelease)
-                    })
-                }
-                else {
-                    self.showUpdateAvailableForRelease(latestRelease)
-                }
-            })
-        }
-        else {
-            launchViewControllerForSelectedMode()
-        }
-    }
-    
     func dfuServiceNotFound() {
         printLog(self, funcName: "dfuServiceNotFound", logString: "")
         
         cm?.delegate = self
         launchViewControllerForSelectedMode()
-    }
-    
-    func showUpdateAvailableForRelease(_ latestRelease: FirmwareInfo!) {
-        let alert = UIAlertController(title:"Update available", message: "Software version \(latestRelease.version) is available", preferredStyle: UIAlertControllerStyle.alert)
-        
-        alert.addAction(UIAlertAction(title: "Go to updates", style: UIAlertActionStyle.default, handler: { _ in
-            self.launchDFU(self.currentPeripheral!.currentPeripheral)
-        }))
-        alert.addAction(UIAlertAction(title: "Ask later", style: UIAlertActionStyle.default, handler: { _ in
-            self.launchViewControllerForSelectedMode()
-        }))
-        alert.addAction(UIAlertAction(title: "Ignore", style: UIAlertActionStyle.cancel, handler: { _ in
-            UserDefaults.standard.set(latestRelease.version, forKey: "softwareUpdateIgnoredVersion")
-            self.launchViewControllerForSelectedMode()
-        }))
-        self.present(alert, animated: true, completion: nil)
-        //self.currentAlertView = alert
-
-
     }
     
 }
