@@ -21,8 +21,9 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
     var devices:[BLEDevice] = []
     fileprivate var tableIsLoading = false
     fileprivate var signalImages:[UIImage]!
-    
-    
+
+    fileprivate let NAME = "BLE_Firmata"
+    fileprivate let CONNECTION_MODE: ConnectionMode = .pinIO
     convenience init(aDelegate:DeviceListViewControllerDelegate){
         
         //Separate NIBs for iPhone 3.5", iPhone 4", & iPad
@@ -104,8 +105,9 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
     
     @objc func connectButtonTapped(_ sender: UIButton) {
         let device = devices[sender.tag]
+        print("CONNECT TAPPED \(device) \(device.isUART)")
         if (device.isUART) {
-            self.connectInMode(ConnectionMode.pinIO, peripheral: device.peripheral)
+            self.connectInMode(CONNECTION_MODE, peripheral: device.peripheral)
         }
     }
     
@@ -126,7 +128,7 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
     
     
     func didFindPeripheral(_ peripheral:CBPeripheral!, advertisementData:[AnyHashable: Any]!, RSSI:NSNumber!) {
-        
+
 //        println("\(self.classForCoder.description()) didFindPeripheral")
         
         //If device is already listed, just update RSSI
@@ -140,10 +142,14 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
         }
         
         //Add reference to new device
-        let newDevice = BLEDevice(peripheral: peripheral, advertisementData: advertisementData as! [NSObject : AnyObject], RSSI: RSSI)
+        let newDevice = BLEDevice(peripheral: peripheral, advertisementData: advertisementData! as [NSObject : AnyObject], RSSI: RSSI)
         newDevice.printAdData()
-        devices.append(newDevice)
-        
+
+        let alreadyInDevices = devices.filter { $0.name == newDevice.name }
+        if newDevice.name == NAME && alreadyInDevices.isEmpty  {
+            devices.append(newDevice)
+        }
+
         //Reload tableview to show new device
         if tableView != nil {
             tableIsLoading = true
@@ -215,7 +221,6 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
         
         //Device Cell
         if indexPath.row == 0 {
-            
             //Check if cell already exists
             let testCell = devices[indexPath.section].deviceCell
             if testCell != nil {
