@@ -2,9 +2,9 @@ import Foundation
 import UIKit
 
 protocol PinIOViewControllerDelegate: HelpViewControllerDelegate {
-    
+
     func sendData(_ newData: Data)
-    
+
 }
 
 
@@ -26,7 +26,7 @@ class PinIOViewController : UIViewController {
     fileprivate let PORT_COUNT = 3
     fileprivate let CAPABILITY_QUERY_TIMEOUT = 5.0
 
-    fileprivate let PIN = 14
+    fileprivate let ANALOG_PIN = 0
 
     var delegate : PinIOViewControllerDelegate!
 
@@ -56,7 +56,7 @@ class PinIOViewController : UIViewController {
     
     
     convenience init(delegate aDelegate:PinIOViewControllerDelegate){
-        
+
         //Separate NIBs for iPhone 3.5", iPhone 4", & iPad
         var nibName:NSString
         
@@ -80,10 +80,7 @@ class PinIOViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.powerType!.text = "Torque"
-        self.powerLevel!.text = "50"
         helpViewController!.delegate = self.delegate
-
     }
     
     
@@ -117,6 +114,13 @@ class PinIOViewController : UIViewController {
             }
         }
     }
+
+    func updatePowerData(_ value: Int) {
+        self.powerType!.text = "Torque"
+        if (value != nil) {
+            self.powerLevel!.text = "\(value)"
+        }
+    }
     
     
     //MARK: Connection & Initialization
@@ -140,7 +144,7 @@ class PinIOViewController : UIViewController {
         let bytes:[UInt8] = [SYSEX_START, 0x6B, SYSEX_END]
         let newData:Data = Data(bytes: UnsafePointer<UInt8>(bytes), count: 3)
         delegate!.sendData(newData)
-        
+
     }
     
     
@@ -150,7 +154,7 @@ class PinIOViewController : UIViewController {
         let bytes:[UInt8] = [SYSEX_START, 0x69, SYSEX_END]
         let newData:Data = Data(bytes: UnsafePointer<UInt8>(bytes), count: 3)
         delegate!.sendData(newData)
-        
+
     }
     
     
@@ -180,7 +184,7 @@ class PinIOViewController : UIViewController {
     func enableReadReports(){
         
         printLog(self, funcName: (#function), logString: nil)
-        
+
         //Set individual pin read reports
 //        for cell in cells {
 //            if (cell?.digitalPin >= 0) { //placeholder cells are -1
@@ -197,8 +201,9 @@ class PinIOViewController : UIViewController {
             let newData = Data(bytes: UnsafePointer<UInt8>(bytes), count: 2)
             delegate!.sendData(newData)
         }
-        
-        
+
+        setAnalogValueReportingforPin(ANALOG_PIN, enabled: true)
+
         //Request mode and state for each pin
 //        let data0:UInt8 = SYSEX_START
 //        let data1:UInt8 = 0x6D
@@ -243,9 +248,9 @@ class PinIOViewController : UIViewController {
         let newData = Data(bytes: UnsafePointer<UInt8>(bytes), count: 2)
     
         portMasks[Int(port)] = data1    //save new pin
-    
+
         delegate!.sendData(newData)
-    
+
     }
     
     
@@ -261,14 +266,13 @@ class PinIOViewController : UIViewController {
         let bytes:[UInt8] = [data0, data1]
         let newData = Data(bytes: UnsafePointer<UInt8>(bytes), count: 2)
         delegate!.sendData(newData)
-        
+
     }
     
     
     func setAnalogValueReportingforPin(_ pin:Int, enabled:Bool){
         
-        //Enable analog read for a pin
-        
+        printLog(self, funcName: #function, logString: "PIN =  \(pin)")
         //Enable by pin
         let data0:UInt8 = 0xC0 + UInt8(pin)          //start analog reporting for pin (192 + pin#)
         var data1:UInt8 = 0    //Enable
@@ -288,63 +292,16 @@ class PinIOViewController : UIViewController {
         let bytes:[UInt8] = [0xFF]
         let newData:Data = Data(bytes: UnsafePointer<UInt8>(bytes), count: 1)
         delegate!.sendData(newData)
-        
+
     }
       
     //MARK: Pin I/O Controls
     
-    @objc func digitalControlChanged(_ sender:UISegmentedControl){
+//    @objc func digitalControlChanged(_ sender:UISegmentedControl){
 
     
-    let state = Int(sender.selectedSegmentIndex)
-    
-//        cell?.setDigitalValue(state)
-    
-    //Send value change to BLEBB
-//        let pin = cell?.digitalPin
-//        writePinState(pinStateForInt(Int(state)), pin: UInt8(pin!))
+//    let state = Int(sender.selectedSegmentIndex)
 
-//        printLog(self, "digitalControlChanged", "state = \(state) : pin = \(pin)")
-    
-    }
-    
-    
-//    @objc func modeControlChanged(_ sender:UISegmentedControl){
-//
-//
-//        let mode:PinMode = pinModeforControl(sender)
-//        let prevMode:PinMode = cell!.mode
-//        cell?.mode = mode
-//
-//        //Write pin
-//        writePinMode(mode, pin: UInt8(cell!.digitalPin))
-//
-//        //Update reporting for Analog pins
-//        if cell?.mode == PinMode.analog {
-//            setAnalogValueReportingforPin(Int(cell!.analogPin), enabled: true)
-////            setAnalogValueReportingforPin(Int(cell!.digitalPin), enabled: true)
-//        }
-//        else if prevMode == PinMode.analog{
-//            setAnalogValueReportingforPin(Int(cell!.analogPin), enabled: false)
-////            setAnalogValueReportingforPin(Int(cell!.digitalPin), enabled: false)
-//        }
-//
-//    }
-    
-    
-    @IBAction func toggleDebugConsole(_ sender:AnyObject) {
-    
-    //For debugging in development
-    
-        if debugConsole?.isHidden == true{
-            debugConsole?.isHidden = false
-        }
-        else{
-            debugConsole?.isHidden = true
-        }
-    
-    }
-    
     
     func pinModeforControl(_ control:UISegmentedControl)->PinMode{
         
@@ -372,36 +329,6 @@ class PinIOViewController : UIViewController {
         
         return mode
     }
-    
-    
-//    @objc func valueControlChanged(_ sender:UISlider){
-//
-//        //Respond to PWM value slider changes
-//
-//        //Limit the amount of messages we send over BLE
-//        let time = CACurrentMediaTime() //Get current time
-//        if (time - lastTime < 0.05) {       //Bail if we're trying to send a value too soon
-//            return
-//        }
-//
-//        lastTime = time
-//
-//        //Find relevant cell based on slider control's tag
-////        let cell:PinCell = pinCellForPin(sender.tag)!
-//
-//        //Bail if we have a redundant value
-//        if (Int(cell.valueLabel.text!) == Int(sender.value)) {
-//            return
-//        }
-//
-//        //Update the cell UI for the new value
-//        cell.setPwmValue(Int(sender.value))
-//
-//        //Send the new value over BLE
-//        writePWMValue(UInt8(sender.value), pin: UInt8(cell.digitalPin))
-//
-//    }
-//
     
     //MARK: Outgoing Data
     
@@ -433,7 +360,7 @@ class PinIOViewController : UIViewController {
         let bytes:[UInt8] = [data0, data1, data2]
         let newData:Data = Data(bytes: UnsafePointer<UInt8>(bytes), count: 3)
         delegate!.sendData(newData)
-        
+
         printLog(self, funcName: "setting pin states -->", logString: "[\(binaryforByte(portMasks[0]))] [\(binaryforByte(portMasks[1]))] [\(binaryforByte(portMasks[2]))]")
         
     }
@@ -454,9 +381,9 @@ class PinIOViewController : UIViewController {
         
         let bytes:[UInt8] = [data0, data1, data2]
         let newData:Data = Data(bytes: UnsafePointer<UInt8>(bytes),count: 3)
-        
+
         delegate!.sendData(newData)
-        
+
     }
     
     
@@ -470,9 +397,9 @@ class PinIOViewController : UIViewController {
     
         let bytes:[UInt8] = [data0, data1, data2]
         let newData:Data = Data(bytes: UnsafePointer<UInt8>(bytes), count: 3)
-    
+
         delegate!.sendData(newData)
-    
+
     }
     
     
@@ -482,7 +409,7 @@ class PinIOViewController : UIViewController {
         
         //Respond to incoming data
         
-//        printLog(self, funcName: (#function), logString: "length = \(newData.length)")
+        printLog(self, funcName: (#function), logString: "length = \(newData.count)")
         
         
         var data = [UInt8](repeating: 0, count: 20)
@@ -552,8 +479,6 @@ class PinIOViewController : UIViewController {
                     //0x0 0x0   0x1 0x0   0x3 0x8   0x7F    pin 2 can do i/o + pwm (8 bit)
                     //0x7F                                  pin 3 is unavailable
                     //0xF7                                  end report
-
-                    setAnalogValueReportingforPin(PIN, enabled: true)
                 return
                     
             }
@@ -592,7 +517,7 @@ class PinIOViewController : UIViewController {
                     
                     if (pinMode > 1 ) && (data.count > 5){
                         let val = Int(data[4]) + (Int(data[5])<<7);
-//                        cell?.setAnalogValue(val)
+                        self.updatePowerData(val)
                     }
                     else {
 //                        cell?.setDigitalValue(Int(pinState))
@@ -600,26 +525,27 @@ class PinIOViewController : UIViewController {
 
             return
         }
-        
-//        //each pin state message is 3 bytes long
-//        for i in stride(from: 0, to: length, by: 3) {
-//
-//            //Digital Reporting (per port)
-//            if ((data[i] >= 0x90) && (data[i] <= 0x9F)){
-//                var pinStates = Int(data[i+1])
-//                let port = Int(data[i]) - 0x90
-//                pinStates |= Int(data[i+2]) << 7    //PORT 0: use LSB of third byte for pin7, PORT 1: pins 14 & 15
-//                updateForPinStates(pinStates, port: port)
-//            }
-//
-//            //Analog Reporting (per pin)
-//            else if ((data[i] >= 0xE0) && (data[i] <= 0xEF)) {
-//                let pin = Int(data[i]) - 0xE0
-//                let val = Int(data[i+1]) + (Int(data[i+2])<<7);
-////                let cell:PinCell? = pinCellForAnalogPin(Int(pin))
+
+
+        //each pin state message is 3 bytes long
+        for i in stride(from: 0, to: length, by: 3) {
+
+            //Digital Reporting (per port)
+            if ((data[i] >= 0x90) && (data[i] <= 0x9F)){
+                var pinStates = Int(data[i+1])
+                let port = Int(data[i]) - 0x90
+                pinStates |= Int(data[i+2]) << 7    //PORT 0: use LSB of third byte for pin7, PORT 1: pins 14 & 15
+                updateForPinStates(pinStates, port: port)
+            }
+
+            //Analog Reporting (per pin)
+            else if ((data[i] >= 0xE0) && (data[i] <= 0xEF)) {
+                let pin = Int(data[i]) - 0xE0
+                let val = Int(data[i+1]) + (Int(data[i+2])<<7);
 //                cell?.setAnalogValue(val)
-//            }
-//        }
+                powerLevel!.text = "\(val)"
+            }
+        }
         
     }
     
@@ -666,7 +592,9 @@ class PinIOViewController : UIViewController {
     
     
     func parseCompleteCapabilityData() {
-        
+
+        printLog(self, funcName: (#function), logString: "PARSING PIN CAPABILITIES")
+
         var allPins:[[UInt8]] = []
         var pinData:[UInt8] = []
         for i in 0 ..< capabilityQueryData.count {
@@ -779,9 +707,7 @@ class PinIOViewController : UIViewController {
         
         self.enableReadReports()
         
-        //reload table cells after delay
         delay(0.5) { () -> () in
-//            self.pinTable.reloadData()
         }
         
     }

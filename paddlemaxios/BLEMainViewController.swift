@@ -37,7 +37,7 @@ BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, 
     var deviceInfoViewController:DeviceInfoViewController!
     var controllerViewController:ControllerViewController!
     var delegate:BLEMainViewControllerDelegate?
-    
+
     @IBOutlet var infoButton:UIButton!
     @IBOutlet var warningLabel:UILabel!
     
@@ -89,18 +89,18 @@ BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, 
         super.init(coder: aDecoder)!
         
     }
-    
-    
+
+
     //for Objective-C delegate compatibility
     func setDelegate(_ newDelegate:AnyObject){
-        
+
         if newDelegate.responds(to: Selector("onDeviceConnectionChange:")){
             delegate = newDelegate as? BLEMainViewControllerDelegate
         }
         else {
             printLog(self, funcName: "setDelegate", logString: "failed to set delegate")
         }
-        
+
     }
     
     
