@@ -26,8 +26,6 @@ class PinIOViewController : UIViewController {
     fileprivate let PORT_COUNT = 3
     fileprivate let CAPABILITY_QUERY_TIMEOUT = 5.0
 
-    fileprivate let ANALOG_PIN = 0
-
     var delegate : PinIOViewControllerDelegate!
 
     
@@ -57,17 +55,7 @@ class PinIOViewController : UIViewController {
     
     convenience init(delegate aDelegate:PinIOViewControllerDelegate){
 
-        //Separate NIBs for iPhone 3.5", iPhone 4", & iPad
-        var nibName:NSString
-        
-        if IS_IPHONE {
-            nibName = "PinIOViewController_iPhone"
-        }
-        else {
-            nibName = "PinIOViewController_iPad"
-        }
-        
-        self.init(nibName: nibName as String, bundle: Bundle.main)
+        self.init(nibName: "PinIOViewController", bundle: Bundle.main)
         
         self.delegate = aDelegate
         self.title = "Power Reading"

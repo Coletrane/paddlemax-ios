@@ -233,18 +233,7 @@ class ControllerViewController: UIViewController, UITableViewDataSource, UITable
 
     convenience init(aDelegate:UARTViewControllerDelegate){
         
-        //Separate NIBs for iPhone 3.5", iPhone 4", & iPad
-        
-        var nibName:NSString
-        
-        if IS_IPHONE {
-            nibName = "ControllerViewController_iPhone"
-        }
-        else{   //IPAD
-            nibName = "ControllerViewController_iPad"
-        }
-        
-        self.init(nibName: nibName as String, bundle: Bundle.main)
+        self.init(nibName: "ControllerViewController", bundle: Bundle.main)
         
         self.delegate = aDelegate
         self.title = "Controller"
@@ -911,9 +900,7 @@ class ControllerViewController: UIViewController, UITableViewDataSource, UITable
             tableView.deselectRow(at: indexPath, animated: false)
             self.navigationController?.pushViewController(controlPadViewController, animated: true)
             
-            if IS_IPHONE {  //Hide nav bar on iphone to conserve space
-                self.navigationController?.setNavigationBarHidden(true, animated: true)
-            }
+            self.navigationController?.setNavigationBarHidden(true, animated: true)
         }
         else if indexPath.section == (sensorArray.count + 1) {
             tableView.deselectRow(at: indexPath, animated: false)

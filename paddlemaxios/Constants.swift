@@ -2,13 +2,15 @@ import Foundation
 import UIKit
 import CoreBluetooth
 
+let PIN = 14
+let ANALOG_PIN = 0
+let NAME = "BLE_Firmata"
+
 //System Variables
 let CURRENT_DEVICE = UIDevice.current
 let INTERFACE_IS_PAD:Bool = (CURRENT_DEVICE.userInterfaceIdiom == UIUserInterfaceIdiom.pad)
 let INTERFACE_IS_PHONE:Bool = (CURRENT_DEVICE.userInterfaceIdiom == UIUserInterfaceIdiom.phone)
 
-let IS_IPAD:Bool = INTERFACE_IS_PAD
-let IS_IPHONE:Bool = INTERFACE_IS_PHONE
 let MAIN_SCREEN = UIScreen.main
 let IS_IPHONE_5:Bool = MAIN_SCREEN.bounds.size.height == 568.0
 let IS_IPHONE_4:Bool = MAIN_SCREEN.bounds.size.height == 480.0

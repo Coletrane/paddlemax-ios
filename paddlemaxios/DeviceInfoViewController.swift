@@ -19,19 +19,8 @@ class DeviceInfoViewController: UIViewController, UITableViewDelegate, UITableVi
     var serviceToggle:[Bool]!    //individual ref for service is open in table
     
     convenience init(cbPeripheral:CBPeripheral, delegate:HelpViewControllerDelegate){
-        
-        //Separate NIBs for iPhone 3.5", iPhone 4", & iPad
-        
-        var nibName:NSString
-        
-        if IS_IPHONE{
-            nibName = "DeviceInfoViewController_iPhone"
-        }
-        else{   //IPAD
-            nibName = "DeviceInfoViewController_iPad"
-        }
-        
-        self.init(nibName: nibName as String, bundle: Bundle.main)
+
+        self.init(nibName: "DeviceInfoViewController", bundle: Bundle.main)
         
         self.peripheral = cbPeripheral
         self.delegate = delegate
@@ -45,30 +34,7 @@ class DeviceInfoViewController: UIViewController, UITableViewDelegate, UITableVi
         self.serviceToggle = [Bool](repeating: defaultServiceToggleState, count: peripheral.services!.count)
         
     }
-    
-    
-    //FOR SCREENSHOTS
-//    convenience init(delegate:HelpViewControllerDelegate){
-//        
-//        //Separate NIBs for iPhone 3.5", iPhone 4", & iPad
-//        
-//        var nibName:NSString
-//        
-//        if IS_IPHONE{
-//            nibName = "DeviceInfoViewController_iPhone"
-//        }
-//        else{   //IPAD
-//            nibName = "DeviceInfoViewController_iPad"
-//        }
-//        
-//        self.init(nibName: nibName, bundle: NSBundle.mainBundle())
-//        
-//        self.peripheral = CBPeripheral()
-//        
-//        self.delegate = delegate
-//    }
-    
-    
+
     override func viewDidLoad() {
         
         super.viewDidLoad()

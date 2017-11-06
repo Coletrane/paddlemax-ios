@@ -22,22 +22,10 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
     fileprivate var tableIsLoading = false
     fileprivate var signalImages:[UIImage]!
 
-    fileprivate let NAME = "BLE_Firmata"
     fileprivate let CONNECTION_MODE: ConnectionMode = .pinIO
     convenience init(aDelegate:DeviceListViewControllerDelegate){
-        
-        //Separate NIBs for iPhone 3.5", iPhone 4", & iPad
-        
-        var nibName:NSString
-        
-        if IS_IPHONE{
-            nibName = "DeviceListViewController_iPhone"
-        }
-        else{   //IPAD
-            nibName = "DeviceListViewController_iPad"
-        }
-        
-        self.init(nibName: nibName as String, bundle: Bundle.main)
+
+        self.init(nibName: "DeviceListViewController", bundle: Bundle.main)
         
         self.delegate = aDelegate
         self.title = Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String
@@ -390,11 +378,8 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
                 msg += s
             }
         }
-        
-//        var style = UIAlertControllerStyle.ActionSheet
-//        if IS_IPAD {
-            let style = UIAlertControllerStyle.alert
-//        }
+
+        let style = UIAlertControllerStyle.alert
         let alertController = UIAlertController(title: ttl, message: msg, preferredStyle: style)
         
         

@@ -66,21 +66,9 @@ BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, 
     
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        
-        var newNibName:String
-        
-        if (IS_IPHONE){
-            newNibName = "BLEMainViewController_iPhone"
-        }
-            
-        else{
-            newNibName = "BLEMainViewController_iPad"
-        }
-        
-        super.init(nibName: newNibName, bundle: Bundle.main)
-        
-        //        println("init with NIB " + self.description)
-        
+
+        super.init(nibName: "BLEMainViewController", bundle: Bundle.main)
+
     }
     
     
@@ -120,11 +108,9 @@ BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, 
         navController.isToolbarHidden = false
         navController.interactivePopGestureRecognizer?.isEnabled = false
         
-        if IS_IPHONE {
-            addChildViewController(navController)
-            view.addSubview(navController.view)
-        }
-        
+        addChildViewController(navController)
+        view.addSubview(navController.view)
+
         if (cm == nil) {
             cm = CBCentralManager(delegate: self, queue: cbcmQueue)
             
@@ -138,11 +124,6 @@ BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, 
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        if (IS_IPAD) {
-            addChildViewController(navController)
-            view.addSubview(navController.view)
-        }
     }
     
     
@@ -171,17 +152,7 @@ BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, 
     //MARK: UI etc
     
     func helpViewControllerDidFinish(_ controller: HelpViewController) {
-        
-        //Called when help view's done button is tapped
-        
-        if (IS_IPHONE) {
             dismiss(animated: true, completion: nil)
-        }
-            
-        else {
-            helpPopoverController?.dismiss(animated: true)
-        }
-        
     }
     
     
@@ -310,24 +281,7 @@ BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, 
     
     @IBAction func showInfo(_ sender:AnyObject) {
 
-        if (IS_IPHONE) {
-            present(currentHelpViewController(), animated: true, completion: nil)
-        }
-            
-            //iPad
-        else if (IS_IPAD) {
-            helpPopoverController?.dismiss(animated: true)
-            
-            helpPopoverController = UIPopoverController(contentViewController: currentHelpViewController())
-            helpPopoverController?.backgroundColor = UIColor.darkGray
-            
-            let rightBBI:UIBarButtonItem! = navController.navigationBar.items!.last!.rightBarButtonItem
-            let aFrame:CGRect = rightBBI!.customView!.frame
-            helpPopoverController?.present(from: aFrame,
-                in: rightBBI.customView!.superview!,
-                permittedArrowDirections: UIPopoverArrowDirection.any,
-                animated: true)
-        }
+        present(currentHelpViewController(), animated: true, completion: nil)
     }
     
     

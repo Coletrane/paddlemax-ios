@@ -54,18 +54,7 @@ class UARTViewController: UIViewController, UITextFieldDelegate, UITextViewDeleg
     
     convenience init(aDelegate:UARTViewControllerDelegate){
         
-        //Separate NIBs for iPhone 3.5", iPhone 4", & iPad
-        
-        var nibName:NSString
-        
-        if IS_IPHONE {
-            nibName = "UARTViewController_iPhone"
-        }
-        else{   //IPAD
-            nibName = "UARTViewController_iPad"
-        }
-        
-        self.init(nibName: nibName as String, bundle: Bundle.main)
+        self.init(nibName: "UartViewController", bundle: Bundle.main)
         
         self.delegate = aDelegate
         self.title = "UART"
@@ -396,19 +385,10 @@ class UARTViewController: UIViewController, UITextFieldDelegate, UITextViewDeleg
             let yOffset:CGFloat = keyboardSize.height
             let oldRect:CGRect = msgInputView.frame
             msgInputYContraint?.constant += yOffset
-            
-            if IS_IPAD {
-                let newRect = CGRect(x: oldRect.origin.x, y: oldRect.origin.y + yOffset, width: oldRect.size.width, height: oldRect.size.height)
-                msgInputView.frame = newRect    //frame animates automatically
-            }
-         
-            else {
-                
-                let newRect = CGRect(x: oldRect.origin.x, y: oldRect.origin.y + yOffset, width: oldRect.size.width, height: oldRect.size.height)
-                msgInputView.frame = newRect    //frame animates automatically
-                
-            }
-            
+
+            let newRect = CGRect(x: oldRect.origin.x, y: oldRect.origin.y + yOffset, width: oldRect.size.width, height: oldRect.size.height)
+            msgInputView.frame = newRect    //frame animates automatically
+
             keyboardIsShown = false
             
         }
@@ -433,19 +413,9 @@ class UARTViewController: UIViewController, UITextFieldDelegate, UITextViewDeleg
             let yOffset:CGFloat = keyboardSize.height
             let oldRect:CGRect = msgInputView.frame
             msgInputYContraint?.constant -= yOffset     //Using autolayout on iPad
-            
-//            if (IS_IPAD){
-            
-                let newRect = CGRect(x: oldRect.origin.x, y: oldRect.origin.y - yOffset, width: oldRect.size.width, height: oldRect.size.height)
-                self.msgInputView.frame = newRect   //frame animates automatically
-//            }
-//            
-//            else {  //iPhone
-//             
-//                var newRect = CGRectMake(oldRect.origin.x, oldRect.origin.y - yOffset, oldRect.size.width, oldRect.size.height)
-//                self.msgInputView.frame = newRect   //frame animates automatically
-//                
-//            }
+
+            let newRect = CGRect(x: oldRect.origin.x, y: oldRect.origin.y - yOffset, width: oldRect.size.width, height: oldRect.size.height)
+            self.msgInputView.frame = newRect   //frame animates automatically
             
             keyboardIsShown = true
             

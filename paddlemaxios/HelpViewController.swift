@@ -2,7 +2,7 @@ import Foundation
 import UIKit
 
 
-@objc protocol HelpViewControllerDelegate : Any{
+@objc protocol HelpViewControllerDelegate : AnyObject{
     
     func helpViewControllerDidFinish(_ controller : HelpViewController)
     
@@ -39,14 +39,9 @@ class HelpViewController : UIViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        
-        if (IS_IPAD == true) {
-            self.preferredContentSize = self.view.frame.size;   //popover size on iPad
-        }
-        
-        else if (IS_IPHONE == true) {
-            self.modalTransitionStyle = UIModalTransitionStyle.flipHorizontal
-        }
+
+        self.modalTransitionStyle = UIModalTransitionStyle.flipHorizontal
+
         
         //Set the app version # in the Help/Info view
         let versionString: String = "v" + ((Bundle.main.infoDictionary)?["CFBundleShortVersionString"] as! String!)
