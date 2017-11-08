@@ -78,7 +78,6 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
         
         tableView.beginUpdates()
         if (senderCell.isOpen == true) {
-//            println("- - - -"); println("sections \(indexPath.section) has \(tableView.numberOfRowsInSection(indexPath.section)) rows"); println("deleting \(attributePathArray.count) rows"); println("- - - -")
             senderCell.isOpen = false
             tableView.deleteRows(at: attributePathArray, with: UITableViewRowAnimation.fade)
         }

@@ -12,8 +12,10 @@
 		648F20AC7FDB3C614BDC0FC0 /* DeviceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F2A9C35C6B713B656919A /* DeviceCell.swift */; };
 		648F2193D195C69B8826ADA7 /* DeviceListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F2DBF1842FD828F0F718F /* DeviceListViewController.swift */; };
 		648F21BEF07D19490275D6D8 /* BLEDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F2004577F9C5362D328A6 /* BLEDevice.swift */; };
+		648F22F3A88D0225E4E394D4 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 648F2054998EEAE80E920DAA /* HomeViewController.xib */; };
 		648F255C8DF02AEB54BC3DBB /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 648F20B008B44D8BF9BB82AB /* Utility.m */; };
 		648F265935B891A9E87C49A8 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F225A24F1A688F30BC824 /* Extensions.swift */; };
+		648F266C818C3C1BAB766AFD /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F2DE5E40B46459A71B405 /* HomeViewController.swift */; };
 		648F26EED99FC774535AD6B5 /* PinIOViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F2E3A85ED450362C60362 /* PinIOViewController.swift */; };
 		648F2734D3B25119FD2025ED /* DeviceListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 648F2504F80ADFE3D9B8BDF4 /* DeviceListViewController.xib */; };
 		648F28179D2B32E9AE414070 /* DeviceInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F20238A854F87EE475A95 /* DeviceInfoViewController.swift */; };
@@ -61,6 +63,7 @@
 /* Begin PBXFileReference section */
 		648F2004577F9C5362D328A6 /* BLEDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEDevice.swift; sourceTree = "<group>"; };
 		648F20238A854F87EE475A95 /* DeviceInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceInfoViewController.swift; sourceTree = "<group>"; };
+		648F2054998EEAE80E920DAA /* HomeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
 		648F20B008B44D8BF9BB82AB /* Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utility.m; sourceTree = "<group>"; };
 		648F20C93AFC396D372BDAE0 /* BLEAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEAppDelegate.swift; sourceTree = "<group>"; };
 		648F20E620DD183A0DBC05C9 /* Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
@@ -88,6 +91,7 @@
 		648F2D61A196C62EC6B52CA4 /* HelpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpViewController.swift; sourceTree = "<group>"; };
 		648F2D7FA54AE2E0E3A36070 /* IntelHex2BinConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntelHex2BinConverter.m; sourceTree = "<group>"; };
 		648F2DBF1842FD828F0F718F /* DeviceListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceListViewController.swift; sourceTree = "<group>"; };
+		648F2DE5E40B46459A71B405 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		648F2DF8F3F024A5ED51311D /* SensorValueCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SensorValueCell.xib; sourceTree = "<group>"; };
 		648F2E3A85ED450362C60362 /* PinIOViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinIOViewController.swift; sourceTree = "<group>"; };
 		648F2E84DD561D98AF191E2B /* BLEMainViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BLEMainViewController.xib; sourceTree = "<group>"; };
@@ -190,6 +194,8 @@
 				648F2E84DD561D98AF191E2B /* BLEMainViewController.xib */,
 				648F281EAFCF96EED93F0081 /* AttributeCell.swift */,
 				648F2D26865DCB17A772B7E1 /* PinCell.swift */,
+				648F2DE5E40B46459A71B405 /* HomeViewController.swift */,
+				648F2054998EEAE80E920DAA /* HomeViewController.xib */,
 			);
 			path = paddlemaxios;
 			sourceTree = "<group>";
@@ -330,6 +336,7 @@
 				648F2EB963F71E4339E50FB3 /* PinIOViewController.xib in Resources */,
 				648F2D5FBC2A38E1E68EC3C2 /* SensorValueCell.xib in Resources */,
 				648F2C131297796770D2CC23 /* BLEMainViewController.xib in Resources */,
+				648F22F3A88D0225E4E394D4 /* HomeViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -376,6 +383,7 @@
 				648F2B787CC1D191B0AD9ABD /* XMLDictionary.m in Sources */,
 				648F2877F7E8AD95F5DE8187 /* AttributeCell.swift in Sources */,
 				648F2D1056CDFA9AA35B10B7 /* PinCell.swift in Sources */,
+				648F266C818C3C1BAB766AFD /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -16,7 +16,7 @@ protocol BLEMainViewControllerDelegate : AnyObject {
 }
 
 class BLEMainViewController : UIViewController, UINavigationControllerDelegate, HelpViewControllerDelegate, CBCentralManagerDelegate,
-BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, DeviceListViewControllerDelegate {
+BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, DeviceListViewControllerDelegate, HomeViewControllerDelegate {
 
     
     
@@ -36,6 +36,7 @@ BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, 
     var deviceListViewController:DeviceListViewController!
     var deviceInfoViewController:DeviceInfoViewController!
     var controllerViewController:ControllerViewController!
+    var homeViewController: HomeViewController!
     var delegate:BLEMainViewControllerDelegate?
 
     @IBOutlet var infoButton:UIButton!
@@ -96,65 +97,72 @@ BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        createDeviceListViewController()
-        
-        navController = UINavigationController(rootViewController: deviceListViewController)
+
+        if (cm == nil) {
+            cm = CBCentralManager(delegate: self, queue: cbcmQueue)
+
+            connectionMode = ConnectionMode.none
+            connectionStatus = ConnectionStatus.idle
+            currentAlertView = nil
+        }
+
+        homeViewController =  HomeViewController(aDelegate: self)
+        refreshHomeViewLabels()
+
+        navController = UINavigationController(rootViewController: homeViewController)
         navController.delegate = self
         navController.navigationBar.barStyle = UIBarStyle.black
         navController.navigationBar.isTranslucent = false
-        navController.toolbar.barStyle = UIBarStyle.black
-        navController.toolbar.isTranslucent = false
-        navController.isToolbarHidden = false
+//        navController.toolbar.barStyle = UIBarStyle.black
+//        navController.toolbar.isTranslucent = false
+        navController.isToolbarHidden = true
         navController.interactivePopGestureRecognizer?.isEnabled = false
         
         addChildViewController(navController)
         view.addSubview(navController.view)
 
-        if (cm == nil) {
-            cm = CBCentralManager(delegate: self, queue: cbcmQueue)
-            
-            connectionMode = ConnectionMode.none
-            connectionStatus = ConnectionStatus.idle
-            currentAlertView = nil
-        }
+
         
     }
-    
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
-    
-    
+
     func didBecomeActive() {
-        
-        // Application returned from background state
-        
-        // Adjust warning label
-        if cm?.state == CBManagerState.poweredOff {
-            
-            warningLabel.text = "Bluetooth disabled"
-            
-        }
-        else if deviceListViewController.devices.count == 0 {
-            
-            warningLabel.text = "No peripherals found"
-            
-        }
-        else {
-            warningLabel.text = ""
-        }
-        
+        refreshHomeViewLabels()
     }
-    
-    
+
     //MARK: UI etc
     
     func helpViewControllerDidFinish(_ controller: HelpViewController) {
             dismiss(animated: true, completion: nil)
     }
-    
+
+    func refreshHomeViewLabels() {
+
+        if (cm?.state == CBManagerState.poweredOff) {
+            setHomeViewBluetoothDisabled()
+        } else if (connectionStatus == ConnectionStatus.idle) {
+            setHomeViewNotConnected()
+        } else if (connectionStatus == ConnectionStatus.connected
+                || connectionStatus == ConnectionStatus.connecting) {
+            setHomeViewConnected()
+        }
+    }
+    func setHomeViewBluetoothDisabled() {
+        homeViewController.connectedLabel.text = "Bluetooth disabled"
+    }
+
+    func setHomeViewNotConnected() {
+        homeViewController.connectedLabel.text = "You are not currently connected to your paddle"
+        homeViewController.connectButton.isHidden = false
+    }
+
+    func setHomeViewConnected() {
+        homeViewController.connectedLabel.text = "You are connected to your paddle!"
+        homeViewController.connectButton.isHidden = true
+    }
     
     func createDeviceListViewController(){
         
@@ -173,7 +181,8 @@ BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, 
         let space = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
         scanButtonItem = UIBarButtonItem(title: "Scan for peripherals", style: UIBarButtonItemStyle.plain, target: self, action: #selector(BLEMainViewController.toggleScan(_:)))
         deviceListViewController.toolbarItems = [space, scanButtonItem!, space]
-        
+
+        pushViewController(deviceListViewController)
     }
     
     
@@ -195,13 +204,13 @@ BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, 
             cm?.stopScan()
             scanIndicator?.stopAnimating()
             
-            let count:Int = deviceListViewController.toolbarItems!.count
-            for i in 0...(count-1) {
-                if deviceListViewController.toolbarItems?[i] === scanIndicatorItem {
-                    deviceListViewController.toolbarItems?.remove(at: i)
-                    break
-                }
-            }
+//            let count:Int = deviceListViewController.toolbarItems!.count
+//            for i in 0...(count-1) {
+//                if deviceListViewController.toolbarItems?[i] === scanIndicatorItem {
+//                    deviceListViewController.toolbarItems?.remove(at: i)
+//                    break
+//                }
+//            }
             
             connectionStatus = ConnectionStatus.idle
             scanButtonItem?.title = "Scan for peripherals"
@@ -445,7 +454,6 @@ BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, 
     
     func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
         
-        // Returning from a module, about to show device list ...
         if viewController === deviceListViewController {
             
             // Returning from Device Info
@@ -491,8 +499,8 @@ BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, 
         }
             //All modes hide toolbar except for device list
         else {
-            deviceListViewController.navigationItem.backBarButtonItem?.title = "Disconnect"
-            navController.setToolbarHidden(true, animated: false)
+//            deviceListViewController.navigationItem.backBarButtonItem?.title = "Disconnect"
+//            navController.setToolbarHidden(true, animated: false)
         }
     }
     
