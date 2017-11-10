@@ -107,7 +107,6 @@ BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, 
         }
 
         homeViewController =  HomeViewController(aDelegate: self)
-        refreshHomeViewLabels()
 
         navController = UINavigationController(rootViewController: homeViewController)
         navController.delegate = self
@@ -434,12 +433,12 @@ BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, 
     
     func pushViewController(_ vc:UIViewController) {
 
-        var animated: Bool!
-        if object_getClassName(vc) == object_getClassName(self.deviceListViewController) {
-            animated = false
-        } else {
-            animated = true
-        }
+        var animated = true
+//        if object_getClassName(vc) == object_getClassName(self.deviceListViewController) {
+//            animated = false
+//        } else {
+//            animated = true
+//        }
 
         // TODO: figure out why this is getting called twice
         if ((object_getClassName(vc) != object_getClassName(self.presentedViewController))) {
@@ -530,14 +529,18 @@ BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, 
     
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        
+
         if connectionMode == ConnectionMode.none {
             DispatchQueue.main.sync(execute: { () -> Void in
-                if self.deviceListViewController == nil {
-                    self.createDeviceListViewController()
-                }
                 self.deviceListViewController.didFindPeripheral(peripheral, advertisementData: advertisementData, RSSI:RSSI)
             })
+        }
+        if navController.topViewController == deviceListViewController
+        && advertisementData.isEmpty {
+//            DispatchQueue.main.sync(execute: { () -> Void in
+//                self.pushViewController(self.deviceListViewController)
+//            })
+            deviceListViewController.warningLabel.text = "No paddles found!"
         }
     }
     

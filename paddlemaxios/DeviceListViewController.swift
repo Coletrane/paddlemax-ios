@@ -18,47 +18,53 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
     @IBOutlet var helpViewController:HelpViewController!
     @IBOutlet var deviceCell:DeviceCell!
     @IBOutlet var attributeCell:AttributeCell!
+    @IBOutlet var warningLabel: UILabel!
+
     var devices:[BLEDevice] = []
     fileprivate var tableIsLoading = false
     fileprivate var signalImages:[UIImage]!
 
     fileprivate let CONNECTION_MODE: ConnectionMode = .pinIO
-    convenience init(aDelegate:DeviceListViewControllerDelegate){
 
+    convenience init(aDelegate:DeviceListViewControllerDelegate){
         self.init(nibName: "DeviceListViewController", bundle: Bundle.main)
-        
         self.delegate = aDelegate
-        self.title = Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String
-        
-        self.signalImages = [UIImage](arrayLiteral: UIImage(named: "signalStrength-0.png")!,
-            UIImage(named: "signalStrength-1.png")!,
-            UIImage(named: "signalStrength-2.png")!,
-            UIImage(named: "signalStrength-3.png")!,
-            UIImage(named: "signalStrength-4.png")!)
-        
+
+        self.title = "Connect to Paddle"
+        self.warningLabel = UILabel()
+        self.warningLabel.isHidden = true
     }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        self.signalImages = [UIImage](arrayLiteral: UIImage(named: "signalStrength-0.png")!,
+            UIImage(named: "signalStrength-1.png")!,
+            UIImage(named: "signalStrength-2.png")!,
+            UIImage(named: "signalStrength-3.png")!,
+            UIImage(named: "signalStrength-4.png")!)
+
         tableView.separatorStyle = UITableViewCellSeparatorStyle.none
+        tableView.isHidden = true
         self.helpViewController.delegate = delegate
-        
+
         //Add pull-to-refresh functionality
         let tvc = UITableViewController(style: UITableViewStyle.plain)
         tvc.tableView = tableView
         let refresh = UIRefreshControl()
         refresh.addTarget(self, action: #selector(DeviceListViewController.refreshWasPulled(_:)), for: UIControlEvents.valueChanged)
         tvc.refreshControl = refresh
-        
     }
-    
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        tableView.isHidden = false
+    }
+
     
     @objc func cellButtonTapped(_ sender: UIButton) {
-        
-//        println("\(self.classForCoder.description()) cellButtonTapped: \(sender.tag)")
-        
         if tableIsLoading == true {
             printLog(self, funcName: "cellButtonTapped", logString: "ignoring tap during table load")
             return
@@ -143,8 +149,6 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
             tableView.reloadData()
             tableIsLoading = false
         }
-        
-        delegate?.warningLabel.text = ""
     }
     
     
@@ -171,7 +175,7 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
                 self.tableIsLoading = true
                 self.tableView.reloadData()
                 self.tableIsLoading = false
-                self.delegate?.warningLabel.text = "No peripherals found"
+                self.warningLabel.isHidden = false
                 self.delegate?.startScan()
             })
         })
@@ -193,7 +197,7 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
         tableIsLoading = false
         delegate?.startScan()
         
-        delegate?.warningLabel.text = "No peripherals found"
+        self.warningLabel.isHidden = false
         
     }
     

@@ -4,6 +4,7 @@ import CoreBluetooth
 
 protocol HomeViewControllerDelegate: AnyObject {
     func createDeviceListViewController()
+    func refreshHomeViewLabels()
 }
 
 class HomeViewController: UIViewController {
@@ -16,26 +17,27 @@ class HomeViewController: UIViewController {
 
     var delegate: HomeViewControllerDelegate?
 
-    override init(nibName nib: String?, bundle nibBundle: Bundle?) {
-        super.init(nibName: "HomeViewController", bundle: Bundle.main)
-    }
+//    override init(nibName nib: String?, bundle nibBundle: Bundle?) {
+//        super.init(nibName: "HomeViewController", bundle: Bundle.main)
+//    }
 
     convenience init(aDelegate:HomeViewControllerDelegate) {
         self.init(nibName: "HomeViewController", bundle: Bundle.main)
         self.delegate = aDelegate
         connectedLabel = UILabel()
         connectButton = UIButton()
+        connectButton.isHidden = false
     }
 
-    required init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)!
-    }
+//    required init(coder aDecoder: NSCoder) {
+//        super.init(coder: aDecoder)!
+//    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         pageControl.currentPage = 1
-
+        self.delegate?.refreshHomeViewLabels()
     }
 
     override func viewWillAppear(_ animated: Bool) {

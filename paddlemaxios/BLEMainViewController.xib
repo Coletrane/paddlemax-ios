@@ -14,30 +14,12 @@
                 <outlet property="helpViewController" destination="yll-D2-uUX" id="5pB-Ku-Uve"/>
                 <outlet property="infoButton" destination="8iu-Sf-oGZ" id="Cyn-C7-PMx"/>
                 <outlet property="view" destination="1xm-FQ-qRq" id="CQl-yS-mFQ"/>
-                <outlet property="warningLabel" destination="Hzt-wf-e8c" id="jvm-Mc-BjR"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view autoresizesSubviews="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="1xm-FQ-qRq" userLabel="View - Main">
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-            <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bluetooth disabled" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hzt-wf-e8c" userLabel="warningLabel">
-                    <rect key="frame" x="8" y="157" width="304" height="21"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="21" id="YES-NE-f13"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" red="0.3333333432674408" green="0.3333333432674408" blue="0.3333333432674408" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
-            </subviews>
-            <color key="backgroundColor" red="0.15000000596046448" green="0.15000000596046448" blue="0.15000000596046448" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-            <constraints>
-                <constraint firstItem="Hzt-wf-e8c" firstAttribute="leading" secondItem="1xm-FQ-qRq" secondAttribute="leading" constant="8" id="4bd-so-eOR"/>
-                <constraint firstAttribute="trailing" secondItem="Hzt-wf-e8c" secondAttribute="trailing" constant="8" id="dn2-7C-wYt"/>
-                <constraint firstItem="Hzt-wf-e8c" firstAttribute="top" secondItem="1xm-FQ-qRq" secondAttribute="top" constant="157" id="tAf-gy-fyV"/>
-            </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <point key="canvasLocation" x="526" y="457"/>
         </view>
