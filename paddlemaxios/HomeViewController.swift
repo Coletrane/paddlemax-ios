@@ -36,6 +36,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        connectButton.layer.cornerRadius = 4
         pageControl.currentPage = 1
         self.delegate?.refreshHomeViewLabels()
     }
@@ -44,11 +45,15 @@ class HomeViewController: UIViewController {
         super.viewWillAppear(animated)
     }
 
-//    func didBecomeActive() {
-//        refreshConnectionViews()
-//    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
 
+        connectedLabel.isHidden = true
+        connectButton.isHidden = true
+    }
     @IBAction func connectButtonPressed(sender: AnyObject) {
         delegate?.createDeviceListViewController()
     }
+
+
 }

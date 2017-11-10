@@ -60,23 +60,17 @@ BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, 
     
     
     func centralManager()->CBCentralManager{
-        
         return cm!;
-        
     }
     
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-
         super.init(nibName: "BLEMainViewController", bundle: Bundle.main)
-
     }
     
     
     required init(coder aDecoder: NSCoder) {
-        
         super.init(coder: aDecoder)!
-        
     }
 
 
@@ -98,6 +92,7 @@ BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+
         if (cm == nil) {
             cm = CBCentralManager(delegate: self, queue: cbcmQueue)
 
@@ -110,10 +105,8 @@ BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, 
 
         navController = UINavigationController(rootViewController: homeViewController)
         navController.delegate = self
-        navController.navigationBar.barStyle = UIBarStyle.black
-        navController.navigationBar.isTranslucent = false
-//        navController.toolbar.barStyle = UIBarStyle.black
-//        navController.toolbar.isTranslucent = false
+        navController.navigationBar.barStyle = UIBarStyle.blackTranslucent
+        navController.toolbar.barStyle = UIBarStyle.blackTranslucent
         navController.isToolbarHidden = true
         navController.interactivePopGestureRecognizer?.isEnabled = false
         
