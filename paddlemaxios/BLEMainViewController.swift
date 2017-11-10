@@ -165,7 +165,6 @@ BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, 
     }
     
     func createDeviceListViewController(){
-        
         //add info bar button to mode controllers
         let archivedData = NSKeyedArchiver.archivedData(withRootObject: infoButton)
         let buttonCopy = NSKeyedUnarchiver.unarchiveObject(with: archivedData) as! UIButton
@@ -173,7 +172,7 @@ BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, 
         infoBarButton = UIBarButtonItem(customView: buttonCopy)
         deviceListViewController = DeviceListViewController(aDelegate: self)
         deviceListViewController.navigationItem.rightBarButtonItem = infoBarButton
-        deviceListViewController.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Disconnect", style: UIBarButtonItemStyle.plain, target: nil, action: nil)
+        deviceListViewController.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.plain, target: nil, action: nil)
         //add scan indicator to toolbar
         scanIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.white)
         scanIndicator!.hidesWhenStopped = false
@@ -182,7 +181,7 @@ BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, 
         scanButtonItem = UIBarButtonItem(title: "Scan for peripherals", style: UIBarButtonItemStyle.plain, target: self, action: #selector(BLEMainViewController.toggleScan(_:)))
         deviceListViewController.toolbarItems = [space, scanButtonItem!, space]
 
-        pushViewController(deviceListViewController)
+        self.pushViewController(deviceListViewController)
     }
     
     
@@ -434,16 +433,24 @@ BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, 
     
     
     func pushViewController(_ vc:UIViewController) {
-        
-        //if currentAlertView != nil {
-        if ((self.presentedViewController) != nil) {
-            self.presentedViewController!.dismiss(animated: false, completion: { () -> Void in
-                self.navController.pushViewController(vc, animated: true)
-              //  self.currentAlertView = nil
-            })
+
+        var animated: Bool!
+        if object_getClassName(vc) == object_getClassName(self.deviceListViewController) {
+            animated = false
+        } else {
+            animated = true
         }
-        else {
-            navController.pushViewController(vc, animated: true)
+
+        // TODO: figure out why this is getting called twice
+        if ((object_getClassName(vc) != object_getClassName(self.presentedViewController))) {
+            if (self.presentedViewController != nil) {
+                self.presentedViewController!.dismiss(animated: animated, completion: { () -> Void in
+                    self.navController.pushViewController(vc, animated: animated)
+                    //  self.currentAlertView = nil
+                })
+            } else {
+                navController.pushViewController(vc, animated: animated)
+            }
         }
         
         self.currentAlertView = nil
@@ -531,13 +538,6 @@ BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, 
                 }
                 self.deviceListViewController.didFindPeripheral(peripheral, advertisementData: advertisementData, RSSI:RSSI)
             })
-            
-            if navController.topViewController != deviceListViewController {
-                DispatchQueue.main.sync(execute: { () -> Void in
-                    self.pushViewController(self.deviceListViewController)
-                })
-            }
-            
         }
     }
     
