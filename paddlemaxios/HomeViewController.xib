@@ -10,6 +10,11 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="engebrechtre bd it.ttf">
+            <string>EngebrechtreRg-BoldItalic</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomeViewController" customModule="paddlemaxios" customModuleProvider="target">
             <connections>
@@ -24,24 +29,40 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <pageControl contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" currentPage="1" translatesAutoresizingMaskIntoConstraints="NO" id="ymf-Lt-5Ij">
-                    <rect key="frame" x="141" y="499" width="39" height="37"/>
+                <pageControl contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" currentPage="1" translatesAutoresizingMaskIntoConstraints="NO" id="ymf-Lt-5Ij">
+                    <rect key="frame" x="141" y="447" width="39" height="161"/>
                     <color key="tintColor" red="0.030997481519692838" green="1" blue="0.77071029047499762" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     <color key="pageIndicatorTintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <color key="currentPageIndicatorTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </pageControl>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jBb-Ar-Xk1">
-                    <rect key="frame" x="16" y="109" width="288" height="168"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="104" id="OJH-ee-L8P"/>
-                    </constraints>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jBb-Ar-Xk1">
+                    <rect key="frame" x="16" y="200" width="288" height="0.0"/>
                     <fontDescription key="fontDescription" type="system" pointSize="19"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qa7-gL-arY">
-                    <rect key="frame" x="76" y="454" width="168" height="37"/>
-                    <color key="backgroundColor" red="0.56465593118734758" green="0.87783692536511848" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="pnr-ba-c0Z">
+                    <rect key="frame" x="35" y="68" width="250" height="231"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="231" id="l6u-Xh-yVf"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PaddleMax" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mDM-qs-DNz">
+                    <rect key="frame" x="68" y="47" width="185" height="46"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="46" id="po0-8c-LPU"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="EngebrechtreRg-BoldItalic" family="Engebrechtre" pointSize="41"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qa7-gL-arY">
+                    <rect key="frame" x="68" y="447" width="187" height="51"/>
+                    <color key="backgroundColor" red="0.27058823529411763" green="0.52941176470588236" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="51" id="g4S-7P-Z7t"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="21"/>
                     <state key="normal" title="Connect to Paddle">
                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
@@ -51,17 +72,29 @@
                 </button>
             </subviews>
             <constraints>
-                <constraint firstItem="qa7-gL-arY" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="67" id="8o2-69-2bF"/>
-                <constraint firstItem="qa7-gL-arY" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Eki-Jg-mFD"/>
-                <constraint firstItem="jBb-Ar-Xk1" firstAttribute="centerX" secondItem="qa7-gL-arY" secondAttribute="centerX" id="Kkw-Pd-mdc"/>
-                <constraint firstItem="ymf-Lt-5Ij" firstAttribute="top" secondItem="qa7-gL-arY" secondAttribute="bottom" constant="16" id="Pbe-jY-cow"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="ymf-Lt-5Ij" secondAttribute="bottom" constant="76" id="aaU-BH-Mgm"/>
-                <constraint firstItem="jBb-Ar-Xk1" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="195" id="oDB-td-MRg"/>
-                <constraint firstItem="jBb-Ar-Xk1" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leadingMargin" id="uAg-By-Dpx"/>
-                <constraint firstItem="qa7-gL-arY" firstAttribute="centerX" secondItem="ymf-Lt-5Ij" secondAttribute="centerX" id="uLE-3Y-Dx1"/>
+                <constraint firstItem="mDM-qs-DNz" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="27" id="2i4-uL-v0K"/>
+                <constraint firstItem="jBb-Ar-Xk1" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="-84" id="3Ml-Hh-Lh4"/>
+                <constraint firstItem="qa7-gL-arY" firstAttribute="top" secondItem="jBb-Ar-Xk1" secondAttribute="bottom" constant="247" id="4pq-vs-skB"/>
+                <constraint firstItem="mDM-qs-DNz" firstAttribute="centerX" secondItem="jBb-Ar-Xk1" secondAttribute="centerX" id="Cho-vU-roh"/>
+                <constraint firstItem="qa7-gL-arY" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="68" id="OHC-qA-JQI"/>
+                <constraint firstItem="pnr-ba-c0Z" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="48" id="TVN-UO-07k"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="ymf-Lt-5Ij" secondAttribute="bottom" constant="-40" id="aaU-BH-Mgm"/>
+                <constraint firstItem="qa7-gL-arY" firstAttribute="centerX" secondItem="ymf-Lt-5Ij" secondAttribute="centerX" constant="1" id="dER-kG-iIK"/>
+                <constraint firstItem="mDM-qs-DNz" firstAttribute="leading" secondItem="qa7-gL-arY" secondAttribute="leading" id="egq-aK-KU5"/>
+                <constraint firstItem="jBb-Ar-Xk1" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="180" id="gTw-yK-TQh"/>
+                <constraint firstItem="jBb-Ar-Xk1" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leadingMargin" id="ndU-HI-n9t"/>
+                <constraint firstItem="ymf-Lt-5Ij" firstAttribute="top" secondItem="qa7-gL-arY" secondAttribute="bottom" constant="-51" id="oIZ-Xi-556"/>
+                <constraint firstItem="jBb-Ar-Xk1" firstAttribute="centerX" secondItem="qa7-gL-arY" secondAttribute="centerX" constant="-1.5" id="pKG-Li-ltd"/>
+                <constraint firstItem="qa7-gL-arY" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" constant="1.5" id="q6O-oH-J01"/>
+                <constraint firstItem="pnr-ba-c0Z" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="35" id="umX-Ni-bc3"/>
+                <constraint firstItem="pnr-ba-c0Z" firstAttribute="centerX" secondItem="jBb-Ar-Xk1" secondAttribute="centerX" id="xiU-hC-Vog"/>
+                <constraint firstAttribute="bottom" secondItem="qa7-gL-arY" secondAttribute="bottom" constant="70" id="xpG-Ra-lFg"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <point key="canvasLocation" x="35" y="53"/>
         </view>
     </objects>
+    <resources>
+        <image name="logo" width="1638" height="1638"/>
+    </resources>
 </document>

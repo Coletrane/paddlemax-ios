@@ -37,6 +37,8 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
 
         connectButton.layer.cornerRadius = 4
+        connectButton.layer.borderWidth = 1
+        connectButton.layer.borderColor = BLUE.cgColor
         pageControl.currentPage = 1
         self.delegate?.refreshHomeViewLabels()
     }

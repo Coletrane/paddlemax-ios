@@ -17,7 +17,6 @@
 		648F265935B891A9E87C49A8 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F225A24F1A688F30BC824 /* Extensions.swift */; };
 		648F266C818C3C1BAB766AFD /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F2DE5E40B46459A71B405 /* HomeViewController.swift */; };
 		648F26EED99FC774535AD6B5 /* PinIOViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F2E3A85ED450362C60362 /* PinIOViewController.swift */; };
-		648F2734D3B25119FD2025ED /* DeviceListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 648F2504F80ADFE3D9B8BDF4 /* DeviceListViewController.xib */; };
 		648F28179D2B32E9AE414070 /* DeviceInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F20238A854F87EE475A95 /* DeviceInfoViewController.swift */; };
 		648F2832BDC064030B2ABCD9 /* ControllerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 648F2AE97A3813A0D35B99B0 /* ControllerViewController.xib */; };
 		648F2877F7E8AD95F5DE8187 /* AttributeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F281EAFCF96EED93F0081 /* AttributeCell.swift */; };
@@ -28,7 +27,6 @@
 		648F2B787CC1D191B0AD9ABD /* XMLDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 648F2574A915AAD6C6066E60 /* XMLDictionary.m */; };
 		648F2BDCEBDE7DA8923E1EC4 /* ControllerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F27C5CEB6B52AA5535550 /* ControllerViewController.swift */; };
 		648F2C131297796770D2CC23 /* BLEMainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 648F2E84DD561D98AF191E2B /* BLEMainViewController.xib */; };
-		648F2C93F71B3DDF8EACE8F6 /* DeviceInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 648F2377CF810C6577AFAC72 /* DeviceInfoViewController.xib */; };
 		648F2CAABAB0415C5EF1A08F /* BLEInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F2BB3F2A28AEEE7FC9869 /* BLEInfo.swift */; };
 		648F2CD6571E1AF3883A960D /* BLEOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 648F22483BF60C5985D922DA /* BLEOperations.m */; };
 		648F2D1056CDFA9AA35B10B7 /* PinCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F2D26865DCB17A772B7E1 /* PinCell.swift */; };
@@ -38,6 +36,10 @@
 		648F2EB963F71E4339E50FB3 /* PinIOViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 648F2A1DE9D9B0D84544ECC0 /* PinIOViewController.xib */; };
 		648F2F2FC6285AFCF2AD6733 /* HelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F2D61A196C62EC6B52CA4 /* HelpViewController.swift */; };
 		648F2F6A18A7EB499E2EF141 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F25803D43C33B0CD7A922 /* Constants.swift */; };
+		793B2D371FB8AAF8002D407E /* engebrechtre bd it.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 793B2D361FB8AAF8002D407E /* engebrechtre bd it.ttf */; };
+		794CBF9E1FB8990400E10F08 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7984B8D41FAD341B00C911E8 /* Info.plist */; };
+		794CBFA51FB8A05400E10F08 /* DeviceInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 794CBFA31FB8A05300E10F08 /* DeviceInfoViewController.xib */; };
+		794CBFA61FB8A05400E10F08 /* DeviceListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 794CBFA41FB8A05400E10F08 /* DeviceListViewController.xib */; };
 		7984B8D01FAD341B00C911E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7984B8CF1FAD341B00C911E8 /* Assets.xcassets */; };
 		7984B8DE1FAD341B00C911E8 /* paddlemaxiosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7984B8DD1FAD341B00C911E8 /* paddlemaxiosTests.swift */; };
 		7984B8E91FAD341B00C911E8 /* paddlemaxiosUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7984B8E81FAD341B00C911E8 /* paddlemaxiosUITests.swift */; };
@@ -72,9 +74,7 @@
 		648F22483BF60C5985D922DA /* BLEOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLEOperations.m; sourceTree = "<group>"; };
 		648F225A24F1A688F30BC824 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		648F2337588941235A03975B /* BLEOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLEOperations.h; sourceTree = "<group>"; };
-		648F2377CF810C6577AFAC72 /* DeviceInfoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DeviceInfoViewController.xib; sourceTree = "<group>"; };
 		648F2419A127DC5986A990F5 /* LogHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogHelper.h; sourceTree = "<group>"; };
-		648F2504F80ADFE3D9B8BDF4 /* DeviceListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DeviceListViewController.xib; sourceTree = "<group>"; };
 		648F2574A915AAD6C6066E60 /* XMLDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLDictionary.m; sourceTree = "<group>"; };
 		648F25803D43C33B0CD7A922 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		648F25E287FA3A89F8A2B318 /* BLESensorButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLESensorButton.swift; sourceTree = "<group>"; };
@@ -97,6 +97,9 @@
 		648F2E84DD561D98AF191E2B /* BLEMainViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BLEMainViewController.xib; sourceTree = "<group>"; };
 		648F2EBCCB4C689400F5B991 /* GATT-characteristics.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = "GATT-characteristics.plist"; sourceTree = "<group>"; };
 		648F2F2A3CED08FFC9322E5D /* XMLDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLDictionary.h; sourceTree = "<group>"; };
+		793B2D361FB8AAF8002D407E /* engebrechtre bd it.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "engebrechtre bd it.ttf"; path = "../../paddle-max-server/static/engebrechtre/engebrechtre bd it.ttf"; sourceTree = "<group>"; };
+		794CBFA31FB8A05300E10F08 /* DeviceInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeviceInfoViewController.xib; sourceTree = "<group>"; };
+		794CBFA41FB8A05400E10F08 /* DeviceListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeviceListViewController.xib; sourceTree = "<group>"; };
 		7984B8C51FAD341B00C911E8 /* paddlemaxios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = paddlemaxios.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7984B8CF1FAD341B00C911E8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7984B8D41FAD341B00C911E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -134,9 +137,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		793B2D351FB8AA47002D407E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				793B2D361FB8AAF8002D407E /* engebrechtre bd it.ttf */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		7984B8BC1FAD341B00C911E8 = {
 			isa = PBXGroup;
 			children = (
+				793B2D351FB8AA47002D407E /* Resources */,
 				7984B8C71FAD341B00C911E8 /* paddlemaxios */,
 				7984B8DC1FAD341B00C911E8 /* paddlemaxiosTests */,
 				7984B8E71FAD341B00C911E8 /* paddlemaxiosUITests */,
@@ -157,6 +169,8 @@
 		7984B8C71FAD341B00C911E8 /* paddlemaxios */ = {
 			isa = PBXGroup;
 			children = (
+				794CBFA31FB8A05300E10F08 /* DeviceInfoViewController.xib */,
+				794CBFA41FB8A05400E10F08 /* DeviceListViewController.xib */,
 				7984B8CF1FAD341B00C911E8 /* Assets.xcassets */,
 				7984B8D41FAD341B00C911E8 /* Info.plist */,
 				648F20C93AFC396D372BDAE0 /* BLEAppDelegate.swift */,
@@ -172,9 +186,7 @@
 				648F2AE97A3813A0D35B99B0 /* ControllerViewController.xib */,
 				648F2A9C35C6B713B656919A /* DeviceCell.swift */,
 				648F20238A854F87EE475A95 /* DeviceInfoViewController.swift */,
-				648F2377CF810C6577AFAC72 /* DeviceInfoViewController.xib */,
 				648F2DBF1842FD828F0F718F /* DeviceListViewController.swift */,
-				648F2504F80ADFE3D9B8BDF4 /* DeviceListViewController.xib */,
 				648F225A24F1A688F30BC824 /* Extensions.swift */,
 				648F2EBCCB4C689400F5B991 /* GATT-characteristics.plist */,
 				648F2D61A196C62EC6B52CA4 /* HelpViewController.swift */,
@@ -328,14 +340,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				793B2D371FB8AAF8002D407E /* engebrechtre bd it.ttf in Resources */,
 				7984B8D01FAD341B00C911E8 /* Assets.xcassets in Resources */,
+				794CBFA61FB8A05400E10F08 /* DeviceListViewController.xib in Resources */,
 				648F2832BDC064030B2ABCD9 /* ControllerViewController.xib in Resources */,
-				648F2C93F71B3DDF8EACE8F6 /* DeviceInfoViewController.xib in Resources */,
-				648F2734D3B25119FD2025ED /* DeviceListViewController.xib in Resources */,
 				648F28DD237CF47DB27480AE /* GATT-characteristics.plist in Resources */,
+				794CBFA51FB8A05400E10F08 /* DeviceInfoViewController.xib in Resources */,
 				648F2EB963F71E4339E50FB3 /* PinIOViewController.xib in Resources */,
 				648F2D5FBC2A38E1E68EC3C2 /* SensorValueCell.xib in Resources */,
 				648F2C131297796770D2CC23 /* BLEMainViewController.xib in Resources */,
+				794CBF9E1FB8990400E10F08 /* Info.plist in Resources */,
 				648F22F3A88D0225E4E394D4 /* HomeViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -532,6 +546,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEVELOPMENT_TEAM = 3K7MWNCT43;
 				INFOPLIST_FILE = paddlemaxios/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -546,6 +561,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				DEVELOPMENT_TEAM = 3K7MWNCT43;
 				INFOPLIST_FILE = paddlemaxios/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
