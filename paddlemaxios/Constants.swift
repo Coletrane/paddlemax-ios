@@ -16,6 +16,23 @@ let LIGHT_PURPLE = UIColor(0x746eff)
 let GREY = UIColor(0x5c5e5c)
 
 
+enum ConnectionMode:Int {
+    case none
+    case pinIO
+    case uart
+    case info
+    case controller
+    case dfu
+}
+
+enum ConnectionStatus:Int {
+    case idle = 0
+    case scanning
+    case connected
+    case connecting
+}
+
+
 //System Variables
 let CURRENT_DEVICE = UIDevice.current
 let INTERFACE_IS_PAD:Bool = (CURRENT_DEVICE.userInterfaceIdiom == UIUserInterfaceIdiom.pad)

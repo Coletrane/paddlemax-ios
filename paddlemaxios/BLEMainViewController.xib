@@ -20,12 +20,6 @@
         <view autoresizesSubviews="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="1xm-FQ-qRq" userLabel="View - Main">
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-            <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="water" translatesAutoresizingMaskIntoConstraints="NO" id="j8I-lP-2at">
-                    <rect key="frame" x="-175" y="-35" width="746" height="731"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                </imageView>
-            </subviews>
             <nil key="simulatedStatusBarMetrics"/>
             <point key="canvasLocation" x="525.5" y="456.5"/>
         </view>
@@ -216,6 +210,5 @@ http://www.adafruit.com/bluefruitle
     </objects>
     <resources>
         <image name="adafruit_logo2012-white-horiz-230w.png" width="230" height="93"/>
-        <image name="water" width="1920" height="1280"/>
     </resources>
 </document>

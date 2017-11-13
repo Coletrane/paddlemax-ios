@@ -21,12 +21,10 @@
 		648F2832BDC064030B2ABCD9 /* ControllerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 648F2AE97A3813A0D35B99B0 /* ControllerViewController.xib */; };
 		648F2877F7E8AD95F5DE8187 /* AttributeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F281EAFCF96EED93F0081 /* AttributeCell.swift */; };
 		648F28DD237CF47DB27480AE /* GATT-characteristics.plist in Resources */ = {isa = PBXBuildFile; fileRef = 648F2EBCCB4C689400F5B991 /* GATT-characteristics.plist */; };
-		648F2944EB60415BC9BDEAC8 /* BLEMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F2240345098A0867EFFC7 /* BLEMainViewController.swift */; };
 		648F296E5EC081B294488CFA /* IntelHex2BinConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 648F2D7FA54AE2E0E3A36070 /* IntelHex2BinConverter.m */; };
 		648F2B1207EAB22054FCD2A7 /* BLEAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F20C93AFC396D372BDAE0 /* BLEAppDelegate.swift */; };
 		648F2B787CC1D191B0AD9ABD /* XMLDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 648F2574A915AAD6C6066E60 /* XMLDictionary.m */; };
 		648F2BDCEBDE7DA8923E1EC4 /* ControllerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F27C5CEB6B52AA5535550 /* ControllerViewController.swift */; };
-		648F2C131297796770D2CC23 /* BLEMainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 648F2E84DD561D98AF191E2B /* BLEMainViewController.xib */; };
 		648F2CAABAB0415C5EF1A08F /* BLEInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F2BB3F2A28AEEE7FC9869 /* BLEInfo.swift */; };
 		648F2CD6571E1AF3883A960D /* BLEOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 648F22483BF60C5985D922DA /* BLEOperations.m */; };
 		648F2D1056CDFA9AA35B10B7 /* PinCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F2D26865DCB17A772B7E1 /* PinCell.swift */; };
@@ -70,7 +68,6 @@
 		648F20C93AFC396D372BDAE0 /* BLEAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEAppDelegate.swift; sourceTree = "<group>"; };
 		648F20E620DD183A0DBC05C9 /* Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
 		648F220BBD8C0393281BEB21 /* IntelHex2BinConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntelHex2BinConverter.h; sourceTree = "<group>"; };
-		648F2240345098A0867EFFC7 /* BLEMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEMainViewController.swift; sourceTree = "<group>"; };
 		648F22483BF60C5985D922DA /* BLEOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLEOperations.m; sourceTree = "<group>"; };
 		648F225A24F1A688F30BC824 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		648F2337588941235A03975B /* BLEOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLEOperations.h; sourceTree = "<group>"; };
@@ -94,7 +91,6 @@
 		648F2DE5E40B46459A71B405 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		648F2DF8F3F024A5ED51311D /* SensorValueCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SensorValueCell.xib; sourceTree = "<group>"; };
 		648F2E3A85ED450362C60362 /* PinIOViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinIOViewController.swift; sourceTree = "<group>"; };
-		648F2E84DD561D98AF191E2B /* BLEMainViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BLEMainViewController.xib; sourceTree = "<group>"; };
 		648F2EBCCB4C689400F5B991 /* GATT-characteristics.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = "GATT-characteristics.plist"; sourceTree = "<group>"; };
 		648F2F2A3CED08FFC9322E5D /* XMLDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLDictionary.h; sourceTree = "<group>"; };
 		793B2D361FB8AAF8002D407E /* engebrechtre bd it.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "engebrechtre bd it.ttf"; path = "../../paddle-max-server/static/engebrechtre/engebrechtre bd it.ttf"; sourceTree = "<group>"; };
@@ -176,7 +172,6 @@
 				648F20C93AFC396D372BDAE0 /* BLEAppDelegate.swift */,
 				648F2004577F9C5362D328A6 /* BLEDevice.swift */,
 				648F2BB3F2A28AEEE7FC9869 /* BLEInfo.swift */,
-				648F2240345098A0867EFFC7 /* BLEMainViewController.swift */,
 				648F2337588941235A03975B /* BLEOperations.h */,
 				648F22483BF60C5985D922DA /* BLEOperations.m */,
 				648F2CD19DF3D6620C85F536 /* BLEPeripheral.swift */,
@@ -203,7 +198,6 @@
 				648F2F2A3CED08FFC9322E5D /* XMLDictionary.h */,
 				648F2574A915AAD6C6066E60 /* XMLDictionary.m */,
 				7984B8F61FAD38E900C911E8 /* paddlemaxios-Bridging-Header.h */,
-				648F2E84DD561D98AF191E2B /* BLEMainViewController.xib */,
 				648F281EAFCF96EED93F0081 /* AttributeCell.swift */,
 				648F2D26865DCB17A772B7E1 /* PinCell.swift */,
 				648F2DE5E40B46459A71B405 /* HomeViewController.swift */,
@@ -348,7 +342,6 @@
 				794CBFA51FB8A05400E10F08 /* DeviceInfoViewController.xib in Resources */,
 				648F2EB963F71E4339E50FB3 /* PinIOViewController.xib in Resources */,
 				648F2D5FBC2A38E1E68EC3C2 /* SensorValueCell.xib in Resources */,
-				648F2C131297796770D2CC23 /* BLEMainViewController.xib in Resources */,
 				794CBF9E1FB8990400E10F08 /* Info.plist in Resources */,
 				648F22F3A88D0225E4E394D4 /* HomeViewController.xib in Resources */,
 			);
@@ -378,7 +371,6 @@
 				648F2B1207EAB22054FCD2A7 /* BLEAppDelegate.swift in Sources */,
 				648F21BEF07D19490275D6D8 /* BLEDevice.swift in Sources */,
 				648F2CAABAB0415C5EF1A08F /* BLEInfo.swift in Sources */,
-				648F2944EB60415BC9BDEAC8 /* BLEMainViewController.swift in Sources */,
 				648F2CD6571E1AF3883A960D /* BLEOperations.m in Sources */,
 				648F202623A5492D94B99B46 /* BLEPeripheral.swift in Sources */,
 				648F2D8D260B05A645628BC9 /* BLESensorButton.swift in Sources */,

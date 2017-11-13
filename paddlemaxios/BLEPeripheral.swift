@@ -3,7 +3,6 @@ import CoreBluetooth
 
 protocol BLEPeripheralDelegate: AnyObject {
     
-    var connectionMode:ConnectionMode { get }
     func didReceiveData(_ newData:Data)
     func connectionFinalized()
     func uartDidEncounterError(_ error:NSString)
@@ -167,27 +166,19 @@ class BLEPeripheral: NSObject, CBPeripheralDelegate {
             // Service characteristics already discovered
             if (s.characteristics != nil){
                 self.peripheral(peripheral, didDiscoverCharacteristicsFor: s, error: nil)    // If characteristics have already been discovered, do not check again
-            }
-                
-            //UART, Pin I/O, or Controller mode
-            else if delegate.connectionMode == ConnectionMode.uart ||
-                    delegate.connectionMode == ConnectionMode.pinIO ||
-                    delegate.connectionMode == ConnectionMode.controller ||
-                    delegate.connectionMode == ConnectionMode.dfu {
-                if UUIDsAreEqual(s.uuid, secondID: uartServiceUUID()) {
+            } else if UUIDsAreEqual(s.uuid, secondID: uartServiceUUID()){
                     uartService = s
                     peripheral.discoverCharacteristics([txCharacteristicUUID(), rxCharacteristicUUID()], for: uartService!)
-                }
             }
                 
             // Info mode
-            else if delegate.connectionMode == ConnectionMode.info {
+            else if HomeViewController.singleton.connectionMode == ConnectionMode.info {
                 knownServices.append(s)
                 peripheral.discoverCharacteristics(nil, for: s)
             }
             
             //DFU / Firmware Updater mode
-            else if delegate.connectionMode == ConnectionMode.dfu {
+            else if HomeViewController.singleton.connectionMode == ConnectionMode.dfu {
                 knownServices.append(s)
                 peripheral.discoverCharacteristics(nil, for: s)
             }
@@ -211,12 +202,6 @@ class BLEPeripheral: NSObject, CBPeripheralDelegate {
         }
         
         printLog(self, funcName: "didDiscoverCharacteristicsForService", logString: "\(service.description) with \(service.characteristics!.count) characteristics")
-        
-        // UART mode
-        if  delegate.connectionMode == ConnectionMode.uart ||
-            delegate.connectionMode == ConnectionMode.pinIO ||
-            delegate.connectionMode == ConnectionMode.controller ||
-            delegate.connectionMode == ConnectionMode.dfu {
             
             for c in (service.characteristics as [CBCharacteristic]!) {
                 
@@ -234,7 +219,7 @@ class BLEPeripheral: NSObject, CBPeripheralDelegate {
 //                    printLog(self, "didDiscoverCharacteristicsForService", "Found Characteristic: Unknown")
                     break
                 }
-                
+
             }
             
             if rxCharacteristic != nil && txCharacteristic != nil {
@@ -242,24 +227,7 @@ class BLEPeripheral: NSObject, CBPeripheralDelegate {
                     self.delegate.connectionFinalized()
                 })
             }
-        }
-        
-        // Info mode
-        else if delegate.connectionMode == ConnectionMode.info {
-            
-            for c in (service.characteristics as [CBCharacteristic]!) {
-                
-                //Read readable characteristic values
-                if (c.properties.rawValue & CBCharacteristicProperties.read.rawValue) != 0 {
-                    peripheral.readValue(for: c)
-                }
-                
-                peripheral.discoverDescriptors(for: c)
-                
-            }
-            
-        }
-        
+
     }
     
     
@@ -296,7 +264,7 @@ class BLEPeripheral: NSObject, CBPeripheralDelegate {
 //                println("found characteristic index \(idx)")
                 if (idx + 1) == allCharacteristics.count {
 //                    println("found last characteristic")
-                    if delegate.connectionMode == ConnectionMode.info {
+                    if HomeViewController.singleton.connectionMode == ConnectionMode.info {
                         delegate.connectionFinalized()
                     }
                 }
@@ -334,7 +302,7 @@ class BLEPeripheral: NSObject, CBPeripheralDelegate {
         }
         
         //UART mode
-        if delegate.connectionMode == ConnectionMode.uart || delegate.connectionMode == ConnectionMode.pinIO || delegate.connectionMode == ConnectionMode.controller {
+        if HomeViewController.singleton.connectionMode == ConnectionMode.uart || HomeViewController.singleton.connectionMode == ConnectionMode.pinIO || HomeViewController.singleton.connectionMode == ConnectionMode.controller {
             
             if (characteristic == self.rxCharacteristic){
                 

@@ -2,14 +2,7 @@ import Foundation
 import UIKit
 import CoreBluetooth
 
-enum ConnectionMode:Int {
-    case none
-    case pinIO
-    case uart
-    case info
-    case controller
-    case dfu
-}
+
 
 protocol BLEMainViewControllerDelegate : AnyObject {
     func onDeviceConnectionChange(_ peripheral:CBPeripheral)
@@ -20,12 +13,7 @@ BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, 
 
     
     
-    enum ConnectionStatus:Int {
-        case idle = 0
-        case scanning
-        case connected
-        case connecting
-    }
+
     
     var connectionMode:ConnectionMode = ConnectionMode.none
     var connectionStatus:ConnectionStatus = ConnectionStatus.idle
@@ -52,13 +40,12 @@ BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, 
     fileprivate var scanIndicator:UIActivityIndicatorView?
     fileprivate var scanIndicatorItem:UIBarButtonItem?
     fileprivate var scanButtonItem:UIBarButtonItem?
-    fileprivate let cbcmQueue = DispatchQueue(label: "com.adafruit.bluefruitconnect.cbcmqueue", attributes: DispatchQueue.Attributes.concurrent)
     fileprivate let connectionTimeOutIntvl:TimeInterval = 30.0
     fileprivate var connectionTimer:Timer?
     
     static let sharedInstance = BLEMainViewController()
     
-    
+
     func centralManager()->CBCentralManager{
         return cm!;
     }
@@ -103,18 +90,10 @@ BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, 
 
         homeViewController =  HomeViewController(aDelegate: self)
 
-        navController = UINavigationController(rootViewController: homeViewController)
-        navController.delegate = self
-        navController.navigationBar.barStyle = UIBarStyle.blackTranslucent
-        navController.toolbar.barStyle = UIBarStyle.blackTranslucent
-        navController.isToolbarHidden = true
-        navController.interactivePopGestureRecognizer?.isEnabled = false
+
         
         addChildViewController(navController)
         view.addSubview(navController.view)
-
-
-        
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -142,39 +121,12 @@ BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, 
             setHomeViewConnected()
         }
     }
-    func setHomeViewBluetoothDisabled() {
-        homeViewController.connectedLabel.text = "Bluetooth disabled"
-    }
 
-    func setHomeViewNotConnected() {
-        homeViewController.connectedLabel.text = "You are not currently connected to your paddle"
-        homeViewController.connectButton.isHidden = false
-    }
+    func homeViewWillAppear() {
 
-    func setHomeViewConnected() {
-        homeViewController.connectedLabel.text = "You are connected to your paddle!"
-        homeViewController.connectButton.isHidden = true
     }
     
-    func createDeviceListViewController(){
-        //add info bar button to mode controllers
-        let archivedData = NSKeyedArchiver.archivedData(withRootObject: infoButton)
-        let buttonCopy = NSKeyedUnarchiver.unarchiveObject(with: archivedData) as! UIButton
-        buttonCopy.addTarget(self, action: #selector(BLEMainViewController.showInfo(_:)), for: UIControlEvents.touchUpInside)
-        infoBarButton = UIBarButtonItem(customView: buttonCopy)
-        deviceListViewController = DeviceListViewController(aDelegate: self)
-        deviceListViewController.navigationItem.rightBarButtonItem = infoBarButton
-        deviceListViewController.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.plain, target: nil, action: nil)
-        //add scan indicator to toolbar
-        scanIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.white)
-        scanIndicator!.hidesWhenStopped = false
-        scanIndicatorItem = UIBarButtonItem(customView: scanIndicator!)
-        let space = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
-        scanButtonItem = UIBarButtonItem(title: "Scan for peripherals", style: UIBarButtonItemStyle.plain, target: self, action: #selector(BLEMainViewController.toggleScan(_:)))
-        deviceListViewController.toolbarItems = [space, scanButtonItem!, space]
 
-        self.pushViewController(deviceListViewController)
-    }
     
     
     @objc func toggleScan(_ sender:UIBarButtonItem?){
@@ -189,52 +141,7 @@ BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, 
     }
     
     
-    func stopScan(){
-        
-        if (connectionMode == ConnectionMode.none) {
-            cm?.stopScan()
-            scanIndicator?.stopAnimating()
-            
-//            let count:Int = deviceListViewController.toolbarItems!.count
-//            for i in 0...(count-1) {
-//                if deviceListViewController.toolbarItems?[i] === scanIndicatorItem {
-//                    deviceListViewController.toolbarItems?.remove(at: i)
-//                    break
-//                }
-//            }
-            
-            connectionStatus = ConnectionStatus.idle
-            scanButtonItem?.title = "Scan for peripherals"
-        }
 
-    }
-    
-    
-    func startScan() {
-        //Check if Bluetooth is enabled
-        if cm?.state == CBManagerState.poweredOff {
-            onBluetoothDisabled()
-            return
-        }
-        
-        cm!.scanForPeripherals(withServices: nil, options: [CBCentralManagerScanOptionAllowDuplicatesKey: true])
-        //Check if scan indicator is in toolbar items
-        var indicatorShown = false
-        for i in deviceListViewController.toolbarItems! {
-            if i === scanIndicatorItem {
-                indicatorShown = true
-            }
-        }
-        //Insert scan indicator if not already in toolbar items
-        if indicatorShown == false {
-            deviceListViewController.toolbarItems?.insert(scanIndicatorItem!, at: 1)
-        }
-        
-        scanIndicator?.startAnimating()
-        connectionStatus = ConnectionStatus.scanning
-        scanButtonItem?.title = "Scanning"
-    }
-    
     
     func onBluetoothDisabled(){
         
@@ -285,51 +192,7 @@ BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, 
     }
     
     
-    func connectPeripheral(_ peripheral:CBPeripheral, mode:ConnectionMode) {
-        
-        //Check if Bluetooth is enabled
-        if cm?.state == CBManagerState.poweredOff {
-            onBluetoothDisabled()
-            return
-        }
-        
-        printLog(self, funcName: "connectPeripheral", logString: "")
-        
-        connectionTimer?.invalidate()
-        
-        if cm == nil {
-            //            println(self.description)
-            printLog(self, funcName: (#function), logString: "No central Manager found, unable to connect peripheral")
-            return
-        }
-        
-        stopScan()
-        
-        //Show connection activity alert view
-        let alert = UIAlertController(title: "Connecting …", message: nil, preferredStyle: UIAlertControllerStyle.alert)
-        //        let aaCancel = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler:{ (aa:UIAlertAction!) -> Void in
-        //            self.currentAlertView = nil
-        //            self.abortConnection()
-        //        })
-        //        alert.addAction(aaCancel)
-        currentAlertView = alert
-        self.present(alert, animated: true, completion: nil)
-        
-        //Cancel any current or pending connection to the peripheral
-        if peripheral.state == CBPeripheralState.connected || peripheral.state == CBPeripheralState.connecting {
-            cm!.cancelPeripheralConnection(peripheral)
-        }
-        
-        //Connect
-        currentPeripheral = BLEPeripheral(peripheral: peripheral, delegate: self)
-        cm!.connect(peripheral, options: [CBConnectPeripheralOptionNotifyOnDisconnectionKey: NSNumber(value: true as Bool)])
-        
-        connectionMode = mode
-        connectionStatus = ConnectionStatus.connecting
-        
-        // Start connection timeout timer
-        connectionTimer = Timer.scheduledTimer(timeInterval: connectionTimeOutIntvl, target: self, selector: #selector(BLEMainViewController.connectionTimedOut(_:)), userInfo: nil, repeats: false)
-    }
+
     
     
     @objc func connectionTimedOut(_ timer:Timer) {
@@ -398,31 +261,6 @@ BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, 
         }
         
     }
-    
-    
-    func alertDismissedOnError() {
-        if (connectionStatus == ConnectionStatus.connected) {
-            disconnect()
-        }
-        else if (connectionStatus == ConnectionStatus.scanning){
-            
-            if cm == nil {
-                printLog(self, funcName: "alertView clickedButtonAtIndex", logString: "No central Manager found, unable to stop scan")
-                return
-            }
-            
-            stopScan()
-        }
-        
-        connectionStatus = ConnectionStatus.idle
-        connectionMode = ConnectionMode.none
-        
-        currentAlertView = nil
-        
-        //alert dismisses automatically @ return
-        
-    }
-    
     
     func pushViewController(_ vc:UIViewController) {
 
@@ -677,7 +515,7 @@ BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, 
     
     
     func isModuleController(_ anObject:AnyObject)->Bool{
-        
+
         var verdict = false
         if     anObject.isMember(of: PinIOViewController.self)
             || anObject.isMember(of: UARTViewController.self)
@@ -688,7 +526,7 @@ BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, 
                 verdict = true
         }
         return verdict
-        
+
     }
     
     

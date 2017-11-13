@@ -24,7 +24,7 @@ class BLEAppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
 
     
     var window:UIWindow?
-    var mainViewController:BLEMainViewController?
+    var mainViewController: HomeViewController?
     
     
     required override init() {
@@ -36,14 +36,11 @@ class BLEAppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
         
         window = UIWindow(frame: UIScreen.main.bounds)
 
-        self.mainViewController = BLEMainViewController.sharedInstance
-        
+        self.mainViewController = HomeViewController.singleton
+
         window!.rootViewController = mainViewController
         window!.makeKeyAndVisible()
 
-        UIApplication.shared.statusBarStyle = .lightContent
-
-        // Ask user for permision to show local notifications
         let center = UNUserNotificationCenter.current()
         center.requestAuthorization(options: [.sound, .alert, .badge],
             completionHandler: { (bool, err) in
@@ -79,7 +76,7 @@ class BLEAppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
     func applicationWillResignActive(_ application: UIApplication) {
         
         // Stop scanning before entering background
-        mainViewController?.stopScan()
+//        mainViewController?.stopScan()
         
         //TEST NOTIFICATION
 //        let note = UILocalNotification()
@@ -93,7 +90,7 @@ class BLEAppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
     
     func applicationDidBecomeActive(_ application: UIApplication) {
         
-        mainViewController?.didBecomeActive()
+//        mainViewController?.didBecomeActive()
     }
     
     
@@ -111,7 +108,7 @@ class BLEAppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
                 //                    NSLog("app received connection status request")
                 
                 //check connection status
-                if BLEMainViewController.sharedInstance.connectedInControllerMode() {
+                if HomeViewController.singleton.connectedInControllerMode() {
                     replyHandler(["connected":true])
                 }
                 else {
@@ -125,7 +122,7 @@ class BLEAppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
                         //                            NSLog("BLEAppDelegate -> Disconnect command received")
                         
                         //disconnect device
-                        BLEMainViewController.sharedInstance.disconnectviaWatch()
+                        HomeViewController.singleton.disconnectviaWatch()
                         
                         replyHandler(["connected":false])
                     }
@@ -138,8 +135,8 @@ class BLEAppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
                     //                        NSLog("color request received")
                     
                     //forward data to mainviewController
-                    if BLEMainViewController.sharedInstance.connectedInControllerMode() {
-                        BLEMainViewController.sharedInstance.controllerViewController.sendColor(UInt8(red), green: UInt8(green), blue: UInt8(blue))
+                    if HomeViewController.singleton.connectedInControllerMode() {
+//                        HomeViewController.singleton.controllerViewController.sendColor(UInt8(red), green: UInt8(green), blue: UInt8(blue))
                         replyHandler(["connected":true])
                     }
                     else {
@@ -151,8 +148,8 @@ class BLEAppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
                     
                     //                        NSLog("button request " + button)
                     //forward data to mainviewController
-                    if BLEMainViewController.sharedInstance.connectedInControllerMode() {
-                        BLEMainViewController.sharedInstance.controllerViewController.controlPadButtonTappedWithTag(button)
+                    if HomeViewController.singleton.connectedInControllerMode() {
+//                        HomeViewController.singleton.controllerViewController.controlPadButtonTappedWithTag(button)
                         replyHandler(["connected":true])
                     }
                     else {
@@ -181,7 +178,7 @@ class BLEAppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
 //                    NSLog("app received connection status request")
                     
                     //check connection status
-                    if BLEMainViewController.sharedInstance.connectedInControllerMode() {
+                    if HomeViewController.singleton.connectedInControllerMode() {
                         reply(["connected":true])
                     }
                     else {
@@ -195,7 +192,7 @@ class BLEAppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
 //                            NSLog("BLEAppDelegate -> Disconnect command received")
                             
                             //disconnect device
-                            BLEMainViewController.sharedInstance.disconnectviaWatch()
+                            HomeViewController.singleton.disconnectviaWatch()
                             
                             reply(["connected":false])
                         }
@@ -208,8 +205,8 @@ class BLEAppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
 //                        NSLog("color request received")
                         
                         //forward data to mainviewController
-                        if BLEMainViewController.sharedInstance.connectedInControllerMode() {
-                            BLEMainViewController.sharedInstance.controllerViewController.sendColor(UInt8(red), green: UInt8(green), blue: UInt8(blue))
+                        if HomeViewController.singleton.connectedInControllerMode() {
+//                            HomeViewController.singleton.controllerViewController.sendColor(UInt8(red), green: UInt8(green), blue: UInt8(blue))
                             reply(["connected":true])
                         }
                         else {
@@ -221,8 +218,8 @@ class BLEAppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
                         
 //                        NSLog("button request " + button)
                         //forward data to mainviewController
-                        if BLEMainViewController.sharedInstance.connectedInControllerMode() {
-                            BLEMainViewController.sharedInstance.controllerViewController.controlPadButtonTappedWithTag(button)
+                        if HomeViewController.singleton.connectedInControllerMode() {
+//                            HomeViewController.singleton.controllerViewController.controlPadButtonTappedWithTag(button)
                             reply(["connected":true])
                         }
                         else {
