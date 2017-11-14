@@ -45,6 +45,7 @@ class HomeViewController: UIViewController, DeviceListViewControllerDelegate, CB
 
         connectedLabel = UILabel()
         connectButton = UIButton()
+
         connectButton.isHidden = false
     }
 
