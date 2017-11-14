@@ -6,13 +6,13 @@ protocol DeviceListViewControllerDelegate: HomeViewControllerDelegate {
 
 }
 
-class DeviceListViewController : UIViewController, UITableViewDelegate, UITableViewDataSource, BLEPeripheralDelegate {
+class DeviceListViewController : UIViewController, UITableViewDelegate, UITableViewDataSource, BLEPeripheralDelegate, UINavigationControllerDelegate {
 
     var delegate: DeviceListViewControllerDelegate?
 
-    @IBOutlet var infoButton: UIButton!
+    var infoButton: UIButton!
     @IBOutlet var tableView: UITableView!
-    @IBOutlet var helpViewController: HelpViewController!
+    //    @IBOutlet var helpViewController: HelpViewController!
     @IBOutlet var deviceCell: DeviceCell!
     @IBOutlet var attributeCell: AttributeCell!
     @IBOutlet var warningLabel: UILabel!
@@ -22,29 +22,27 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
     fileprivate var tableIsLoading = false
     fileprivate var signalImages: [UIImage]!
     fileprivate var infoBarButton: UIBarButtonItem!
-    fileprivate var scanIndicator: UIActivityIndicatorView?
-    fileprivate var scanIndicatorItem: UIBarButtonItem?
-    fileprivate var scanButtonItem: UIBarButtonItem?
-    fileprivate var connectionTimeOutIntvl: TimeInterval = 30.0
+    fileprivate var scanIndicator: UIActivityIndicatorView!
+    fileprivate var scanIndicatorItem: UIBarButtonItem!
+    fileprivate var scanButtonItem: UIBarButtonItem!
+    fileprivate var connectionTimeOutIntvl: TimeInterval! = 30.0
     var connectionTimer: Timer?
 
     fileprivate let CONNECTION_MODE = ConnectionMode.pinIO
-
-    let cm = HomeViewController.singleton.cm
-
 
     convenience init(aDelegate: DeviceListViewControllerDelegate) {
         self.init(nibName: "DeviceListViewController", bundle: Bundle.main)
         delegate = aDelegate
 
-        self.title = "Connect to Paddle"
-        self.warningLabel = UILabel()
-        self.warningLabel.isHidden = true
+        title = "Connect to Paddle"
+        warningLabel = UILabel()
+        warningLabel.isHidden = true
 
-//        let archivedData = NSKeyedArchiver.archivedData(withRootObject: infoButton)
-//        let buttonCopy = NSKeyedUnarchiver.unarchiveObject(with: archivedData) as! UIButton
+        infoButton = UIButton()
+        let archivedData = NSKeyedArchiver.archivedData(withRootObject: infoButton)
+        let buttonCopy = NSKeyedUnarchiver.unarchiveObject(with: archivedData) as! UIButton
 //        buttonCopy.addTarget(self, action: #selector(HomeViewController.showInfo(_:)), for: UIControlEvents.touchUpInside)
-//        infoBarButton = UIBarButtonItem(customView: buttonCopy)
+        infoBarButton = UIBarButtonItem(customView: buttonCopy)
         scanIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.white)
         self.navigationItem.rightBarButtonItem = infoBarButton
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.plain, target: nil, action: nil)
@@ -65,6 +63,8 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
             UIImage(named: "signalStrength-3.png")!,
             UIImage(named: "signalStrength-4.png")!)
 
+        tableView.delegate = self
+        tableView.dataSource = self
         tableView.separatorStyle = UITableViewCellSeparatorStyle.none
         tableView.isHidden = true
 
@@ -74,6 +74,11 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
         let refresh = UIRefreshControl()
         refresh.addTarget(self, action: #selector(self.refreshWasPulled(_:)), for: UIControlEvents.valueChanged)
         tvc.refreshControl = refresh
+
+        warningLabel.isHidden = true
+        if (delegate?.cm?.state == CBManagerState.poweredOff) {
+            warningLabel.isHidden = false
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -113,6 +118,7 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
 
     }
 
+    // MARK: event handlers
 
     @objc func connectButtonTapped(_ sender: UIButton) {
         let device = devices[sender.tag]
@@ -122,7 +128,12 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
         }
     }
 
+    // MARK: view manipulation
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .default
+    }
 
+    // MARK: connection helpers
     func connectInMode(_ mode: ConnectionMode, peripheral: CBPeripheral) {
         self.connectPeripheral(peripheral, mode: mode)
 //        switch mode {
@@ -138,9 +149,8 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
     }
 
 
-    func didFindPeripheral(_ peripheral: CBPeripheral!, advertisementData: [AnyHashable: Any]!, RSSI: NSNumber!) {
 
-//        println("\(self.classForCoder.description()) didFindPeripheral")
+    func didFindPeripheral(_ peripheral: CBPeripheral!, advertisementData: [AnyHashable: Any]!, RSSI: NSNumber!) {
 
         //If device is already listed, just update RSSI
         let newID = peripheral.identifier
@@ -415,16 +425,15 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
     func stopScan() {
 
         if (delegate!.connectionMode == ConnectionMode.none) {
-            cm!.stopScan()
+            delegate?.cm?.stopScan()
             scanIndicator?.stopAnimating()
 
-//            let count:Int = self.toolbarItems!.count
-//            for i in 0...(count-1) {
-//                if self.toolbarItems?[i] === scanIndicatorItem {
-//                    self.toolbarItems?.remove(at: i)
-//                    break
-//                }
-//            }
+            for i in 0...toolbarItems!.count - 1 {
+                if toolbarItems?[i] === scanIndicatorItem {
+                    toolbarItems?.remove(at: i)
+                    break
+                }
+            }
 
             delegate!.connectionStatus = ConnectionStatus.idle
             scanButtonItem?.title = "Scan for peripherals"
@@ -434,23 +443,22 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
 
 
     func startScan() {
-        //Check if Bluetooth is enabled
-        if cm!.state == CBManagerState.poweredOff {
+        if delegate?.cm?.state == CBManagerState.poweredOff {
             onBluetoothDisabled()
             return
         }
 
-        cm!.scanForPeripherals(withServices: nil, options: [CBCentralManagerScanOptionAllowDuplicatesKey: true])
+        delegate?.cm?.scanForPeripherals(withServices: nil, options: [CBCentralManagerScanOptionAllowDuplicatesKey: true])
         //Check if scan indicator is in toolbar items
         var indicatorShown = false
-        for i in self.toolbarItems! {
+        for i in toolbarItems! {
             if i === scanIndicatorItem {
                 indicatorShown = true
             }
         }
         //Insert scan indicator if not already in toolbar items
         if indicatorShown == false {
-            self.toolbarItems?.insert(scanIndicatorItem!, at: 1)
+            toolbarItems?.insert(scanIndicatorItem!, at: 1)
         }
 
         scanIndicator?.startAnimating()
@@ -461,7 +469,7 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
     func connectPeripheral(_ peripheral: CBPeripheral, mode: ConnectionMode) {
 
         //Check if Bluetooth is enabled
-        if cm!.state == CBManagerState.poweredOff {
+        if delegate?.cm?.state == CBManagerState.poweredOff {
             onBluetoothDisabled()
             return
         }
@@ -470,7 +478,7 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
 
         connectionTimer?.invalidate()
 
-        if cm == nil {
+        if delegate?.cm == nil {
             //            println(self.description)
             printLog(self, funcName: (#function), logString: "No central Manager found, unable to connect peripheral")
             return
@@ -490,12 +498,12 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
 
         //Cancel any current or pending connection to the peripheral
         if peripheral.state == CBPeripheralState.connected || peripheral.state == CBPeripheralState.connecting {
-            cm!.cancelPeripheralConnection(peripheral)
+            delegate?.cm?.cancelPeripheralConnection(peripheral)
         }
 
         //Connect
         delegate!.currentPeripheral = BLEPeripheral(peripheral: peripheral, delegate: self)
-        cm!.connect(peripheral, options: [CBConnectPeripheralOptionNotifyOnDisconnectionKey: NSNumber(value: true as Bool)])
+        delegate?.cm?.connect(peripheral, options: [CBConnectPeripheralOptionNotifyOnDisconnectionKey: NSNumber(value: true as Bool)])
 
         delegate!.connectionMode = mode
         delegate!.connectionStatus = ConnectionStatus.connecting
@@ -551,8 +559,8 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
 
         connectionTimer?.invalidate()
 
-        if (cm != nil) && (delegate!.currentPeripheral != nil) {
-            cm!.cancelPeripheralConnection(delegate!.currentPeripheral!.currentPeripheral)
+        if (delegate?.cm != nil) && (delegate!.currentPeripheral != nil) {
+            delegate?.cm?.cancelPeripheralConnection(delegate!.currentPeripheral!.currentPeripheral)
         }
 
         delegate!.connectionMode = ConnectionMode.none
@@ -564,7 +572,7 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
 
         printLog(self, funcName: (#function), logString: "")
 
-        if cm == nil {
+        if delegate?.cm == nil {
             printLog(self, funcName: (#function), logString: "No central Manager found, unable to disconnect peripheral")
             return
         }
@@ -577,7 +585,7 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
         //Cancel any current or pending connection to the peripheral
         let peripheralState = delegate!.currentPeripheral!.currentPeripheral.state
         if peripheralState == CBPeripheralState.connected || peripheralState == CBPeripheralState.connecting {
-            cm!.cancelPeripheralConnection(delegate!.currentPeripheral!.currentPeripheral)
+            delegate?.cm?.cancelPeripheralConnection(delegate!.currentPeripheral!.currentPeripheral)
         }
 
     }
@@ -589,7 +597,7 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
         }
         else if (delegate!.connectionStatus == ConnectionStatus.scanning){
 
-            if cm == nil {
+            if delegate?.cm == nil {
                 printLog(self, funcName: "alertView clickedButtonAtIndex", logString: "No central Manager found, unable to stop scan")
                 return
             }

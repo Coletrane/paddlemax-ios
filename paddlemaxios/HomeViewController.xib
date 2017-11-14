@@ -104,6 +104,8 @@
                 <constraint firstItem="oLs-8F-Kav" firstAttribute="centerX" secondItem="qa7-gL-arY" secondAttribute="centerX" id="uVa-h5-hvM"/>
                 <constraint firstItem="mDM-qs-DNz" firstAttribute="centerX" secondItem="jBb-Ar-Xk1" secondAttribute="centerX" id="vDu-IS-7LM"/>
             </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <point key="canvasLocation" x="35" y="53"/>
         </view>

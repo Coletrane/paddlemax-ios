@@ -7,20 +7,18 @@ protocol HomeViewControllerDelegate: AnyObject {
     var connectionStatus: ConnectionStatus? { get set }
     var currentPeripheral: BLEPeripheral? { get set }
     var alertView: UIAlertController! { get set }
+    var cm: CBCentralManager? { get set }
 //    func onDeviceConnectionChange(_ peripheral:CBPeripheral)
 }
 
 
-class HomeViewController: UIViewController, DeviceListViewControllerDelegate, CBCentralManagerDelegate, UINavigationControllerDelegate, PinIOViewControllerDelegate {
- 
+class HomeViewController: UIViewController, DeviceListViewControllerDelegate, CBCentralManagerDelegate, PinIOViewControllerDelegate {
 
-    
     static let singleton = HomeViewController()
 
     var cm: CBCentralManager?
     fileprivate let cbcmQueue = DispatchQueue(label: "com.paddlemax.paddlemaxios.cbcmqueue", attributes: DispatchQueue.Attributes.concurrent)
 
-    var nav: UINavigationController!
     var deviceListViewController: DeviceListViewController!
     var pinIoViewController:PinIOViewController!
 
@@ -41,6 +39,10 @@ class HomeViewController: UIViewController, DeviceListViewControllerDelegate, CB
     // MARK: constructors
     override init(nibName nib: String?, bundle nibBundle: Bundle?) {
         super.init(nibName: "HomeViewController", bundle: Bundle.main)
+
+        connectionMode = ConnectionMode.none
+        connectionStatus = ConnectionStatus.idle
+
         connectedLabel = UILabel()
         connectButton = UIButton()
         connectButton.isHidden = false
@@ -70,7 +72,6 @@ class HomeViewController: UIViewController, DeviceListViewControllerDelegate, CB
             cm = CBCentralManager(delegate: self, queue: cbcmQueue)
         }
 
-
         connectButton.layer.cornerRadius = 8
         connectButton.layer.borderWidth = 1
         connectButton.layer.borderColor = BLUE.cgColor
@@ -80,9 +81,6 @@ class HomeViewController: UIViewController, DeviceListViewControllerDelegate, CB
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
-        self.navigationController!.navigationBar.isHidden = true
-        self.navigationController!.isToolbarHidden = true
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -101,8 +99,11 @@ class HomeViewController: UIViewController, DeviceListViewControllerDelegate, CB
     // MARK: event handlers
     @IBAction func connectButtonPressed(sender: AnyObject) {
         deviceListViewController = DeviceListViewController(aDelegate: self)
-        nav.pushViewController(deviceListViewController, animated: true)
+        present(deviceListViewController, animated: true, completion: { () -> Void in
+            self.deviceListViewController.startScan()
+        })
     }
+
     func alertDismissedOnError() {
         if (connectionStatus == ConnectionStatus.connected) {
             deviceListViewController.disconnect()
@@ -135,6 +136,10 @@ class HomeViewController: UIViewController, DeviceListViewControllerDelegate, CB
             connectedComponents()
         }
     }
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+
     // helpers for component refresh
     func bluetoothDisabledComponents() {
         self.connectedLabel.text = "Bluetooth disabled"
@@ -207,13 +212,7 @@ class HomeViewController: UIViewController, DeviceListViewControllerDelegate, CB
                 self.deviceListViewController.didFindPeripheral(peripheral, advertisementData: advertisementData, RSSI:RSSI)
             })
         }
-        if nav.topViewController == deviceListViewController
-               && advertisementData.isEmpty {
-//            DispatchQueue.main.sync(execute: { () -> Void in
-//                self.pushViewController(self.deviceListViewController)
-//            })
-            deviceListViewController.warningLabel.text = "No paddles found!"
-        }
+//        deviceListViewController.warningLabel.text = "No paddles found!"
     }
 
 
@@ -276,7 +275,6 @@ class HomeViewController: UIViewController, DeviceListViewControllerDelegate, CB
         }
 
         //if status was connected, then disconnect was unexpected by the user, show alert
-        let topVC = nav.topViewController
         //TODO: add record controller here
 //        if  connectionStatus == ConnectionStatus.connected && topVC!) {
         if connectionStatus == ConnectionStatus.connected {
@@ -321,7 +319,7 @@ class HomeViewController: UIViewController, DeviceListViewControllerDelegate, CB
 
     func respondToUnexpectedDisconnect() {
 
-        self.nav.popToRootViewController(animated: true)
+//        self.self.navigationController?.popToRootViewController(animated: true)
 
         //display disconnect alert
         let alert = UIAlertView(title:"Disconnected",
@@ -344,7 +342,7 @@ class HomeViewController: UIViewController, DeviceListViewControllerDelegate, CB
         pinIoViewController = PinIOViewController(delegate: self)
         pinIoViewController.didConnect()
 //        pinIoViewController.navigationItem.rightBarButtonItem = infoBarButton
-        nav.pushViewController(pinIoViewController, animated: true)
+//        self.navigationController?.pushViewController(pinIoViewController, animated: true)
     }
 
     func peripheralDidDisconnect() {
@@ -359,7 +357,7 @@ class HomeViewController: UIViewController, DeviceListViewControllerDelegate, CB
         }
 
         //if status was connected, then disconnect was unexpected by the user, show alert
-        let topVC = nav.topViewController
+//        let topVC = self.navigationController?.topViewController
         //TODO: implement record controller
 //        if  connectionStatus == ConnectionStatus.connected && isModuleController(topVC!) {
         if connectionStatus == ConnectionStatus.connected {
