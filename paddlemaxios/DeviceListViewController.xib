@@ -12,7 +12,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DeviceListViewController" customModule="paddlemaxios" customModuleProvider="target">
             <connections>
-                <outlet property="attributeCell" destination="JkO-yz-rpB" id="kPZ-QO-ZyA"/>
                 <outlet property="deviceCell" destination="9hq-Hj-3DE" id="bbI-jq-Fea"/>
                 <outlet property="tableView" destination="q4d-iJ-RdI" id="uRM-dk-MRS"/>
                 <outlet property="view" destination="4pg-hr-bCM" id="pAR-ne-Pj0"/>
@@ -75,116 +74,38 @@
                 <rect key="frame" x="0.0" y="0.0" width="299" height="47.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label autoresizesSubviews="NO" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="100" contentMode="left" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HC8-BS-Yeq" userLabel="nameLabel">
-                        <rect key="frame" x="50" y="7" width="165" height="24"/>
+                    <label autoresizesSubviews="NO" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="100" contentMode="left" misplaced="YES" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HC8-BS-Yeq" userLabel="nameLabel">
+                        <rect key="frame" x="48" y="11" width="55" height="24"/>
                         <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="---" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4W0-Ly-bcW" userLabel="rssiLabel">
-                        <rect key="frame" x="16" y="31" width="26" height="18"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="18" id="Ev0-OH-zql"/>
-                            <constraint firstAttribute="width" constant="26" id="VhY-Sw-i1N"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                        <color key="textColor" red="0.3333333432674408" green="0.3333333432674408" blue="0.3333333432674408" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <imageView userInteractionEnabled="NO" tag="104" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="signalStrength-0.png" translatesAutoresizingMaskIntoConstraints="NO" id="xxO-YE-opn">
-                        <rect key="frame" x="16" y="11" width="24" height="21"/>
+                    <imageView userInteractionEnabled="NO" tag="104" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="signalStrength-0.png" translatesAutoresizingMaskIntoConstraints="NO" id="xxO-YE-opn">
+                        <rect key="frame" x="16" y="14" width="24" height="21"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="24" id="vcM-4n-PXG"/>
                             <constraint firstAttribute="height" constant="21" id="xmX-fw-ESb"/>
                         </constraints>
                     </imageView>
-                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" tag="105" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UART capable" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="Yse-6t-Bpc" userLabel="uartCapableLabel">
-                        <rect key="frame" x="50" y="30" width="233" height="21"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="21" id="Efq-7E-6XE"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <color key="textColor" red="0.3333333432674408" green="0.3333333432674408" blue="0.3333333432674408" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <button opaque="NO" tag="103" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lcx-1A-9x9" userLabel="toggleButton">
-                        <rect key="frame" x="0.0" y="1" width="215" height="46"/>
-                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                        <state key="normal">
-                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        </state>
-                        <state key="highlighted">
-                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        </state>
-                    </button>
-                    <button opaque="NO" tag="102" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oLX-6Q-sPY" userLabel="connectButton">
-                        <rect key="frame" x="215" y="9" width="68" height="28"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="68" id="7Dw-N8-IXt"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                        <state key="normal" title="Connect">
-                            <color key="titleColor" red="0.27058823529999998" green="0.52941176469999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        </state>
+                    <button opaque="NO" tag="102" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tUM-il-9VE" userLabel="connectButton">
+                        <rect key="frame" x="0.0" y="0.0" width="299" height="48"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </button>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="centerY" secondItem="HC8-BS-Yeq" secondAttribute="centerY" constant="4" id="0Wp-6J-rkg"/>
-                    <constraint firstItem="oLX-6Q-sPY" firstAttribute="trailing" secondItem="qHX-Dw-Jr8" secondAttribute="trailingMargin" id="2Ev-pO-FkX"/>
-                    <constraint firstItem="oLX-6Q-sPY" firstAttribute="leading" secondItem="HC8-BS-Yeq" secondAttribute="trailing" id="5Ds-lJ-yOB"/>
-                    <constraint firstItem="Yse-6t-Bpc" firstAttribute="leading" secondItem="4W0-Ly-bcW" secondAttribute="trailing" constant="8" id="7Hc-We-bwK"/>
                     <constraint firstItem="xxO-YE-opn" firstAttribute="leading" secondItem="qHX-Dw-Jr8" secondAttribute="leadingMargin" id="C7b-4N-ZTc"/>
-                    <constraint firstItem="4W0-Ly-bcW" firstAttribute="top" secondItem="qHX-Dw-Jr8" secondAttribute="topMargin" constant="20" id="Epo-Vz-fpS"/>
-                    <constraint firstAttribute="centerY" secondItem="oLX-6Q-sPY" secondAttribute="centerY" id="K2I-tn-cp2"/>
-                    <constraint firstItem="Lcx-1A-9x9" firstAttribute="leading" secondItem="qHX-Dw-Jr8" secondAttribute="leading" id="P2f-7D-L6r"/>
-                    <constraint firstItem="Yse-6t-Bpc" firstAttribute="top" secondItem="qHX-Dw-Jr8" secondAttribute="topMargin" constant="19" id="XPp-th-re9"/>
-                    <constraint firstItem="oLX-6Q-sPY" firstAttribute="leading" secondItem="Lcx-1A-9x9" secondAttribute="trailing" id="bNe-fn-cJN"/>
                     <constraint firstItem="xxO-YE-opn" firstAttribute="top" secondItem="qHX-Dw-Jr8" secondAttribute="topMargin" id="eYl-ve-78h"/>
-                    <constraint firstItem="Yse-6t-Bpc" firstAttribute="trailing" secondItem="qHX-Dw-Jr8" secondAttribute="trailingMargin" id="jGa-1a-Yiv"/>
-                    <constraint firstItem="4W0-Ly-bcW" firstAttribute="leading" secondItem="qHX-Dw-Jr8" secondAttribute="leadingMargin" id="p6o-qa-uOs"/>
                     <constraint firstItem="HC8-BS-Yeq" firstAttribute="leading" secondItem="qHX-Dw-Jr8" secondAttribute="leadingMargin" constant="34" id="uPC-PD-87G"/>
-                    <constraint firstAttribute="bottom" secondItem="Lcx-1A-9x9" secondAttribute="bottom" id="vAf-fJ-GDR"/>
-                    <constraint firstItem="Lcx-1A-9x9" firstAttribute="top" secondItem="qHX-Dw-Jr8" secondAttribute="top" constant="1" id="x8m-Vc-nFf"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-            <point key="canvasLocation" x="-271.5" y="-438"/>
-        </tableViewCell>
-        <tableViewCell opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" rowHeight="22" id="JkO-yz-rpB" userLabel="Attribute Cell" customClass="AttributeCell" customModule="paddlemaxios" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="299" height="22"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="JkO-yz-rpB" id="0bF-Ap-o4e">
-                <rect key="frame" x="0.0" y="0.0" width="299" height="21.5"/>
-                <autoresizingMask key="autoresizingMask"/>
-                <subviews>
-                    <label autoresizesSubviews="NO" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="100" contentMode="left" text="Attribute" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AGT-Jw-Z8k" userLabel="Label - Name">
-                        <rect key="frame" x="16" y="4" width="267" height="15"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <color key="textColor" red="0.3333333432674408" green="0.3333333432674408" blue="0.3333333432674408" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    </label>
-                    <button opaque="NO" tag="103" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="skg-eV-n9d" userLabel="cellButton">
-                        <rect key="frame" x="0.0" y="0.0" width="299" height="15"/>
-                        <state key="normal">
-                            <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        </state>
-                    </button>
-                </subviews>
-                <constraints>
-                    <constraint firstAttribute="centerY" secondItem="AGT-Jw-Z8k" secondAttribute="centerY" constant="-1" id="Hwm-3f-GeV"/>
-                    <constraint firstItem="skg-eV-n9d" firstAttribute="leading" secondItem="0bF-Ap-o4e" secondAttribute="leading" id="K5O-qp-hNs"/>
-                    <constraint firstAttribute="trailing" secondItem="skg-eV-n9d" secondAttribute="trailing" id="QTy-go-JEB"/>
-                    <constraint firstItem="AGT-Jw-Z8k" firstAttribute="leading" secondItem="0bF-Ap-o4e" secondAttribute="leadingMargin" id="n2I-p3-K5Q"/>
-                    <constraint firstAttribute="bottom" secondItem="skg-eV-n9d" secondAttribute="bottom" constant="6" id="qFl-it-C8O"/>
-                    <constraint firstItem="AGT-Jw-Z8k" firstAttribute="trailing" secondItem="0bF-Ap-o4e" secondAttribute="trailingMargin" id="rhd-0d-fWk"/>
-                    <constraint firstItem="skg-eV-n9d" firstAttribute="top" secondItem="0bF-Ap-o4e" secondAttribute="top" id="wAf-ko-Wvx"/>
-                </constraints>
-            </tableViewCellContentView>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-            <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-            <point key="canvasLocation" x="-271.5" y="-354"/>
+            <connections>
+                <outlet property="connectButton" destination="tUM-il-9VE" id="nIy-xQ-pzP"/>
+                <outlet property="nameLabel" destination="HC8-BS-Yeq" id="ORI-dZ-Y5m"/>
+                <outlet property="signalImageView" destination="xxO-YE-opn" id="8SN-MZ-bqB"/>
+            </connections>
+            <point key="canvasLocation" x="-225.5" y="-298"/>
         </tableViewCell>
     </objects>
     <resources>

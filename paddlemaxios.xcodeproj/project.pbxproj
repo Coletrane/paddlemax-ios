@@ -20,7 +20,6 @@
 		648F26EED99FC774535AD6B5 /* PinIOViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F2E3A85ED450362C60362 /* PinIOViewController.swift */; };
 		648F28179D2B32E9AE414070 /* DeviceInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F20238A854F87EE475A95 /* DeviceInfoViewController.swift */; };
 		648F2832BDC064030B2ABCD9 /* ControllerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 648F2AE97A3813A0D35B99B0 /* ControllerViewController.xib */; };
-		648F2877F7E8AD95F5DE8187 /* AttributeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F281EAFCF96EED93F0081 /* AttributeCell.swift */; };
 		648F28DD237CF47DB27480AE /* GATT-characteristics.plist in Resources */ = {isa = PBXBuildFile; fileRef = 648F2EBCCB4C689400F5B991 /* GATT-characteristics.plist */; };
 		648F296E5EC081B294488CFA /* IntelHex2BinConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 648F2D7FA54AE2E0E3A36070 /* IntelHex2BinConverter.m */; };
 		648F2B1207EAB22054FCD2A7 /* BLEAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F20C93AFC396D372BDAE0 /* BLEAppDelegate.swift */; };
@@ -35,6 +34,8 @@
 		648F2EB963F71E4339E50FB3 /* PinIOViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 648F2A1DE9D9B0D84544ECC0 /* PinIOViewController.xib */; };
 		648F2F2FC6285AFCF2AD6733 /* HelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F2D61A196C62EC6B52CA4 /* HelpViewController.swift */; };
 		648F2F6A18A7EB499E2EF141 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F25803D43C33B0CD7A922 /* Constants.swift */; };
+		791CD51F1FBBE3F000F09089 /* QuickStat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791CD51E1FBBE3F000F09089 /* QuickStat.swift */; };
+		791CD5211FBBF46200F09089 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791CD5201FBBF46200F09089 /* Enums.swift */; };
 		793B2D371FB8AAF8002D407E /* engebrechtre bd it.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 793B2D361FB8AAF8002D407E /* engebrechtre bd it.ttf */; };
 		794CBF9E1FB8990400E10F08 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7984B8D41FAD341B00C911E8 /* Info.plist */; };
 		7984B8D01FAD341B00C911E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7984B8CF1FAD341B00C911E8 /* Assets.xcassets */; };
@@ -76,7 +77,6 @@
 		648F25803D43C33B0CD7A922 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		648F25E287FA3A89F8A2B318 /* BLESensorButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLESensorButton.swift; sourceTree = "<group>"; };
 		648F27C5CEB6B52AA5535550 /* ControllerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControllerViewController.swift; sourceTree = "<group>"; };
-		648F281EAFCF96EED93F0081 /* AttributeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttributeCell.swift; sourceTree = "<group>"; };
 		648F28D6C755EC0C67E8389E /* UARTViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UARTViewController.swift; sourceTree = "<group>"; };
 		648F2A1DE9D9B0D84544ECC0 /* PinIOViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PinIOViewController.xib; sourceTree = "<group>"; };
 		648F2A9C35C6B713B656919A /* DeviceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceCell.swift; sourceTree = "<group>"; };
@@ -94,6 +94,8 @@
 		648F2EBCCB4C689400F5B991 /* GATT-characteristics.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = "GATT-characteristics.plist"; sourceTree = "<group>"; };
 		648F2EE4F33414EE559BED94 /* DeviceListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DeviceListViewController.xib; sourceTree = "<group>"; };
 		648F2F2A3CED08FFC9322E5D /* XMLDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLDictionary.h; sourceTree = "<group>"; };
+		791CD51E1FBBE3F000F09089 /* QuickStat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuickStat.swift; sourceTree = "<group>"; };
+		791CD5201FBBF46200F09089 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		793B2D361FB8AAF8002D407E /* engebrechtre bd it.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "engebrechtre bd it.ttf"; path = "../../paddle-max-server/static/engebrechtre/engebrechtre bd it.ttf"; sourceTree = "<group>"; };
 		7984B8C51FAD341B00C911E8 /* paddlemaxios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = paddlemaxios.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7984B8CF1FAD341B00C911E8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -165,6 +167,7 @@
 		7984B8C71FAD341B00C911E8 /* paddlemaxios */ = {
 			isa = PBXGroup;
 			children = (
+				791CD51E1FBBE3F000F09089 /* QuickStat.swift */,
 				799CB59E1FB96C4200658E4F /* DeviceInfoViewController.xib */,
 				7984B8CF1FAD341B00C911E8 /* Assets.xcassets */,
 				7984B8D41FAD341B00C911E8 /* Info.plist */,
@@ -197,11 +200,11 @@
 				648F2F2A3CED08FFC9322E5D /* XMLDictionary.h */,
 				648F2574A915AAD6C6066E60 /* XMLDictionary.m */,
 				7984B8F61FAD38E900C911E8 /* paddlemaxios-Bridging-Header.h */,
-				648F281EAFCF96EED93F0081 /* AttributeCell.swift */,
 				648F2D26865DCB17A772B7E1 /* PinCell.swift */,
 				648F2DE5E40B46459A71B405 /* HomeViewController.swift */,
 				648F2054998EEAE80E920DAA /* HomeViewController.xib */,
 				648F2EE4F33414EE559BED94 /* DeviceListViewController.xib */,
+				791CD5201FBBF46200F09089 /* Enums.swift */,
 			);
 			path = paddlemaxios;
 			sourceTree = "<group>";
@@ -384,11 +387,12 @@
 				648F296E5EC081B294488CFA /* IntelHex2BinConverter.m in Sources */,
 				648F26EED99FC774535AD6B5 /* PinIOViewController.swift in Sources */,
 				648F203E5E9543492CBDCB54 /* SensorValueCell.swift in Sources */,
+				791CD51F1FBBE3F000F09089 /* QuickStat.swift in Sources */,
 				648F2DBE0A2E77C9A948E739 /* UARTViewController.swift in Sources */,
 				648F255C8DF02AEB54BC3DBB /* Utility.m in Sources */,
 				648F2B787CC1D191B0AD9ABD /* XMLDictionary.m in Sources */,
-				648F2877F7E8AD95F5DE8187 /* AttributeCell.swift in Sources */,
 				648F2D1056CDFA9AA35B10B7 /* PinCell.swift in Sources */,
+				791CD5211FBBF46200F09089 /* Enums.swift in Sources */,
 				648F266C818C3C1BAB766AFD /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

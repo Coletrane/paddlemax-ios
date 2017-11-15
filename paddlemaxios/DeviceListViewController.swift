@@ -6,7 +6,7 @@ protocol DeviceListViewControllerDelegate: HomeViewControllerDelegate {
 
 }
 
-class DeviceListViewController : UIViewController, UITableViewDelegate, UITableViewDataSource, BLEPeripheralDelegate, UINavigationControllerDelegate {
+class DeviceListViewController : UIViewController, UITableViewDelegate, UITableViewDataSource, BLEPeripheralDelegate, UINavigationControllerDelegate, DeviceCellDelegate {
 
     var delegate: DeviceListViewControllerDelegate?
 
@@ -14,9 +14,9 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
     @IBOutlet var tableView: UITableView!
     //    @IBOutlet var helpViewController: HelpViewController!
     @IBOutlet var deviceCell: DeviceCell!
-    @IBOutlet var attributeCell: AttributeCell!
+    
     @IBOutlet var warningLabel: UILabel!
-
+    
     var devices: [BLEDevice] = []
 
     fileprivate var tableIsLoading = false
@@ -56,12 +56,6 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.signalImages = [UIImage](arrayLiteral: UIImage(named: "signalStrength-0.png")!,
-            UIImage(named: "signalStrength-1.png")!,
-            UIImage(named: "signalStrength-2.png")!,
-            UIImage(named: "signalStrength-3.png")!,
-            UIImage(named: "signalStrength-4.png")!)
 
         tableView.delegate = self
         tableView.dataSource = self
@@ -247,48 +241,30 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
                 return testCell!
             }
 
-            //Create Device Cell from NIB
-            let cellData = NSKeyedArchiver.archivedData(withRootObject: deviceCell)
-            let cell: DeviceCell = NSKeyedUnarchiver.unarchiveObject(with: cellData) as! DeviceCell
+//            //Create Device Cell from NIB
+//            let cellData = NSKeyedArchiver.archivedData(withRootObject: deviceCell)
+//            let cell: DeviceCell = NSKeyedUnarchiver.unarchiveObject(with: cellData) as! DeviceCell
+            let cell = DeviceCell(aDelegate: self)
 
-            //Assign properties via view tags set in IB
-            cell.nameLabel = cell.viewWithTag(100) as! UILabel
-            cell.rssiLabel = cell.viewWithTag(101) as! UILabel
-            cell.connectButton = cell.viewWithTag(102) as! UIButton
-            cell.connectButton.addTarget(self, action: #selector(self.connectButtonTapped(_:)), for: UIControlEvents.touchUpInside)
-            cell.connectButton.layer.cornerRadius = 4.0
-            cell.toggleButton = cell.viewWithTag(103) as! UIButton
-            cell.toggleButton.addTarget(self, action: #selector(self.cellButtonTapped(_:)), for: UIControlEvents.touchUpInside)
-            cell.signalImageView = cell.viewWithTag(104) as! UIImageView
-            cell.uartCapableLabel = cell.viewWithTag(105) as! UILabel
-            //set tag to indicate digital pin number
-            cell.toggleButton.tag = indexPath.section   // Button tags are now device indexes, not view references
-            cell.connectButton.tag = indexPath.section
-            cell.signalImages = signalImages
+//            cell.nameLabel = cell.viewWithTag(100) as! UILabel
+//            cell.connectButton = cell.viewWithTag(102) as! UIButton
+//            cell.connectButton.addTarget(self, action: #selector(self.connectButtonTapped(_:)), for: UIControlEvents.touchUpInside)
+//            cell.connectButton.layer.cornerRadius = 4.0
+//            cell.signalImageView = cell.viewWithTag(104) as! UIImageView
+//            //set tag to indicate digital pin number
+//            cell.connectButton.tag = indexPath.section
+//            cell.signalImages = signalImages
 
 
             //Ensure cell is within device array range
             if indexPath.section <= (devices.count - 1) {
                 devices[indexPath.section].deviceCell = cell
             }
-            return cell
-        }
-
-        //Attribute Cell
-        else {
-            //Create Device Cell from NIB
-            let cellData = NSKeyedArchiver.archivedData(withRootObject: attributeCell)
-            let cell: AttributeCell = NSKeyedUnarchiver.unarchiveObject(with: cellData) as! AttributeCell
-
-            //Assign properties via tags
-            cell.label = cell.viewWithTag(100) as! UILabel
-            cell.button = cell.viewWithTag(103) as! UIButton
-            cell.button.addTarget(self, action: #selector(self.selectAttributeCell(_:)), for: UIControlEvents.touchUpInside)
-            cell.dataStrings = devices[indexPath.section].advertisementArray[indexPath.row - 1]
 
             return cell
+        } else {
+            return UITableViewCell()
         }
-
     }
 
 
@@ -381,46 +357,6 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
 
     }
 
-
-    @objc func selectAttributeCell(_ sender: UIButton) {
-
-        let indexPath = indexPathForSubview(sender)
-
-        let cell = tableView.cellForRow(at: indexPath) as! AttributeCell
-
-        tableView.selectRow(at: indexPath, animated: true, scrollPosition: UITableViewScrollPosition.none)
-
-        //Show full view of attribute data
-        let ttl = cell.dataStrings[0]
-        var msg = ""
-        for s in cell.dataStrings { //compose message from attribute strings
-            if s == "nil" || s == ttl {
-                continue
-            } else {
-                msg += "\n"
-                msg += s
-            }
-        }
-
-        let style = UIAlertControllerStyle.alert
-        let alertController = UIAlertController(title: ttl, message: msg, preferredStyle: style)
-
-
-        // Cancel button
-        let aaCancel = UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel) { (aa: UIAlertAction!) -> Void in
-        }
-        alertController.addAction(aaCancel)
-
-        // Info button
-//        let aaInfo = UIAlertAction(title: "Info", style: UIAlertActionStyle.Default) { (aa:UIAlertAction!) -> Void in
-//            self.connectInMode(delegate?.connectionMode.Info, peripheral: device.peripheral)
-//    }
-
-        self.present(alertController, animated: true) { () -> Void in
-
-        }
-
-    }
 
     func stopScan() {
 

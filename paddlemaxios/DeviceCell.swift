@@ -1,18 +1,41 @@
 import UIKit
 
+protocol DeviceCellDelegate: AnyObject {
+
+}
+
 class DeviceCell: UITableViewCell {
     
-    var nameLabel:UILabel!
-    var toggleButton:UIButton!
-    var rssiLabel:UILabel!
-    var uartCapableLabel:UILabel!
-    var signalImageView:UIImageView!
+    @IBOutlet var nameLabel:UILabel!
+    @IBOutlet var connectButton:UIButton!
+    @IBOutlet var signalImageView:UIImageView!
     var signalImages:[UIImage]!
+    
     fileprivate var lastSigIndex = -1
     fileprivate var lastSigUpdate:Double = Date.timeIntervalSinceReferenceDate
     fileprivate let updateIntvl = 3.0
-    var connectButton:UIButton!
     var isOpen:Bool = false
+
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+
+        nameLabel = UILabel()
+        connectButton = UIButton()
+        signalImageView = UIImageView()
+        self.signalImages = [UIImage](arrayLiteral: UIImage(named: "signalStrength-0.png")!,
+            UIImage(named: "signalStrength-1.png")!,
+            UIImage(named: "signalStrength-2.png")!,
+            UIImage(named: "signalStrength-3.png")!,
+            UIImage(named: "signalStrength-4.png")!)
+    }
+
+    convenience init(aDelegate: DeviceCellDelegate) {
+        self.init(style: UITableViewCellStyle.default, reuseIdentifier: nil)
+    }
+
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)!
+    }
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -37,12 +60,10 @@ class DeviceCell: UITableViewCell {
         }
         
         let rssiInt = RSSI.intValue
-        var rssiString = RSSI.stringValue
         var index = 0
         
         if rssiInt == 127 {     // value of 127 reserved for RSSI not available
             index = 0
-            rssiString = "N/A"
         }
         else if rssiInt <= -84 {
             index = 0
@@ -61,7 +82,6 @@ class DeviceCell: UITableViewCell {
         }
      
         if index != lastSigIndex {
-            rssiLabel.text = rssiString
             signalImageView.image = signalImages[index]
             lastSigIndex = index
             lastSigUpdate = now

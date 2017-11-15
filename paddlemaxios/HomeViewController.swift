@@ -9,11 +9,12 @@ protocol HomeViewControllerDelegate: AnyObject {
     var alertView: UIAlertController! { get set }
     var cm: CBCentralManager? { get set }
     func dismissDeviceList()
+    func setQuickStatLabels(timePeriod: TimePeriod, quickStat: QuickStatValue)
 //    func onDeviceConnectionChange(_ peripheral:CBPeripheral)
 }
 
 
-class HomeViewController: UIViewController, DeviceListViewControllerDelegate, CBCentralManagerDelegate, PinIOViewControllerDelegate {
+class HomeViewController: UIViewController, DeviceListViewControllerDelegate, CBCentralManagerDelegate, PinIOViewControllerDelegate, QuickStatDelegate, DeviceCellDelegate {
 
     static let singleton = HomeViewController()
 
@@ -36,12 +37,23 @@ class HomeViewController: UIViewController, DeviceListViewControllerDelegate, CB
     @IBOutlet var pageControl: UIPageControl!
     @IBOutlet var logoImage: UIImageView!
 
+    @IBOutlet var quickStatView: QuickStat!
+    @IBOutlet var timePeriodLabel: UILabel!
+    @IBOutlet var quickStatLabel: UILabel!
+    @IBOutlet var quickStatButton: UIButton!
+    
     var alertView: UIAlertController!
 
     // MARK: constructors
     override init(nibName nib: String?, bundle nibBundle: Bundle?) {
         super.init(nibName: "HomeViewController", bundle: Bundle.main)
 
+        quickStatView = QuickStat(aDelegate: self)
+        timePeriodLabel = UILabel()
+        quickStatLabel = UILabel()
+        quickStatButton = UIButton()
+
+        // TODO: check if device is already connected
         connectionMode = ConnectionMode.none
         connectionStatus = ConnectionStatus.idle
 
@@ -91,7 +103,7 @@ class HomeViewController: UIViewController, DeviceListViewControllerDelegate, CB
     }
 
     func helpViewControllerDidFinish(_ controller: HelpViewController) {
-        //
+        //TODO: implement help
     }
 
     // MARK: view controller navigation
@@ -102,6 +114,10 @@ class HomeViewController: UIViewController, DeviceListViewControllerDelegate, CB
         })
     }
 
+    func setQuickStatLabels(timePeriod period: TimePeriod, quickStat stat: QuickStatValue) {
+        timePeriodLabel.text = "\(period):"
+        quickStatLabel.text = "\(stat):"
+    }
     func dismissDeviceList() {
         deviceListViewController.dismiss(animated: true)
         refreshConnectionStatusComponents()
@@ -157,6 +173,10 @@ class HomeViewController: UIViewController, DeviceListViewControllerDelegate, CB
         connectedLabel.text = "You are connected to your paddle!"
         connectButton.isHidden = true
         logoImage.isHidden = true
+    }
+
+    @IBAction func quickStatButtonPressed() {
+        printLog(self, funcName: #function, logString: "quick stat button was pressed!")
     }
 
     func alertBluetoothPowerOff() {

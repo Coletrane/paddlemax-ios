@@ -29,7 +29,6 @@ class BLEDevice {
             deviceCell?.nameLabel.text = self.name
             deviceCell?.connectButton.isHidden = !(self.connectableBool)
             deviceCell?.updateSignalImage(RSSI)
-            deviceCell?.uartCapableLabel.isHidden = !self.isUART
         }
     }
     
