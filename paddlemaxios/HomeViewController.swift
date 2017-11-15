@@ -8,6 +8,7 @@ protocol HomeViewControllerDelegate: AnyObject {
     var currentPeripheral: BLEPeripheral? { get set }
     var alertView: UIAlertController! { get set }
     var cm: CBCentralManager? { get set }
+    func dismissDeviceList()
 //    func onDeviceConnectionChange(_ peripheral:CBPeripheral)
 }
 
@@ -33,6 +34,7 @@ class HomeViewController: UIViewController, DeviceListViewControllerDelegate, CB
     @IBOutlet var connectedLabel: UILabel!
     @IBOutlet var connectButton: UIButton!
     @IBOutlet var pageControl: UIPageControl!
+    @IBOutlet var logoImage: UIImageView!
 
     var alertView: UIAlertController!
 
@@ -76,7 +78,7 @@ class HomeViewController: UIViewController, DeviceListViewControllerDelegate, CB
         connectButton.layer.cornerRadius = 8
         connectButton.layer.borderWidth = 1
         connectButton.layer.borderColor = BLUE.cgColor
-        pageControl.currentPage = 1
+        pageControl.currentPage = 0
         refreshConnectionStatusComponents()
     }
 
@@ -86,23 +88,23 @@ class HomeViewController: UIViewController, DeviceListViewControllerDelegate, CB
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-
-        connectedLabel.isHidden = true
-        connectButton.isHidden = true
-        logo.isHidden = true
-        logoLabel.isHidden = true
     }
 
     func helpViewControllerDidFinish(_ controller: HelpViewController) {
         //
     }
 
-    // MARK: event handlers
+    // MARK: view controller navigation
     @IBAction func connectButtonPressed(sender: AnyObject) {
         deviceListViewController = DeviceListViewController(aDelegate: self)
         present(deviceListViewController, animated: true, completion: { () -> Void in
             self.deviceListViewController.startScan()
         })
+    }
+
+    func dismissDeviceList() {
+        deviceListViewController.dismiss(animated: true)
+        refreshConnectionStatusComponents()
     }
 
     func alertDismissedOnError() {
@@ -126,6 +128,9 @@ class HomeViewController: UIViewController, DeviceListViewControllerDelegate, CB
     }
 
     // MARK: view manipulation
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     func refreshConnectionStatusComponents() {
 
         if (cm?.state == CBManagerState.poweredOff) {
@@ -137,23 +142,21 @@ class HomeViewController: UIViewController, DeviceListViewControllerDelegate, CB
             connectedComponents()
         }
     }
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-
     // helpers for component refresh
     func bluetoothDisabledComponents() {
-        self.connectedLabel.text = "Bluetooth disabled"
+        connectedLabel.text = "Bluetooth disabled"
     }
 
     func notConnectedComponents() {
-        self.connectedLabel.text = "You are not currently connected to your paddle"
-        self.connectButton.isHidden = false
+        connectedLabel.text = "You are not currently connected to your paddle"
+        connectButton.isHidden = false
+        logoImage.isHidden = false
     }
 
     func connectedComponents() {
-        self.connectedLabel.text = "You are connected to your paddle!"
-        self.connectButton.isHidden = true
+        connectedLabel.text = "You are connected to your paddle!"
+        connectButton.isHidden = true
+        logoImage.isHidden = true
     }
 
     func alertBluetoothPowerOff() {

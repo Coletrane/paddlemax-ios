@@ -21,6 +21,7 @@
                 <outlet property="connectButton" destination="qa7-gL-arY" id="4lv-jV-AYc"/>
                 <outlet property="connectedLabel" destination="oLs-8F-Kav" id="SBj-bF-AVR"/>
                 <outlet property="logo" destination="pnr-ba-c0Z" id="45Y-le-ncU"/>
+                <outlet property="logoImage" destination="pnr-ba-c0Z" id="MMA-ro-MFa"/>
                 <outlet property="logoLabel" destination="mDM-qs-DNz" id="wl1-Ze-8A0"/>
                 <outlet property="pageControl" destination="ymf-Lt-5Ij" id="G4O-UA-DCJ"/>
                 <outlet property="view" destination="iN0-l3-epB" id="SJL-BC-qse"/>
@@ -80,12 +81,19 @@
                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <pageControl contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" currentPage="1" translatesAutoresizingMaskIntoConstraints="NO" id="ymf-Lt-5Ij">
-                    <rect key="frame" x="141" y="461" width="39" height="161"/>
+                <pageControl contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="2" translatesAutoresizingMaskIntoConstraints="NO" id="ymf-Lt-5Ij">
+                    <rect key="frame" x="149" y="461" width="23" height="161"/>
                     <color key="tintColor" red="0.030997481519692838" green="1" blue="0.77071029047499762" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     <color key="pageIndicatorTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <color key="currentPageIndicatorTintColor" red="0.27058823529999998" green="0.52941176469999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </pageControl>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="This Week:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SZ0-hG-yhC">
+                    <rect key="frame" x="35" y="81" width="85" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <constraints>
                 <constraint firstItem="mDM-qs-DNz" firstAttribute="trailing" secondItem="qa7-gL-arY" secondAttribute="trailing" id="09H-u2-MVW"/>

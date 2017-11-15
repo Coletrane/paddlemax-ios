@@ -137,10 +137,10 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
     func connectInMode(_ mode: ConnectionMode, peripheral: CBPeripheral) {
         self.connectPeripheral(peripheral, mode: mode)
 //        switch mode {
-//        case delegate!.connectionMode.uart,
-//             delegate!.connectionMode.pinIO,
-//             delegate!.connectionMode.info,
-//             delegate!.connectionMode.controller:
+//        case delegate?.connectionMode.uart,
+//             delegate?.connectionMode.pinIO,
+//             delegate?.connectionMode.info,
+//             delegate?.connectionMode.controller:
 //            self.connectPeripheral(peripheral, mode: mode)
 //        default:
 //            break
@@ -413,7 +413,7 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
 
         // Info button
 //        let aaInfo = UIAlertAction(title: "Info", style: UIAlertActionStyle.Default) { (aa:UIAlertAction!) -> Void in
-//            self.connectInMode(delegate!.connectionMode.Info, peripheral: device.peripheral)
+//            self.connectInMode(delegate?.connectionMode.Info, peripheral: device.peripheral)
 //    }
 
         self.present(alertController, animated: true) { () -> Void in
@@ -424,7 +424,7 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
 
     func stopScan() {
 
-        if (delegate!.connectionMode == ConnectionMode.none) {
+        if (delegate?.connectionMode == ConnectionMode.none) {
             delegate?.cm?.stopScan()
             scanIndicator?.stopAnimating()
 
@@ -435,7 +435,7 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
                 }
             }
 
-            delegate!.connectionStatus = ConnectionStatus.idle
+            delegate?.connectionStatus = ConnectionStatus.idle
             scanButtonItem?.title = "Scan for peripherals"
         }
 
@@ -462,7 +462,7 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
         }
 
         scanIndicator?.startAnimating()
-        delegate!.connectionStatus = ConnectionStatus.scanning
+        delegate?.connectionStatus = ConnectionStatus.scanning
         scanButtonItem?.title = "Scanning"
     }
 
@@ -478,22 +478,16 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
 
         connectionTimer?.invalidate()
 
-        if delegate?.cm == nil {
-            //            println(self.description)
-            printLog(self, funcName: (#function), logString: "No central Manager found, unable to connect peripheral")
-            return
-        }
-
         stopScan()
 
         //Show connection activity alert view
         let alert = UIAlertController(title: "Connecting …", message: nil, preferredStyle: UIAlertControllerStyle.alert)
-        //        let aaCancel = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler:{ (aa:UIAlertAction!) -> Void in
-        //            self.currentAlertView = nil
-        //            self.abortConnection()
-        //        })
-        //        alert.addAction(aaCancel)
-        delegate!.alertView = alert
+                let aaCancel = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler:{ (aa:UIAlertAction!) -> Void in
+                    self.delegate?.alertView.dismiss(animated: true)
+                    self.abortConnection()
+                })
+                alert.addAction(aaCancel)
+        delegate?.alertView = alert
         self.present(alert, animated: true, completion: nil)
 
         //Cancel any current or pending connection to the peripheral
@@ -502,11 +496,11 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
         }
 
         //Connect
-        delegate!.currentPeripheral = BLEPeripheral(peripheral: peripheral, delegate: self)
+        delegate?.currentPeripheral = BLEPeripheral(peripheral: peripheral, delegate: self)
         delegate?.cm?.connect(peripheral, options: [CBConnectPeripheralOptionNotifyOnDisconnectionKey: NSNumber(value: true as Bool)])
 
-        delegate!.connectionMode = mode
-        delegate!.connectionStatus = ConnectionStatus.connecting
+        delegate?.connectionMode = CONNECTION_MODE
+        delegate?.connectionStatus = ConnectionStatus.connecting
 
         // Start connection timeout timer
         connectionTimer = Timer.scheduledTimer(timeInterval: connectionTimeOutIntvl, target: self, selector: #selector(self.connectionTimedOut(_:)), userInfo: nil, repeats: false)
@@ -523,7 +517,7 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
 
     @objc func toggleScan(_ sender:UIBarButtonItem?){
 
-        if delegate!.connectionStatus == ConnectionStatus.scanning {
+        if delegate?.connectionStatus == ConnectionStatus.scanning {
             stopScan()
         }
         else {
@@ -534,16 +528,14 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
 
     @objc func connectionTimedOut(_ timer:Timer) {
 
-        if delegate!.connectionStatus != ConnectionStatus.connecting {
+        if delegate?.connectionStatus != ConnectionStatus.connecting {
             return
         }
 
-        //dismiss "Connecting" alert view
-        if delegate!.alertView != nil {
-            delegate!.alertView.dismiss(animated: true, completion: nil)
+        if delegate?.alertView != nil {
+            delegate?.alertView.dismiss(animated: true, completion: nil)
         }
 
-        //Cancel current connection
         abortConnection()
 
         //Notify user that connection timed out
@@ -559,12 +551,12 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
 
         connectionTimer?.invalidate()
 
-        if (delegate?.cm != nil) && (delegate!.currentPeripheral != nil) {
-            delegate?.cm?.cancelPeripheralConnection(delegate!.currentPeripheral!.currentPeripheral)
+        if (delegate?.cm != nil) && (delegate?.currentPeripheral != nil) {
+            delegate?.cm?.cancelPeripheralConnection((delegate?.currentPeripheral?.currentPeripheral!)!)
         }
 
-        delegate!.connectionMode = ConnectionMode.none
-        delegate!.connectionStatus = ConnectionStatus.idle
+        delegate?.connectionMode = ConnectionMode.none
+        delegate?.connectionStatus = ConnectionStatus.idle
     }
 
 
@@ -577,25 +569,25 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
             return
         }
 
-        else if delegate!.currentPeripheral == nil {
+        else if delegate?.currentPeripheral == nil {
             printLog(self, funcName: (#function), logString: "No current peripheral found, unable to disconnect peripheral")
             return
         }
 
         //Cancel any current or pending connection to the peripheral
-        let peripheralState = delegate!.currentPeripheral!.currentPeripheral.state
+        let peripheralState = delegate?.currentPeripheral!.currentPeripheral.state
         if peripheralState == CBPeripheralState.connected || peripheralState == CBPeripheralState.connecting {
-            delegate?.cm?.cancelPeripheralConnection(delegate!.currentPeripheral!.currentPeripheral)
+            delegate?.cm?.cancelPeripheralConnection((delegate?.currentPeripheral?.currentPeripheral!)!)
         }
 
     }
 
 
     func alertDismissedOnError() {
-        if (delegate!.connectionStatus == ConnectionStatus.connected) {
+        if (delegate?.connectionStatus == ConnectionStatus.connected) {
             disconnect()
         }
-        else if (delegate!.connectionStatus == ConnectionStatus.scanning){
+        else if (delegate?.connectionStatus == ConnectionStatus.scanning){
 
             if delegate?.cm == nil {
                 printLog(self, funcName: "alertView clickedButtonAtIndex", logString: "No central Manager found, unable to stop scan")
@@ -605,8 +597,8 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
             stopScan()
         }
 
-        delegate!.connectionStatus = ConnectionStatus.idle
-        delegate!.connectionMode = ConnectionMode.none
+        delegate?.connectionStatus = ConnectionStatus.idle
+        delegate?.connectionMode = ConnectionMode.none
 
         //alert dismisses automatically @ return
     }
@@ -616,8 +608,8 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
     func didReceiveData(_ newData: Data) {
         printLog(self, funcName: "didReceiveData", logString: "\(newData.hexRepresentationWithSpaces(true))")
 
-        if (delegate!.connectionStatus == ConnectionStatus.connected ) {
-//            delegate!.pinIoViewController.receiveData(newData)
+        if (delegate?.connectionStatus == ConnectionStatus.connected ) {
+//            delegate?.pinIoViewController.receiveData(newData)
         }
         else {
             printLog(self, funcName: "didReceiveData", logString: "Received data without connection")
@@ -627,31 +619,29 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
     func connectionFinalized() {
 
         //Bail if we aren't in the process of connecting
-        if delegate!.connectionStatus != ConnectionStatus.connecting {
+        if delegate?.connectionStatus != ConnectionStatus.connecting {
             printLog(self, funcName: "connectionFinalized", logString: "with incorrect state")
             return
         }
 
-        if (delegate!.currentPeripheral == nil) {
-            printLog(self, funcName: "connectionFinalized", logString: "Unable to start info w nil delegate!.currentPeripheral")
+        if (delegate?.currentPeripheral == nil) {
+            printLog(self, funcName: "connectionFinalized", logString: "Unable to start info w nil delegate?.currentPeripheral")
             return
         }
 
         connectionTimer?.invalidate()
 
-        delegate!.connectionStatus = ConnectionStatus.connecting
+        delegate?.connectionStatus = ConnectionStatus.connecting
 
-//        self.launchPinIOViewController()
+        delegate?.alertView.dismiss(animated: true)
+        delegate?.dismissDeviceList()
     }
 
     func uartDidEncounterError(_ error: NSString) {
 
-        //Dismiss "scanning …" alert view if shown
-        if (delegate!.alertView != nil) {
-            delegate!.alertView.dismiss(animated: true, completion: { () -> Void in
-                self.alertDismissedOnError()
-            })
-        }
+        delegate?.alertView.dismiss(animated: true, completion: { () -> Void in
+            self.alertDismissedOnError()
+        })
 
         //Display error alert
         let alert = UIAlertController(title: "Error", message: error as String, preferredStyle: UIAlertControllerStyle.alert)
@@ -659,6 +649,4 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
         alert.addAction(aaOK)
         self.present(alert, animated: true, completion: nil)
     }
-
-
 }
