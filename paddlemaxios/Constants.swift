@@ -6,7 +6,7 @@ let PIN = 14
 let ANALOG_PIN = 0
 let NAME = "BLE_Firmata"
 
-//Color Palette
+// Color Palette
 let DARK_BLUE = UIColor(0x2458ff)
 let BLUE = UIColor(0x4587ff)
 let LIGHT_BLUE = UIColor(0x54b0ff)
@@ -14,6 +14,10 @@ let DARK_PURPLE = UIColor(0x780fff)
 let PURPLE = UIColor(0x7e41ff)
 let LIGHT_PURPLE = UIColor(0x746eff)
 let GREY = UIColor(0x5c5e5c)
+
+// User settings keys
+let QUICK_STAT_TIME = "quickStatTime"
+let QUICK_STAT_SETTING = "quickStatSetting"
 
 //System Variables
 let CURRENT_DEVICE = UIDevice.current

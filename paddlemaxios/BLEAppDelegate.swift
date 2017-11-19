@@ -24,7 +24,8 @@ class BLEAppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
 
     
     var window:UIWindow?
-    var homeViewController: HomeViewController?
+
+    var tabBarController: UITabBarController!
 
     required override init() {
         super.init()
@@ -35,9 +36,10 @@ class BLEAppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
         
         window = UIWindow(frame: UIScreen.main.bounds)
 
-        homeViewController = HomeViewController(nibName: "HomeViewController", bundle: Bundle.main)
+        tabBarController = TabBarController()
 
-        window!.rootViewController = homeViewController
+        // TODO: check if user is logged in
+        window!.rootViewController = tabBarController
         window!.makeKeyAndVisible()
 
         let center = UNUserNotificationCenter.current()

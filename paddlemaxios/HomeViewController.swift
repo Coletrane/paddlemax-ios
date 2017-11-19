@@ -2,6 +2,36 @@ import Foundation
 import UIKit
 import CoreBluetooth
 
+enum TimePeriod: String {
+    case oneWeek    = "This Week"
+    case twoWeeks   = "Past 2 Weeks"
+    case oneMonth   = "This Month"
+    case threeMonth = "Past 3 Months"
+    case sixMonth   = "Past 6 Months"
+    case oneYear    = "This Year"
+
+    static let array: Array<String> = [
+        oneWeek.rawValue,
+        twoWeeks.rawValue,
+        oneMonth.rawValue,
+        threeMonth.rawValue,
+        sixMonth.rawValue,
+        oneYear.rawValue
+    ]
+}
+
+enum QuickStatValue: String {
+    case distance   = "Distance"
+    case power      = "Power"
+    case time       = "Time"
+
+    static let array: Array<String> = [
+        distance.rawValue,
+        power.rawValue,
+        time.rawValue
+    ]
+}
+
 protocol HomeViewControllerDelegate: AnyObject {
     var connectionMode: ConnectionMode? { get set }
     var connectionStatus: ConnectionStatus? { get set }
@@ -9,49 +39,68 @@ protocol HomeViewControllerDelegate: AnyObject {
     var alertView: UIAlertController! { get set }
     var cm: CBCentralManager? { get set }
     func dismissDeviceList()
-    func setQuickStatLabels(timePeriod: TimePeriod, quickStat: QuickStatValue)
 //    func onDeviceConnectionChange(_ peripheral:CBPeripheral)
 }
 
 
-class HomeViewController: UIViewController, DeviceListViewControllerDelegate, CBCentralManagerDelegate, PinIOViewControllerDelegate, QuickStatDelegate, DeviceCellDelegate {
+class HomeViewController: UIViewController,
+        DeviceListViewControllerDelegate,
+        CBCentralManagerDelegate,
+        PinIOViewControllerDelegate,
+        UIPickerViewDelegate {
 
     static let singleton = HomeViewController()
 
     var cm: CBCentralManager?
-    fileprivate let cbcmQueue = DispatchQueue(label: "com.paddlemax.paddlemaxios.cbcmqueue", attributes: DispatchQueue.Attributes.concurrent)
+    fileprivate let cbcmQueue = DispatchQueue(
+            label: "com.paddlemax.paddlemaxios.cbcmqueue",
+            attributes: DispatchQueue.Attributes.concurrent)
 
+    // View controllers
     var deviceListViewController: DeviceListViewController!
     var pinIoViewController:PinIOViewController!
 
     var delegate: HomeViewControllerDelegate?
 
+    // Enum values
     var connectionMode: ConnectionMode?
     var connectionStatus: ConnectionStatus?
     var currentPeripheral: BLEPeripheral?
 
+    // Quick stat variables
+    fileprivate var timePeriod: TimePeriod!
+    fileprivate var timePeriodPickerValue: Int!
+    fileprivate let timePeriodPickerItems = TimePeriod.array
+    fileprivate var quickStatValue: QuickStatValue!
+    fileprivate var quickStat: Double!
+    fileprivate var quickStatPickerValue: Int!
+    fileprivate let quickStatPickerItems = QuickStatValue.array
+
+    // General outlets
     @IBOutlet var logo: UIImageView!
     @IBOutlet var logoLabel: UILabel!
-    @IBOutlet var connectedLabel: UILabel!
-    @IBOutlet var connectButton: UIButton!
-    @IBOutlet var pageControl: UIPageControl!
     @IBOutlet var logoImage: UIImageView!
 
-    @IBOutlet var quickStatView: QuickStat!
-    @IBOutlet var timePeriodLabel: UILabel!
+    // Connection related outlets
+    @IBOutlet var connectedLabel: UILabel!
+    @IBOutlet var connectButton: UIButton!
+
+    // Quick stat related outlets
+    @IBOutlet var setQuickStatButton: UIButton!
+    @IBOutlet var confirmQuickStatButton: UIButton!
     @IBOutlet var quickStatLabel: UILabel!
-    @IBOutlet var quickStatButton: UIButton!
-    
+    @IBOutlet var quickStatPicker: UIPickerView!
+    @IBOutlet var timePeriodLabel: UILabel!
+    @IBOutlet var timePeriodPicker: UIPickerView!
+
+
     var alertView: UIAlertController!
 
     // MARK: constructors
-    override init(nibName nib: String?, bundle nibBundle: Bundle?) {
-        super.init(nibName: "HomeViewController", bundle: Bundle.main)
-
-        quickStatView = QuickStat(aDelegate: self)
-        timePeriodLabel = UILabel()
-        quickStatLabel = UILabel()
-        quickStatButton = UIButton()
+    convenience init() {
+        self.init(
+                nibName: "HomeViewController",
+                bundle: Bundle.main)
 
         // TODO: check if device is already connected
         connectionMode = ConnectionMode.none
@@ -59,8 +108,16 @@ class HomeViewController: UIViewController, DeviceListViewControllerDelegate, CB
 
         connectedLabel = UILabel()
         connectButton = UIButton()
+        quickStatLabel = UILabel()
+        quickStatPicker = UIPickerView()
+        timePeriodLabel = UILabel()
+        timePeriodPicker = UIPickerView()
+        setQuickStatButton = UIButton()
+        confirmQuickStatButton = UIButton()
+    }
 
-        connectButton.isHidden = false
+    override init(nibName nib: String?, bundle nibBundle: Bundle?) {
+        super.init(nibName: nib, bundle: nibBundle)
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -74,7 +131,9 @@ class HomeViewController: UIViewController, DeviceListViewControllerDelegate, CB
             delegate = newDelegate as? HomeViewControllerDelegate
         }
         else {
-            printLog(self, funcName: "setDelegate", logString: "failed to set delegate")
+            printLog(self,
+                    funcName: "setDelegate",
+                    logString: "failed to set delegate")
         }
 
     }
@@ -90,12 +149,26 @@ class HomeViewController: UIViewController, DeviceListViewControllerDelegate, CB
         connectButton.layer.cornerRadius = 8
         connectButton.layer.borderWidth = 1
         connectButton.layer.borderColor = BLUE.cgColor
-        pageControl.currentPage = 0
+
+        hideQuickStatSettings()
+        // Set to one week and distance if user has no preferences set
+        setQuickStatValues(timePeriod: TimePeriod.oneWeek, quickStat: 0.0)
         refreshConnectionStatusComponents()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
+        timePeriodPicker.reloadAllComponents()
+        if let row = timePeriodPickerValue {
+            timePeriodPicker.selectRow(row, inComponent: 0, animated: false)
+        }
+
+        quickStatPicker.reloadAllComponents()
+        if let row = quickStatPickerValue {
+            quickStatPicker.selectRow(row, inComponent: 0, animated: false)
+        }
+
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -107,17 +180,13 @@ class HomeViewController: UIViewController, DeviceListViewControllerDelegate, CB
     }
 
     // MARK: view controller navigation
-    @IBAction func connectButtonPressed(sender: AnyObject) {
+    @IBAction func connectButtonPressed(_ sender: UIButton) {
         deviceListViewController = DeviceListViewController(aDelegate: self)
         present(deviceListViewController, animated: true, completion: { () -> Void in
             self.deviceListViewController.startScan()
         })
     }
 
-    func setQuickStatLabels(timePeriod period: TimePeriod, quickStat stat: QuickStatValue) {
-        timePeriodLabel.text = "\(period):"
-        quickStatLabel.text = "\(stat):"
-    }
     func dismissDeviceList() {
         deviceListViewController.dismiss(animated: true)
         refreshConnectionStatusComponents()
@@ -130,7 +199,9 @@ class HomeViewController: UIViewController, DeviceListViewControllerDelegate, CB
         else if (connectionStatus == ConnectionStatus.scanning){
 
             if cm == nil {
-                printLog(self, funcName: "alertView clickedButtonAtIndex", logString: "No central Manager found, unable to stop scan")
+                printLog(self,
+                        funcName: "alertView clickedButtonAtIndex",
+                        logString: "No central Manager found, unable to stop scan")
                 return
             }
 
@@ -143,10 +214,31 @@ class HomeViewController: UIViewController, DeviceListViewControllerDelegate, CB
         alertView = nil
     }
 
-    // MARK: view manipulation
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+    // MARK: quick stat helpers
+    func setQuickStatValues(timePeriod time: TimePeriod, quickStat stat: Double) {
+        // Figure out if the user has already set a preference for quick stats
+        if let userTimePeriod = UserDefaults.standard.string(forKey: QUICK_STAT_TIME) {
+            timePeriod = TimePeriod(rawValue: userTimePeriod)
+        } else {
+            UserDefaults.standard.set(TimePeriod.oneWeek.rawValue, forKey: QUICK_STAT_TIME)
+            timePeriod = TimePeriod.oneWeek
+        }
+        timePeriodPickerValue = timePeriodPickerItems.index(of: timePeriod.rawValue)
+        timePeriodLabel.text = "\(timePeriod.rawValue):"
+
+        // TODO: handle localiztion measurement systems
+        if let userQuickStat = UserDefaults.standard.string(forKey: QUICK_STAT_SETTING) {
+            quickStatValue = QuickStatValue(rawValue: userQuickStat)
+        } else {
+            UserDefaults.standard.set(QuickStatValue.distance.rawValue, forKey: QUICK_STAT_SETTING)
+            quickStatValue = QuickStatValue.distance
+        }
+        quickStatPickerValue = quickStatPickerItems.index(of: quickStatValue.rawValue)
+        quickStat = stat
+        quickStatLabel.text = "\(quickStat!) mi"
     }
+
+    // MARK: view manipulation
     func refreshConnectionStatusComponents() {
 
         if (cm?.state == CBManagerState.poweredOff) {
@@ -158,6 +250,45 @@ class HomeViewController: UIViewController, DeviceListViewControllerDelegate, CB
             connectedComponents()
         }
     }
+
+    // MARK: event handlers
+    @IBAction func setQuickStat(_ sender: UIButton) {
+        printLog(self,
+                funcName: #function,
+                logString: "set quick stat button was pressed")
+
+        showQuickStatSettings()
+    }
+    func showQuickStatSettings() {
+        timePeriodLabel.isHidden = true
+        timePeriodPicker.isHidden = false
+        quickStatLabel.isHidden = true
+        quickStatPicker.isHidden = false
+        setQuickStatButton.isHidden = true
+        confirmQuickStatButton.isHidden = false
+    }
+
+
+    @IBAction func confirmQuickStat(_ sender: UIButton) {
+        printLog(self,
+                funcName: #function,
+                logString: "confirming quick stat settings " +
+                        "timePeriod = \(timePeriod) " +
+                        "quickStat = \(quickStatValue)")
+    }
+    func hideQuickStatSettings() {
+        timePeriodLabel.isHidden = false
+        timePeriodPicker.isHidden = true
+        quickStatLabel.isHidden = false
+        quickStatPicker.isHidden = true
+        setQuickStatButton.isHidden = false
+        confirmQuickStatButton.isHidden = true
+    }
+    func confirmQuickStatSettings() {
+
+    }
+
+
     // helpers for component refresh
     func bluetoothDisabledComponents() {
         connectedLabel.text = "Bluetooth disabled"
@@ -173,10 +304,6 @@ class HomeViewController: UIViewController, DeviceListViewControllerDelegate, CB
         connectedLabel.text = "You are connected to your paddle!"
         connectButton.isHidden = true
         logoImage.isHidden = true
-    }
-
-    @IBAction func quickStatButtonPressed() {
-        printLog(self, funcName: #function, logString: "quick stat button was pressed!")
     }
 
     func alertBluetoothPowerOff() {
@@ -199,6 +326,19 @@ class HomeViewController: UIViewController, DeviceListViewControllerDelegate, CB
         let alertView = UIAlertView(title: title, message: message, delegate: nil, cancelButtonTitle: "OK")
         alertView.show()
 
+    }
+
+    // UIPickerViewDelegate functions
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+
+    func pickerView(_ pickerView: UIPickerView, _ component: Int) {
+        if pickerView == timePeriodPicker {
+
+        } else if pickerView == quickStatPicker {
+
+        }
     }
 
     // MARK: bluetooth functions

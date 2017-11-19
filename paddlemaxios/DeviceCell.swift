@@ -5,17 +5,21 @@ protocol DeviceCellDelegate: AnyObject {
 }
 
 class DeviceCell: UITableViewCell {
-    
+
+    // Outlets
     @IBOutlet var nameLabel:UILabel!
     @IBOutlet var connectButton:UIButton!
     @IBOutlet var signalImageView:UIImageView!
+
+    // Variables
     var signalImages:[UIImage]!
-    
     fileprivate var lastSigIndex = -1
     fileprivate var lastSigUpdate:Double = Date.timeIntervalSinceReferenceDate
     fileprivate let updateIntvl = 3.0
     var isOpen:Bool = false
 
+
+    // MARK: constructors
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 

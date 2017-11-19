@@ -10,15 +10,22 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
 
     var delegate: DeviceListViewControllerDelegate?
 
-    var infoButton: UIButton!
+
+    // Outlets
     @IBOutlet var tableView: UITableView!
     //    @IBOutlet var helpViewController: HelpViewController!
     @IBOutlet var deviceCell: DeviceCell!
-    
     @IBOutlet var warningLabel: UILabel!
-    
-    var devices: [BLEDevice] = []
+    var infoButton: UIButton!
 
+    // Alert Views
+    fileprivate var connectingAlertView: UIAlertController!
+    fileprivate var noBluetoothAlertView: UIAlertController!
+    fileprivate var timedOutAlertView: UIAlertController!
+    fileprivate var genericErrorAlertView: UIAlertController!
+
+    // Variables
+    var devices: [BLEDevice] = []
     fileprivate var tableIsLoading = false
     fileprivate var signalImages: [UIImage]!
     fileprivate var infoBarButton: UIBarButtonItem!
@@ -32,6 +39,7 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
 
     convenience init(aDelegate: DeviceListViewControllerDelegate) {
         self.init(nibName: "DeviceListViewController", bundle: Bundle.main)
+
         delegate = aDelegate
 
         title = "Connect to Paddle"
@@ -39,18 +47,6 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
         warningLabel.isHidden = true
 
         infoButton = UIButton()
-        let archivedData = NSKeyedArchiver.archivedData(withRootObject: infoButton)
-        let buttonCopy = NSKeyedUnarchiver.unarchiveObject(with: archivedData) as! UIButton
-//        buttonCopy.addTarget(self, action: #selector(HomeViewController.showInfo(_:)), for: UIControlEvents.touchUpInside)
-        infoBarButton = UIBarButtonItem(customView: buttonCopy)
-        scanIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.white)
-        self.navigationItem.rightBarButtonItem = infoBarButton
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.plain, target: nil, action: nil)
-        scanIndicator!.hidesWhenStopped = false
-        scanIndicatorItem = UIBarButtonItem(customView: scanIndicator!)
-        let space = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
-        scanButtonItem = UIBarButtonItem(title: "Scan for peripherals", style: UIBarButtonItemStyle.plain, target: self, action: #selector(toggleScan(_:)))
-        self.toolbarItems = [space, scanButtonItem!, space]
     }
 
 
@@ -73,6 +69,39 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
         if (delegate?.cm?.state == CBManagerState.poweredOff) {
             warningLabel.isHidden = false
         }
+
+        connectingAlertView = UIAlertController(
+                title: "Connecting …",
+                message: nil,
+                preferredStyle: UIAlertControllerStyle.alert)
+        connectingAlertView.addAction(
+            UIAlertAction(
+                    title: "Cancel",
+                    style: UIAlertActionStyle.cancel,
+                    handler: { (aa: UIAlertAction!) -> Void in
+                        self.delegate?.alertView.dismiss(animated: true)
+                        self.abortConnection()
+                    }))
+
+        noBluetoothAlertView = UIAlertController(
+                title: "Bluetooth disabled",
+                message: "Enable Bluetooth in system settings",
+                preferredStyle: UIAlertControllerStyle.alert)
+        noBluetoothAlertView.addAction(
+                UIAlertAction(
+                        title: "OK",
+                        style: UIAlertActionStyle.default,
+                        handler: nil))
+
+        timedOutAlertView = UIAlertController(
+                title: "Connection timed out",
+                message: "No response from peripheral",
+                preferredStyle: UIAlertControllerStyle.alert)
+        timedOutAlertView.addAction(
+                UIAlertAction(
+                        title: "OK",
+                        style: UIAlertActionStyle.cancel,
+                        handler: nil))
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -82,41 +111,43 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
     }
 
 
-    @objc func cellButtonTapped(_ sender: UIButton) {
-        if tableIsLoading == true {
-            printLog(self, funcName: "cellButtonTapped", logString: "ignoring tap during table load")
-            return
-        }
-
-        //find relevant indexPaths
-        let indexPath: IndexPath = indexPathForSubview(sender)
-        var attributePathArray: [IndexPath] = []
-        for i in 1...(devices[indexPath.section].advertisementArray.count) {
-            attributePathArray.append(IndexPath(row: i, section: indexPath.section))
-        }
-
-        //if same button is tapped as previous, close the cell
-        let senderCell = tableView.cellForRow(at: indexPath) as! DeviceCell
-
-        animateCellSelection(tableView.cellForRow(at: indexPath)!)
-
-        tableView.beginUpdates()
-        if (senderCell.isOpen == true) {
-            senderCell.isOpen = false
-            tableView.deleteRows(at: attributePathArray, with: UITableViewRowAnimation.fade)
-        } else {
-            senderCell.isOpen = true
-            tableView.insertRows(at: attributePathArray, with: UITableViewRowAnimation.fade)
-        }
-        tableView.endUpdates()
-
-    }
+//    @objc func cellButtonTapped(_ sender: UIButton) {
+//        if tableIsLoading == true {
+//            printLog(self, funcName: "cellButtonTapped", logString: "ignoring tap during table load")
+//            return
+//        }
+//
+//        //find relevant indexPaths
+//        let indexPath: IndexPath = indexPathForSubview(sender)
+//        var attributePathArray: [IndexPath] = []
+//        for i in 1...(devices[indexPath.section].advertisementArray.count) {
+//            attributePathArray.append(IndexPath(row: i, section: indexPath.section))
+//        }
+//
+//        //if same button is tapped as previous, close the cell
+//        let senderCell = tableView.cellForRow(at: indexPath) as! DeviceCell
+//
+//        animateCellSelection(tableView.cellForRow(at: indexPath)!)
+//
+//        tableView.beginUpdates()
+//        if (senderCell.isOpen == true) {
+//            senderCell.isOpen = false
+//            tableView.deleteRows(at: attributePathArray, with: UITableViewRowAnimation.fade)
+//        } else {
+//            senderCell.isOpen = true
+//            tableView.insertRows(at: attributePathArray, with: UITableViewRowAnimation.fade)
+//        }
+//        tableView.endUpdates()
+//
+//    }
 
     // MARK: event handlers
-
-    @objc func connectButtonTapped(_ sender: UIButton) {
+    @IBAction func connectButtonPressed(_ sender: UIButton) {
         let device = devices[sender.tag]
-        print("CONNECT TAPPED \(device) \(device.isUART)")
+        printLog(self,
+                funcName: #function,
+                logString: "Connect button pressed, connecting to \(device.peripheral)")
+
         if (device.isUART) {
             self.connectInMode(CONNECTION_MODE, peripheral: device.peripheral)
         }
@@ -125,6 +156,14 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
     // MARK: view manipulation
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .default
+    }
+
+    func connectButtonTapped(_ sender: UIButton) {
+        let device = devices[sender.tag]
+        print("CONNECT TAPPED \(device) \(device.isUART)")
+        if (device.isUART) {
+            self.connectInMode(CONNECTION_MODE, peripheral: device.peripheral)
+        }
     }
 
     // MARK: connection helpers
@@ -141,8 +180,6 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
 //        }
 
     }
-
-
 
     func didFindPeripheral(_ peripheral: CBPeripheral!, advertisementData: [AnyHashable: Any]!, RSSI: NSNumber!) {
 
@@ -417,14 +454,7 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
         stopScan()
 
         //Show connection activity alert view
-        let alert = UIAlertController(title: "Connecting …", message: nil, preferredStyle: UIAlertControllerStyle.alert)
-                let aaCancel = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler:{ (aa:UIAlertAction!) -> Void in
-                    self.delegate?.alertView.dismiss(animated: true)
-                    self.abortConnection()
-                })
-                alert.addAction(aaCancel)
-        delegate?.alertView = alert
-        self.present(alert, animated: true, completion: nil)
+        self.present(connectingAlertView, animated: true, completion: nil)
 
         //Cancel any current or pending connection to the peripheral
         if peripheral.state == CBPeripheralState.connected || peripheral.state == CBPeripheralState.connecting {
@@ -444,11 +474,8 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
 
     func onBluetoothDisabled(){
 
-        //Show alert to enable bluetooth
-        let alert = UIAlertController(title: "Bluetooth disabled", message: "Enable Bluetooth in system settings", preferredStyle: UIAlertControllerStyle.alert)
-        let aaOK = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil)
-        alert.addAction(aaOK)
-        self.present(alert, animated: true, completion: nil)
+
+        self.present(noBluetoothAlertView, animated: true, completion: nil)
     }
 
     @objc func toggleScan(_ sender:UIBarButtonItem?){
@@ -474,12 +501,7 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
 
         abortConnection()
 
-        //Notify user that connection timed out
-        let alert = UIAlertController(title: "Connection timed out", message: "No response from peripheral", preferredStyle: UIAlertControllerStyle.alert)
-        let aaOk = UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel) { (aa:UIAlertAction!) -> Void in }
-        alert.addAction(aaOk)
-        self.present(alert, animated: true) { () -> Void in }
-
+        self.present(timedOutAlertView, animated: true) { () -> Void in }
     }
 
 
@@ -579,10 +601,6 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
             self.alertDismissedOnError()
         })
 
-        //Display error alert
-        let alert = UIAlertController(title: "Error", message: error as String, preferredStyle: UIAlertControllerStyle.alert)
-        let aaOK = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil)
-        alert.addAction(aaOK)
-        self.present(alert, animated: true, completion: nil)
+        self.present(genericErrorAlertView, animated: true, completion: nil)
     }
 }
