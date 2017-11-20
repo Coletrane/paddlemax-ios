@@ -36,7 +36,6 @@
 		648F2F2FC6285AFCF2AD6733 /* HelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F2D61A196C62EC6B52CA4 /* HelpViewController.swift */; };
 		648F2F6A18A7EB499E2EF141 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F25803D43C33B0CD7A922 /* Constants.swift */; };
 		791CD5211FBBF46200F09089 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791CD5201FBBF46200F09089 /* Enums.swift */; };
-		791CD5231FC229A000F09089 /* TabBarController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 791CD5221FC229A000F09089 /* TabBarController.xib */; };
 		793B2D371FB8AAF8002D407E /* engebrechtre bd it.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 793B2D361FB8AAF8002D407E /* engebrechtre bd it.ttf */; };
 		794CBF9E1FB8990400E10F08 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7984B8D41FAD341B00C911E8 /* Info.plist */; };
 		7984B8D01FAD341B00C911E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7984B8CF1FAD341B00C911E8 /* Assets.xcassets */; };
@@ -97,7 +96,6 @@
 		648F2F2A3CED08FFC9322E5D /* XMLDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLDictionary.h; sourceTree = "<group>"; };
 		648F2F87270CEAA4B2E3DF4C /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		791CD5201FBBF46200F09089 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
-		791CD5221FC229A000F09089 /* TabBarController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TabBarController.xib; sourceTree = "<group>"; };
 		793B2D361FB8AAF8002D407E /* engebrechtre bd it.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "engebrechtre bd it.ttf"; path = "../../paddle-max-server/static/engebrechtre/engebrechtre bd it.ttf"; sourceTree = "<group>"; };
 		7984B8C51FAD341B00C911E8 /* paddlemaxios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = paddlemaxios.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7984B8CF1FAD341B00C911E8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -206,7 +204,6 @@
 				648F2054998EEAE80E920DAA /* HomeViewController.xib */,
 				648F2EE4F33414EE559BED94 /* DeviceListViewController.xib */,
 				791CD5201FBBF46200F09089 /* Enums.swift */,
-				791CD5221FC229A000F09089 /* TabBarController.xib */,
 				648F2F87270CEAA4B2E3DF4C /* TabBarController.swift */,
 			);
 			path = paddlemaxios;
@@ -341,7 +338,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				799CB5A01FB96C4200658E4F /* DeviceInfoViewController.xib in Resources */,
-				791CD5231FC229A000F09089 /* TabBarController.xib in Resources */,
 				793B2D371FB8AAF8002D407E /* engebrechtre bd it.ttf in Resources */,
 				7984B8D01FAD341B00C911E8 /* Assets.xcassets in Resources */,
 				648F2832BDC064030B2ABCD9 /* ControllerViewController.xib in Resources */,

@@ -7,25 +7,6 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
     var profileViewController: UIViewController!
     var homeViewController: HomeViewController!
     var settingsViewController: UIViewController!
-
-    // MARK: constructors
-    convenience init() {
-        self.init(
-                nibName: "TabBarController",
-                bundle: Bundle.main)
-
-        delegate = self
-
-        setViewControllers(viewControllers, animated: true)
-    }
-
-    override init(nibName nib: String?, bundle nibBundle: Bundle?) {
-        super.init(nibName: nib, bundle: nibBundle)
-    }
-
-    required init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)!
-    }
     
     // MARK: view lifecycle
     override func viewDidLoad() {
@@ -38,21 +19,21 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
         profileViewController = UIViewController()
         profileViewController.tabBarItem = UITabBarItem(
                 title: "Profile",
-                image: .none,
-                selectedImage: .none
+                image: UIImage(named: "circle-user-7.png"),
+                selectedImage: nil
         )
 
         homeViewController = HomeViewController()
         homeViewController.tabBarItem = UITabBarItem(
-                title: "Home",
-                image: .none,
-                selectedImage: .none)
+                title: "Paddle",
+                image: UIImage(named: "earth-america-7.png"),
+                selectedImage: nil)
 
         settingsViewController = UIViewController()
         settingsViewController.tabBarItem = UITabBarItem(
                 title: "Settings",
-                image: .none,
-                selectedImage: .none
+                image: UIImage(named: "gear-7.png"),
+                selectedImage: nil
         )
 
         viewControllers = [
@@ -60,6 +41,8 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
             homeViewController,
             settingsViewController
         ]
+
+        selectedViewController = viewControllers![1]
     }
 
     // MARK: view manipulation
