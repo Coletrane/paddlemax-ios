@@ -16,6 +16,7 @@ let LIGHT_PURPLE = UIColor(0x746eff)
 let GREY = UIColor(0x5c5e5c)
 
 // User settings keys
+let USER_LOGIN = "userLogin"
 let QUICK_STAT_TIME = "quickStatTime"
 let QUICK_STAT_SETTING = "quickStatSetting"
 

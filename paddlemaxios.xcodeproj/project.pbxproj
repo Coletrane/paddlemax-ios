@@ -23,7 +23,7 @@
 		648F2832BDC064030B2ABCD9 /* ControllerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 648F2AE97A3813A0D35B99B0 /* ControllerViewController.xib */; };
 		648F28DD237CF47DB27480AE /* GATT-characteristics.plist in Resources */ = {isa = PBXBuildFile; fileRef = 648F2EBCCB4C689400F5B991 /* GATT-characteristics.plist */; };
 		648F296E5EC081B294488CFA /* IntelHex2BinConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 648F2D7FA54AE2E0E3A36070 /* IntelHex2BinConverter.m */; };
-		648F2B1207EAB22054FCD2A7 /* BLEAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F20C93AFC396D372BDAE0 /* BLEAppDelegate.swift */; };
+		648F2B1207EAB22054FCD2A7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F20C93AFC396D372BDAE0 /* AppDelegate.swift */; };
 		648F2B787CC1D191B0AD9ABD /* XMLDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 648F2574A915AAD6C6066E60 /* XMLDictionary.m */; };
 		648F2BDCEBDE7DA8923E1EC4 /* ControllerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F27C5CEB6B52AA5535550 /* ControllerViewController.swift */; };
 		648F2CAABAB0415C5EF1A08F /* BLEInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F2BB3F2A28AEEE7FC9869 /* BLEInfo.swift */; };
@@ -33,15 +33,23 @@
 		648F2D8D260B05A645628BC9 /* BLESensorButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F25E287FA3A89F8A2B318 /* BLESensorButton.swift */; };
 		648F2DBE0A2E77C9A948E739 /* UARTViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F28D6C755EC0C67E8389E /* UARTViewController.swift */; };
 		648F2EB963F71E4339E50FB3 /* PinIOViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 648F2A1DE9D9B0D84544ECC0 /* PinIOViewController.xib */; };
+		648F2EBE2AE2CBF67B3BD796 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F2D988D3B725A3A2706A1 /* SplashViewController.swift */; };
 		648F2F2FC6285AFCF2AD6733 /* HelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F2D61A196C62EC6B52CA4 /* HelpViewController.swift */; };
 		648F2F6A18A7EB499E2EF141 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F25803D43C33B0CD7A922 /* Constants.swift */; };
 		791CD5211FBBF46200F09089 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791CD5201FBBF46200F09089 /* Enums.swift */; };
+		791CD5251FC316A100F09089 /* SplashViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 791CD5241FC316A100F09089 /* SplashViewController.xib */; };
+		791CD6A11FC31D4900F09089 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 791CD69C1FC31D4800F09089 /* FBSDKCoreKit.framework */; };
+		791CD6A21FC31D4900F09089 /* AccountKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 791CD69D1FC31D4800F09089 /* AccountKit.framework */; };
+		791CD6A31FC31D4900F09089 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 791CD69E1FC31D4900F09089 /* FBSDKLoginKit.framework */; };
+		791CD6A41FC31D4900F09089 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 791CD69F1FC31D4900F09089 /* Bolts.framework */; };
+		791CD6A51FC31D4900F09089 /* AccountKitStrings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 791CD6A01FC31D4900F09089 /* AccountKitStrings.bundle */; };
 		793B2D371FB8AAF8002D407E /* engebrechtre bd it.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 793B2D361FB8AAF8002D407E /* engebrechtre bd it.ttf */; };
 		794CBF9E1FB8990400E10F08 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7984B8D41FAD341B00C911E8 /* Info.plist */; };
 		7984B8D01FAD341B00C911E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7984B8CF1FAD341B00C911E8 /* Assets.xcassets */; };
 		7984B8DE1FAD341B00C911E8 /* paddlemaxiosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7984B8DD1FAD341B00C911E8 /* paddlemaxiosTests.swift */; };
 		7984B8E91FAD341B00C911E8 /* paddlemaxiosUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7984B8E81FAD341B00C911E8 /* paddlemaxiosUITests.swift */; };
 		799CB5A01FB96C4200658E4F /* DeviceInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799CB59E1FB96C4200658E4F /* DeviceInfoViewController.xib */; };
+		79BE69A71FC31F5200FA46B8 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79BE69A61FC31F5200FA46B8 /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,7 +74,7 @@
 		648F20238A854F87EE475A95 /* DeviceInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceInfoViewController.swift; sourceTree = "<group>"; };
 		648F2054998EEAE80E920DAA /* HomeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
 		648F20B008B44D8BF9BB82AB /* Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utility.m; sourceTree = "<group>"; };
-		648F20C93AFC396D372BDAE0 /* BLEAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEAppDelegate.swift; sourceTree = "<group>"; };
+		648F20C93AFC396D372BDAE0 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		648F20E620DD183A0DBC05C9 /* Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
 		648F220BBD8C0393281BEB21 /* IntelHex2BinConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntelHex2BinConverter.h; sourceTree = "<group>"; };
 		648F22483BF60C5985D922DA /* BLEOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLEOperations.m; sourceTree = "<group>"; };
@@ -87,6 +95,7 @@
 		648F2D26865DCB17A772B7E1 /* PinCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinCell.swift; sourceTree = "<group>"; };
 		648F2D61A196C62EC6B52CA4 /* HelpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpViewController.swift; sourceTree = "<group>"; };
 		648F2D7FA54AE2E0E3A36070 /* IntelHex2BinConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntelHex2BinConverter.m; sourceTree = "<group>"; };
+		648F2D988D3B725A3A2706A1 /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		648F2DBF1842FD828F0F718F /* DeviceListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceListViewController.swift; sourceTree = "<group>"; };
 		648F2DE5E40B46459A71B405 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		648F2DF8F3F024A5ED51311D /* SensorValueCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SensorValueCell.xib; sourceTree = "<group>"; };
@@ -96,6 +105,12 @@
 		648F2F2A3CED08FFC9322E5D /* XMLDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLDictionary.h; sourceTree = "<group>"; };
 		648F2F87270CEAA4B2E3DF4C /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		791CD5201FBBF46200F09089 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
+		791CD5241FC316A100F09089 /* SplashViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SplashViewController.xib; sourceTree = "<group>"; };
+		791CD69C1FC31D4800F09089 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		791CD69D1FC31D4800F09089 /* AccountKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AccountKit.framework; sourceTree = "<group>"; };
+		791CD69E1FC31D4900F09089 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		791CD69F1FC31D4900F09089 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
+		791CD6A01FC31D4900F09089 /* AccountKitStrings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AccountKitStrings.bundle; sourceTree = "<group>"; };
 		793B2D361FB8AAF8002D407E /* engebrechtre bd it.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "engebrechtre bd it.ttf"; path = "../../paddle-max-server/static/engebrechtre/engebrechtre bd it.ttf"; sourceTree = "<group>"; };
 		7984B8C51FAD341B00C911E8 /* paddlemaxios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = paddlemaxios.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7984B8CF1FAD341B00C911E8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -108,6 +123,7 @@
 		7984B8EA1FAD341B00C911E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7984B8F61FAD38E900C911E8 /* paddlemaxios-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "paddlemaxios-Bridging-Header.h"; sourceTree = "<group>"; };
 		799CB59E1FB96C4200658E4F /* DeviceInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeviceInfoViewController.xib; sourceTree = "<group>"; };
+		79BE69A61FC31F5200FA46B8 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +131,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				791CD6A11FC31D4900F09089 /* FBSDKCoreKit.framework in Frameworks */,
+				791CD6A21FC31D4900F09089 /* AccountKit.framework in Frameworks */,
+				79BE69A71FC31F5200FA46B8 /* MapKit.framework in Frameworks */,
+				791CD6A31FC31D4900F09089 /* FBSDKLoginKit.framework in Frameworks */,
+				791CD6A41FC31D4900F09089 /* Bolts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,6 +156,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		791CD5261FC318C500F09089 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				79BE69A61FC31F5200FA46B8 /* MapKit.framework */,
+				791CD69D1FC31D4800F09089 /* AccountKit.framework */,
+				791CD6A01FC31D4900F09089 /* AccountKitStrings.bundle */,
+				791CD69F1FC31D4900F09089 /* Bolts.framework */,
+				791CD69C1FC31D4800F09089 /* FBSDKCoreKit.framework */,
+				791CD69E1FC31D4900F09089 /* FBSDKLoginKit.framework */,
+			);
+			path = Frameworks;
+			sourceTree = "<group>";
+		};
 		793B2D351FB8AA47002D407E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -146,6 +180,7 @@
 		7984B8BC1FAD341B00C911E8 = {
 			isa = PBXGroup;
 			children = (
+				791CD5261FC318C500F09089 /* Frameworks */,
 				793B2D351FB8AA47002D407E /* Resources */,
 				7984B8C71FAD341B00C911E8 /* paddlemaxios */,
 				7984B8DC1FAD341B00C911E8 /* paddlemaxiosTests */,
@@ -170,7 +205,7 @@
 				799CB59E1FB96C4200658E4F /* DeviceInfoViewController.xib */,
 				7984B8CF1FAD341B00C911E8 /* Assets.xcassets */,
 				7984B8D41FAD341B00C911E8 /* Info.plist */,
-				648F20C93AFC396D372BDAE0 /* BLEAppDelegate.swift */,
+				648F20C93AFC396D372BDAE0 /* AppDelegate.swift */,
 				648F2004577F9C5362D328A6 /* BLEDevice.swift */,
 				648F2BB3F2A28AEEE7FC9869 /* BLEInfo.swift */,
 				648F2337588941235A03975B /* BLEOperations.h */,
@@ -205,6 +240,8 @@
 				648F2EE4F33414EE559BED94 /* DeviceListViewController.xib */,
 				791CD5201FBBF46200F09089 /* Enums.swift */,
 				648F2F87270CEAA4B2E3DF4C /* TabBarController.swift */,
+				791CD5241FC316A100F09089 /* SplashViewController.xib */,
+				648F2D988D3B725A3A2706A1 /* SplashViewController.swift */,
 			);
 			path = paddlemaxios;
 			sourceTree = "<group>";
@@ -297,6 +334,11 @@
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = 3K7MWNCT43;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					7984B8D81FAD341B00C911E8 = {
 						CreatedOnToolsVersion = 8.3.3;
@@ -340,6 +382,8 @@
 				799CB5A01FB96C4200658E4F /* DeviceInfoViewController.xib in Resources */,
 				793B2D371FB8AAF8002D407E /* engebrechtre bd it.ttf in Resources */,
 				7984B8D01FAD341B00C911E8 /* Assets.xcassets in Resources */,
+				791CD6A51FC31D4900F09089 /* AccountKitStrings.bundle in Resources */,
+				791CD5251FC316A100F09089 /* SplashViewController.xib in Resources */,
 				648F2832BDC064030B2ABCD9 /* ControllerViewController.xib in Resources */,
 				648F28DD237CF47DB27480AE /* GATT-characteristics.plist in Resources */,
 				648F2EB963F71E4339E50FB3 /* PinIOViewController.xib in Resources */,
@@ -371,7 +415,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				648F2B1207EAB22054FCD2A7 /* BLEAppDelegate.swift in Sources */,
+				648F2B1207EAB22054FCD2A7 /* AppDelegate.swift in Sources */,
 				648F21BEF07D19490275D6D8 /* BLEDevice.swift in Sources */,
 				648F2CAABAB0415C5EF1A08F /* BLEInfo.swift in Sources */,
 				648F2CD6571E1AF3883A960D /* BLEOperations.m in Sources */,
@@ -394,6 +438,7 @@
 				791CD5211FBBF46200F09089 /* Enums.swift in Sources */,
 				648F266C818C3C1BAB766AFD /* HomeViewController.swift in Sources */,
 				648F215FBA10BFA8F31ECB9F /* TabBarController.swift in Sources */,
+				648F2EBE2AE2CBF67B3BD796 /* SplashViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -544,6 +589,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEVELOPMENT_TEAM = 3K7MWNCT43;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks/FacebookSDKs-iOS-4.28.0",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				INFOPLIST_FILE = paddlemaxios/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.paddlemax.paddlemaxios;
@@ -559,6 +609,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				DEVELOPMENT_TEAM = 3K7MWNCT43;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks/FacebookSDKs-iOS-4.28.0",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				INFOPLIST_FILE = paddlemaxios/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.paddlemax.paddlemaxios;
