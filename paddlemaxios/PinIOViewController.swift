@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-protocol PinIOViewControllerDelegate: HelpViewControllerDelegate {
+protocol PinIOViewControllerDelegate: AnyObject {
 
     func sendData(_ newData: Data)
 
@@ -31,7 +31,7 @@ class PinIOViewController : UIViewController {
     
     @IBOutlet var powerType: UILabel?
     @IBOutlet var powerLevel: UILabel?
-    @IBOutlet var helpViewController : HelpViewController!
+//    @IBOutlet var helpViewController : HelpViewController!
 
     @IBOutlet var debugConsole : UITextView? = nil
 
@@ -59,7 +59,7 @@ class PinIOViewController : UIViewController {
         
         self.delegate = aDelegate
         self.title = "Power Reading"
-        self.helpViewController?.title = "Power Reading Help"
+//        self.helpViewController?.title = "Power Reading Help"
         readReportsSent = false
         
     }
@@ -68,7 +68,7 @@ class PinIOViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        helpViewController!.delegate = self.delegate
+//        helpViewController!.delegate = self.delegate
     }
     
     

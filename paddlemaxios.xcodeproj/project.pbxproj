@@ -8,33 +8,23 @@
 
 /* Begin PBXBuildFile section */
 		648F202623A5492D94B99B46 /* BLEPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F2CD19DF3D6620C85F536 /* BLEPeripheral.swift */; };
-		648F203E5E9543492CBDCB54 /* SensorValueCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F2AAC43ADFB294E907D9A /* SensorValueCell.swift */; };
 		648F20AC7FDB3C614BDC0FC0 /* DeviceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F2A9C35C6B713B656919A /* DeviceCell.swift */; };
 		648F215FBA10BFA8F31ECB9F /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F2F87270CEAA4B2E3DF4C /* TabBarController.swift */; };
 		648F2193D195C69B8826ADA7 /* DeviceListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F2DBF1842FD828F0F718F /* DeviceListViewController.swift */; };
 		648F21BEF07D19490275D6D8 /* BLEDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F2004577F9C5362D328A6 /* BLEDevice.swift */; };
 		648F226D3BBCAF8E184F0826 /* DeviceListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 648F2EE4F33414EE559BED94 /* DeviceListViewController.xib */; };
 		648F22F3A88D0225E4E394D4 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 648F2054998EEAE80E920DAA /* HomeViewController.xib */; };
-		648F255C8DF02AEB54BC3DBB /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 648F20B008B44D8BF9BB82AB /* Utility.m */; };
 		648F265935B891A9E87C49A8 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F225A24F1A688F30BC824 /* Extensions.swift */; };
 		648F266C818C3C1BAB766AFD /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F2DE5E40B46459A71B405 /* HomeViewController.swift */; };
 		648F26EED99FC774535AD6B5 /* PinIOViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F2E3A85ED450362C60362 /* PinIOViewController.swift */; };
-		648F28179D2B32E9AE414070 /* DeviceInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F20238A854F87EE475A95 /* DeviceInfoViewController.swift */; };
-		648F2832BDC064030B2ABCD9 /* ControllerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 648F2AE97A3813A0D35B99B0 /* ControllerViewController.xib */; };
 		648F28DD237CF47DB27480AE /* GATT-characteristics.plist in Resources */ = {isa = PBXBuildFile; fileRef = 648F2EBCCB4C689400F5B991 /* GATT-characteristics.plist */; };
-		648F296E5EC081B294488CFA /* IntelHex2BinConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 648F2D7FA54AE2E0E3A36070 /* IntelHex2BinConverter.m */; };
 		648F2B1207EAB22054FCD2A7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F20C93AFC396D372BDAE0 /* AppDelegate.swift */; };
-		648F2B787CC1D191B0AD9ABD /* XMLDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 648F2574A915AAD6C6066E60 /* XMLDictionary.m */; };
-		648F2BDCEBDE7DA8923E1EC4 /* ControllerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F27C5CEB6B52AA5535550 /* ControllerViewController.swift */; };
 		648F2CAABAB0415C5EF1A08F /* BLEInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F2BB3F2A28AEEE7FC9869 /* BLEInfo.swift */; };
-		648F2CD6571E1AF3883A960D /* BLEOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 648F22483BF60C5985D922DA /* BLEOperations.m */; };
 		648F2D1056CDFA9AA35B10B7 /* PinCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F2D26865DCB17A772B7E1 /* PinCell.swift */; };
-		648F2D5FBC2A38E1E68EC3C2 /* SensorValueCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 648F2DF8F3F024A5ED51311D /* SensorValueCell.xib */; };
 		648F2D8D260B05A645628BC9 /* BLESensorButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F25E287FA3A89F8A2B318 /* BLESensorButton.swift */; };
 		648F2DBE0A2E77C9A948E739 /* UARTViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F28D6C755EC0C67E8389E /* UARTViewController.swift */; };
 		648F2EB963F71E4339E50FB3 /* PinIOViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 648F2A1DE9D9B0D84544ECC0 /* PinIOViewController.xib */; };
 		648F2EBE2AE2CBF67B3BD796 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F2D988D3B725A3A2706A1 /* SplashViewController.swift */; };
-		648F2F2FC6285AFCF2AD6733 /* HelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F2D61A196C62EC6B52CA4 /* HelpViewController.swift */; };
 		648F2F6A18A7EB499E2EF141 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F25803D43C33B0CD7A922 /* Constants.swift */; };
 		791CD5211FBBF46200F09089 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791CD5201FBBF46200F09089 /* Enums.swift */; };
 		791CD5251FC316A100F09089 /* SplashViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 791CD5241FC316A100F09089 /* SplashViewController.xib */; };
@@ -48,7 +38,6 @@
 		7984B8D01FAD341B00C911E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7984B8CF1FAD341B00C911E8 /* Assets.xcassets */; };
 		7984B8DE1FAD341B00C911E8 /* paddlemaxiosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7984B8DD1FAD341B00C911E8 /* paddlemaxiosTests.swift */; };
 		7984B8E91FAD341B00C911E8 /* paddlemaxiosUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7984B8E81FAD341B00C911E8 /* paddlemaxiosUITests.swift */; };
-		799CB5A01FB96C4200658E4F /* DeviceInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799CB59E1FB96C4200658E4F /* DeviceInfoViewController.xib */; };
 		79BE69A71FC31F5200FA46B8 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79BE69A61FC31F5200FA46B8 /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -71,38 +60,23 @@
 
 /* Begin PBXFileReference section */
 		648F2004577F9C5362D328A6 /* BLEDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEDevice.swift; sourceTree = "<group>"; };
-		648F20238A854F87EE475A95 /* DeviceInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceInfoViewController.swift; sourceTree = "<group>"; };
 		648F2054998EEAE80E920DAA /* HomeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
-		648F20B008B44D8BF9BB82AB /* Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utility.m; sourceTree = "<group>"; };
 		648F20C93AFC396D372BDAE0 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		648F20E620DD183A0DBC05C9 /* Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
-		648F220BBD8C0393281BEB21 /* IntelHex2BinConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntelHex2BinConverter.h; sourceTree = "<group>"; };
-		648F22483BF60C5985D922DA /* BLEOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLEOperations.m; sourceTree = "<group>"; };
 		648F225A24F1A688F30BC824 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		648F2337588941235A03975B /* BLEOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLEOperations.h; sourceTree = "<group>"; };
-		648F2419A127DC5986A990F5 /* LogHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogHelper.h; sourceTree = "<group>"; };
-		648F2574A915AAD6C6066E60 /* XMLDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLDictionary.m; sourceTree = "<group>"; };
 		648F25803D43C33B0CD7A922 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		648F25E287FA3A89F8A2B318 /* BLESensorButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLESensorButton.swift; sourceTree = "<group>"; };
-		648F27C5CEB6B52AA5535550 /* ControllerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControllerViewController.swift; sourceTree = "<group>"; };
 		648F28D6C755EC0C67E8389E /* UARTViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UARTViewController.swift; sourceTree = "<group>"; };
 		648F2A1DE9D9B0D84544ECC0 /* PinIOViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PinIOViewController.xib; sourceTree = "<group>"; };
 		648F2A9C35C6B713B656919A /* DeviceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceCell.swift; sourceTree = "<group>"; };
-		648F2AAC43ADFB294E907D9A /* SensorValueCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SensorValueCell.swift; sourceTree = "<group>"; };
-		648F2AE97A3813A0D35B99B0 /* ControllerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ControllerViewController.xib; sourceTree = "<group>"; };
 		648F2BB3F2A28AEEE7FC9869 /* BLEInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEInfo.swift; sourceTree = "<group>"; };
 		648F2CD19DF3D6620C85F536 /* BLEPeripheral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEPeripheral.swift; sourceTree = "<group>"; };
 		648F2D26865DCB17A772B7E1 /* PinCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinCell.swift; sourceTree = "<group>"; };
-		648F2D61A196C62EC6B52CA4 /* HelpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpViewController.swift; sourceTree = "<group>"; };
-		648F2D7FA54AE2E0E3A36070 /* IntelHex2BinConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntelHex2BinConverter.m; sourceTree = "<group>"; };
 		648F2D988D3B725A3A2706A1 /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		648F2DBF1842FD828F0F718F /* DeviceListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceListViewController.swift; sourceTree = "<group>"; };
 		648F2DE5E40B46459A71B405 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		648F2DF8F3F024A5ED51311D /* SensorValueCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SensorValueCell.xib; sourceTree = "<group>"; };
 		648F2E3A85ED450362C60362 /* PinIOViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinIOViewController.swift; sourceTree = "<group>"; };
 		648F2EBCCB4C689400F5B991 /* GATT-characteristics.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = "GATT-characteristics.plist"; sourceTree = "<group>"; };
 		648F2EE4F33414EE559BED94 /* DeviceListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DeviceListViewController.xib; sourceTree = "<group>"; };
-		648F2F2A3CED08FFC9322E5D /* XMLDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLDictionary.h; sourceTree = "<group>"; };
 		648F2F87270CEAA4B2E3DF4C /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		791CD5201FBBF46200F09089 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		791CD5241FC316A100F09089 /* SplashViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SplashViewController.xib; sourceTree = "<group>"; };
@@ -122,7 +96,6 @@
 		7984B8E81FAD341B00C911E8 /* paddlemaxiosUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = paddlemaxiosUITests.swift; sourceTree = "<group>"; };
 		7984B8EA1FAD341B00C911E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7984B8F61FAD38E900C911E8 /* paddlemaxios-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "paddlemaxios-Bridging-Header.h"; sourceTree = "<group>"; };
-		799CB59E1FB96C4200658E4F /* DeviceInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeviceInfoViewController.xib; sourceTree = "<group>"; };
 		79BE69A61FC31F5200FA46B8 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -202,37 +175,21 @@
 		7984B8C71FAD341B00C911E8 /* paddlemaxios */ = {
 			isa = PBXGroup;
 			children = (
-				799CB59E1FB96C4200658E4F /* DeviceInfoViewController.xib */,
 				7984B8CF1FAD341B00C911E8 /* Assets.xcassets */,
 				7984B8D41FAD341B00C911E8 /* Info.plist */,
 				648F20C93AFC396D372BDAE0 /* AppDelegate.swift */,
 				648F2004577F9C5362D328A6 /* BLEDevice.swift */,
 				648F2BB3F2A28AEEE7FC9869 /* BLEInfo.swift */,
-				648F2337588941235A03975B /* BLEOperations.h */,
-				648F22483BF60C5985D922DA /* BLEOperations.m */,
 				648F2CD19DF3D6620C85F536 /* BLEPeripheral.swift */,
 				648F25E287FA3A89F8A2B318 /* BLESensorButton.swift */,
 				648F25803D43C33B0CD7A922 /* Constants.swift */,
-				648F27C5CEB6B52AA5535550 /* ControllerViewController.swift */,
-				648F2AE97A3813A0D35B99B0 /* ControllerViewController.xib */,
 				648F2A9C35C6B713B656919A /* DeviceCell.swift */,
-				648F20238A854F87EE475A95 /* DeviceInfoViewController.swift */,
 				648F2DBF1842FD828F0F718F /* DeviceListViewController.swift */,
 				648F225A24F1A688F30BC824 /* Extensions.swift */,
 				648F2EBCCB4C689400F5B991 /* GATT-characteristics.plist */,
-				648F2D61A196C62EC6B52CA4 /* HelpViewController.swift */,
-				648F220BBD8C0393281BEB21 /* IntelHex2BinConverter.h */,
-				648F2D7FA54AE2E0E3A36070 /* IntelHex2BinConverter.m */,
-				648F2419A127DC5986A990F5 /* LogHelper.h */,
 				648F2E3A85ED450362C60362 /* PinIOViewController.swift */,
 				648F2A1DE9D9B0D84544ECC0 /* PinIOViewController.xib */,
-				648F2AAC43ADFB294E907D9A /* SensorValueCell.swift */,
-				648F2DF8F3F024A5ED51311D /* SensorValueCell.xib */,
 				648F28D6C755EC0C67E8389E /* UARTViewController.swift */,
-				648F20E620DD183A0DBC05C9 /* Utility.h */,
-				648F20B008B44D8BF9BB82AB /* Utility.m */,
-				648F2F2A3CED08FFC9322E5D /* XMLDictionary.h */,
-				648F2574A915AAD6C6066E60 /* XMLDictionary.m */,
 				7984B8F61FAD38E900C911E8 /* paddlemaxios-Bridging-Header.h */,
 				648F2D26865DCB17A772B7E1 /* PinCell.swift */,
 				648F2DE5E40B46459A71B405 /* HomeViewController.swift */,
@@ -379,15 +336,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				799CB5A01FB96C4200658E4F /* DeviceInfoViewController.xib in Resources */,
 				793B2D371FB8AAF8002D407E /* engebrechtre bd it.ttf in Resources */,
 				7984B8D01FAD341B00C911E8 /* Assets.xcassets in Resources */,
 				791CD6A51FC31D4900F09089 /* AccountKitStrings.bundle in Resources */,
 				791CD5251FC316A100F09089 /* SplashViewController.xib in Resources */,
-				648F2832BDC064030B2ABCD9 /* ControllerViewController.xib in Resources */,
 				648F28DD237CF47DB27480AE /* GATT-characteristics.plist in Resources */,
 				648F2EB963F71E4339E50FB3 /* PinIOViewController.xib in Resources */,
-				648F2D5FBC2A38E1E68EC3C2 /* SensorValueCell.xib in Resources */,
 				794CBF9E1FB8990400E10F08 /* Info.plist in Resources */,
 				648F22F3A88D0225E4E394D4 /* HomeViewController.xib in Resources */,
 				648F226D3BBCAF8E184F0826 /* DeviceListViewController.xib in Resources */,
@@ -418,22 +372,14 @@
 				648F2B1207EAB22054FCD2A7 /* AppDelegate.swift in Sources */,
 				648F21BEF07D19490275D6D8 /* BLEDevice.swift in Sources */,
 				648F2CAABAB0415C5EF1A08F /* BLEInfo.swift in Sources */,
-				648F2CD6571E1AF3883A960D /* BLEOperations.m in Sources */,
 				648F202623A5492D94B99B46 /* BLEPeripheral.swift in Sources */,
 				648F2D8D260B05A645628BC9 /* BLESensorButton.swift in Sources */,
 				648F2F6A18A7EB499E2EF141 /* Constants.swift in Sources */,
-				648F2BDCEBDE7DA8923E1EC4 /* ControllerViewController.swift in Sources */,
 				648F20AC7FDB3C614BDC0FC0 /* DeviceCell.swift in Sources */,
-				648F28179D2B32E9AE414070 /* DeviceInfoViewController.swift in Sources */,
 				648F2193D195C69B8826ADA7 /* DeviceListViewController.swift in Sources */,
 				648F265935B891A9E87C49A8 /* Extensions.swift in Sources */,
-				648F2F2FC6285AFCF2AD6733 /* HelpViewController.swift in Sources */,
-				648F296E5EC081B294488CFA /* IntelHex2BinConverter.m in Sources */,
 				648F26EED99FC774535AD6B5 /* PinIOViewController.swift in Sources */,
-				648F203E5E9543492CBDCB54 /* SensorValueCell.swift in Sources */,
 				648F2DBE0A2E77C9A948E739 /* UARTViewController.swift in Sources */,
-				648F255C8DF02AEB54BC3DBB /* Utility.m in Sources */,
-				648F2B787CC1D191B0AD9ABD /* XMLDictionary.m in Sources */,
 				648F2D1056CDFA9AA35B10B7 /* PinCell.swift in Sources */,
 				791CD5211FBBF46200F09089 /* Enums.swift in Sources */,
 				648F266C818C3C1BAB766AFD /* HomeViewController.swift in Sources */,

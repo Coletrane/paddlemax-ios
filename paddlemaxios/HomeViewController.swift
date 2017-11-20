@@ -175,9 +175,9 @@ class HomeViewController: UIViewController,
         super.viewWillDisappear(animated)
     }
 
-    func helpViewControllerDidFinish(_ controller: HelpViewController) {
-        //TODO: implement help
-    }
+//    func helpViewControllerDidFinish(_ controller: HelpViewController) {
+//        //TODO: implement help
+//    }
 
     // MARK: view controller navigation
     @IBAction func connectButtonPressed(_ sender: UIButton) {
