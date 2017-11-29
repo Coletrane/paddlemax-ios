@@ -29,7 +29,7 @@ class SplashViewController: UIViewController {
         super.viewDidAppear(animated)
 
         logo.isHidden = false
-        var timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(self.timerAction), userInfo: nil, repeats: true)
+//        var timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(self.timerAction), userInfo: nil, repeats: true)
 
 
         logo.fadeTransition(0.5)

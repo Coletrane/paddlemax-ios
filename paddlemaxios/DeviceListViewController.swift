@@ -21,7 +21,10 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
     //    @IBOutlet var helpViewController: HelpViewController!
     @IBOutlet var deviceCell: DeviceCell!
     @IBOutlet var warningLabel: UILabel!
-
+    @IBOutlet var toolbar: UIToolbar!
+    @IBOutlet var scanningItem: UIBarButtonItem!
+    @IBOutlet var scanningIndicatorItem: UIBarButtonItem!
+    
     // Alert Views
     fileprivate var connectingAlertView: UIAlertController!
     fileprivate var noBluetoothAlertView: UIAlertController!
@@ -32,10 +35,7 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
     var devices: [BLEDevice] = []
     fileprivate var tableIsLoading = false
     fileprivate var signalImages: [UIImage]!
-    fileprivate var infoBarButton: UIBarButtonItem!
     fileprivate var scanIndicator: UIActivityIndicatorView!
-    fileprivate var scanIndicatorItem: UIBarButtonItem!
-    fileprivate var scanningItem: UIBarButtonItem!
     fileprivate var connectionTimeOutIntvl: TimeInterval! = 30.0
     var connectionTimer: Timer?
 
@@ -70,14 +70,12 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
         // Add scanning indicator to toolbar
         scanIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.white)
         scanIndicator!.hidesWhenStopped = false
-        scanIndicatorItem = UIBarButtonItem(customView: scanIndicator!)
+        scanningIndicatorItem = UIBarButtonItem(customView: scanIndicator!)
         scanningItem = UIBarButtonItem(
                 title: "Scanning",
                 style: UIBarButtonItemStyle.plain,
                 target: nil,
                 action: nil)
-        navigationController?.toolbarItems = [scanIndicatorItem, scanningItem]
-        navigationController?.toolbar.isHidden = false
 
         warningLabel.isHidden = true
         if (delegate?.cm?.state == CBManagerState.poweredOff) {
@@ -432,7 +430,9 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
             delegate?.cm?.stopScan()
             scanIndicator?.stopAnimating()
 
-            navigationController?.toolbarItems = []
+            // always in the middle so magic numbers are okay here
+            toolbar.items?.remove(at: 1)
+            toolbar.items?.remove(at: 2)
 
             delegate?.connectionStatus = ConnectionStatus.idle
             scanningItem?.title = "Scan for peripherals"
@@ -449,7 +449,8 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
 
         delegate?.cm?.scanForPeripherals(withServices: nil, options: [CBCentralManagerScanOptionAllowDuplicatesKey: true])
 
-        navigationController?.toolbarItems = [scanIndicatorItem, scanningItem]
+        toolbar.items?.insert(scanningItem, at: 1)
+        toolbar.items?.insert(scanningIndicatorItem, at: 2)
         scanIndicator?.startAnimating()
 
         delegate?.connectionStatus = ConnectionStatus.scanning

@@ -186,11 +186,6 @@ class BLEDevice {
         
     }
 
-    func isMacAddress(_ addr: String) {
-        let macRegex = try! NSRegularExpression(pattern: "^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$")
-        let match = macRegex.matches(in: addr, options: [], range: NSRange(location: 0, length: addr.count))
-    }
-
     func stringsFromUUIDs(_ idArray:NSArray)->[String] {
         
         var idStringArray = [String](repeating: "", count: idArray.count)

@@ -87,12 +87,8 @@ class PinIOViewController : UIViewController {
                 indicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
                 indicator.translatesAutoresizingMaskIntoConstraints = false
                 self.capabilityQueryAlert!.view.addSubview(indicator)
-                
-                let views = ["alert" : self.capabilityQueryAlert!.view, "indicator" : indicator]
-                var constraints = NSLayoutConstraint.constraints(withVisualFormat: "V:[indicator]-(25)-|", options: NSLayoutFormatOptions.alignAllCenterX, metrics: nil, views: views)
-                constraints += NSLayoutConstraint.constraints(withVisualFormat: "H:|[indicator]|", options: NSLayoutFormatOptions.alignAllCenterX, metrics: nil, views: views)
-                self.capabilityQueryAlert!.view.addConstraints(constraints)
-                
+            
+
                 indicator.isUserInteractionEnabled = false
                 indicator.startAnimating()
                 
@@ -104,10 +100,8 @@ class PinIOViewController : UIViewController {
     }
 
     func updatePowerData(_ value: Int) {
-        self.powerType!.text = "Torque"
-        if (value != nil) {
-            self.powerLevel!.text = "\(value)"
-        }
+        powerType!.text = "Torque"
+        powerLevel!.text = "\(value)"
     }
     
     
@@ -498,9 +492,9 @@ class PinIOViewController : UIViewController {
             */
             
             printLog(self, funcName: (#function), logString: "INDIVIDUAL PIN STATE RECEIVED")
-            let pin = data[2]
+//            let pin = data[2]
             let pinMode = data[3]
-            let pinState = data[4]
+//            let pinState = data[4]
 
                     
                     if (pinMode > 1 ) && (data.count > 5){
@@ -528,7 +522,7 @@ class PinIOViewController : UIViewController {
 
             //Analog Reporting (per pin)
             else if ((data[i] >= 0xE0) && (data[i] <= 0xEF)) {
-                let pin = Int(data[i]) - 0xE0
+//                let pin = Int(data[i]) - 0xE0
                 let val = Int(data[i+1]) + (Int(data[i+2])<<7);
 //                cell?.setAnalogValue(val)
                 powerLevel!.text = "\(val)"
@@ -600,7 +594,7 @@ class PinIOViewController : UIViewController {
         var message = ""
         var pinNumber = 0
         var isAvailable = true, isInput = false, isOutput = false, isAnalog = false, isPWM = false
-        var newCells:[PinCell?] = []
+//        var newCells:[PinCell?] = []
         for p in allPins {
             
             var str = ""

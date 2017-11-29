@@ -22,7 +22,6 @@
 		648F2CAABAB0415C5EF1A08F /* BLEInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F2BB3F2A28AEEE7FC9869 /* BLEInfo.swift */; };
 		648F2D1056CDFA9AA35B10B7 /* PinCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F2D26865DCB17A772B7E1 /* PinCell.swift */; };
 		648F2D8D260B05A645628BC9 /* BLESensorButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F25E287FA3A89F8A2B318 /* BLESensorButton.swift */; };
-		648F2DBE0A2E77C9A948E739 /* UARTViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F28D6C755EC0C67E8389E /* UARTViewController.swift */; };
 		648F2EB963F71E4339E50FB3 /* PinIOViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 648F2A1DE9D9B0D84544ECC0 /* PinIOViewController.xib */; };
 		648F2EBE2AE2CBF67B3BD796 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F2D988D3B725A3A2706A1 /* SplashViewController.swift */; };
 		648F2F6A18A7EB499E2EF141 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F25803D43C33B0CD7A922 /* Constants.swift */; };
@@ -64,7 +63,6 @@
 		648F225A24F1A688F30BC824 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		648F25803D43C33B0CD7A922 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		648F25E287FA3A89F8A2B318 /* BLESensorButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLESensorButton.swift; sourceTree = "<group>"; };
-		648F28D6C755EC0C67E8389E /* UARTViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UARTViewController.swift; sourceTree = "<group>"; };
 		648F2A1DE9D9B0D84544ECC0 /* PinIOViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PinIOViewController.xib; sourceTree = "<group>"; };
 		648F2A9C35C6B713B656919A /* DeviceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceCell.swift; sourceTree = "<group>"; };
 		648F2BB3F2A28AEEE7FC9869 /* BLEInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEInfo.swift; sourceTree = "<group>"; };
@@ -188,7 +186,6 @@
 				648F2EBCCB4C689400F5B991 /* GATT-characteristics.plist */,
 				648F2E3A85ED450362C60362 /* PinIOViewController.swift */,
 				648F2A1DE9D9B0D84544ECC0 /* PinIOViewController.xib */,
-				648F28D6C755EC0C67E8389E /* UARTViewController.swift */,
 				7984B8F61FAD38E900C911E8 /* paddlemaxios-Bridging-Header.h */,
 				648F2D26865DCB17A772B7E1 /* PinCell.swift */,
 				648F2DE5E40B46459A71B405 /* HomeViewController.swift */,
@@ -377,7 +374,6 @@
 				648F2193D195C69B8826ADA7 /* DeviceListViewController.swift in Sources */,
 				648F265935B891A9E87C49A8 /* Extensions.swift in Sources */,
 				648F26EED99FC774535AD6B5 /* PinIOViewController.swift in Sources */,
-				648F2DBE0A2E77C9A948E739 /* UARTViewController.swift in Sources */,
 				648F2D1056CDFA9AA35B10B7 /* PinCell.swift in Sources */,
 				791CD5211FBBF46200F09089 /* Enums.swift in Sources */,
 				648F266C818C3C1BAB766AFD /* HomeViewController.swift in Sources */,

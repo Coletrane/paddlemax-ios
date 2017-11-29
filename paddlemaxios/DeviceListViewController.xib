@@ -17,8 +17,12 @@
                 <outlet property="cancelButton" destination="Zpa-Qd-7Nd" id="D36-YS-AHG"/>
                 <outlet property="deviceCell" destination="9hq-Hj-3DE" id="bbI-jq-Fea"/>
                 <outlet property="navBar" destination="fNp-vM-Khr" id="MFt-LD-60L"/>
+                <outlet property="scanningIndicator" destination="VlW-kZ-Swh" id="4f5-fi-faC"/>
+                <outlet property="scanningIndicatorItem" destination="VlW-kZ-Swh" id="3Mf-Iq-CQK"/>
+                <outlet property="scanningItem" destination="st9-0L-Dq1" id="i0X-kx-GvX"/>
                 <outlet property="settingsButton" destination="zYs-p3-9yc" id="XYe-vr-VdF"/>
                 <outlet property="tableView" destination="q4d-iJ-RdI" id="uRM-dk-MRS"/>
+                <outlet property="toolbar" destination="Vbo-SF-UoM" id="bic-Gj-mCn"/>
                 <outlet property="view" destination="4pg-hr-bCM" id="pAR-ne-Pj0"/>
                 <outlet property="warningLabel" destination="1ll-uR-BLg" id="6uj-e3-iiq"/>
             </connections>
@@ -71,6 +75,16 @@
                         <outlet property="delegate" destination="-1" id="hvd-XP-PvI"/>
                     </connections>
                 </tableView>
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vbo-SF-UoM">
+                    <rect key="frame" x="0.0" y="524" width="320" height="44"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                    <items>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="bki-c3-FPj"/>
+                        <barButtonItem title="Scanning" style="plain" id="st9-0L-Dq1"/>
+                        <barButtonItem id="VlW-kZ-Swh" userLabel="Scanning Indicator"/>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="IpC-8R-AId"/>
+                    </items>
+                </toolbar>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
