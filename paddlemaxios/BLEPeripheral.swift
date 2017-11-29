@@ -243,9 +243,11 @@ class BLEPeripheral: NSObject, CBPeripheralDelegate {
             if characteristic.descriptors?.count != 0 {
                 for d in characteristic.descriptors! {
                     let desc = d as CBDescriptor!
-                    printLog(self, funcName: "didDiscoverDescriptorsForCharacteristic", logString: "\(desc?.description)")
+                    printLog(self,
+                            funcName: "didDiscoverDescriptorsForCharacteristic",
+                            logString: "\(desc?.description ?? "N/A")")
                     
-//                    currentPeripheral.readValueForDescriptor(desc)
+                    currentPeripheral.readValue(for: desc!)
                 }
             }
 
@@ -341,7 +343,9 @@ class BLEPeripheral: NSObject, CBPeripheralDelegate {
             return
         }
         
-        printLog(self, funcName: "didDiscoverIncludedServicesForService", logString: "service: \(service.description) has \(service.includedServices?.count) included services")
+        printLog(self,
+                funcName: "didDiscoverIncludedServicesForService",
+                logString: "service: \(service.description) has \(service.includedServices?.count ?? -1) included services")
         
         //        if service.characteristics.count == 0 {
         //            currentPeripheral.discoverIncludedServices(nil, forService: service)

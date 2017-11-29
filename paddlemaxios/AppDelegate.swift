@@ -23,12 +23,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
         tabBarController = TabBarController()
         splashViewController = SplashViewController()
 
-        // TODO: check if user is logged in
-        if let loggedIn = UserDefaults.standard.string(forKey: USER_LOGIN) {
-            window!.rootViewController = tabBarController
-        } else {
-            window!.rootViewController = splashViewController
-        }
+//        if let loggedIn = UserDefaults.standard.string(forKey: USER_LOGIN) {
+//            window!.rootViewController = tabBarController
+//        } else {
+//            window!.rootViewController = splashViewController
+//        }
+        window!.rootViewController = tabBarController
 
         window!.makeKeyAndVisible()
 
@@ -65,17 +65,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
     
     
     func applicationWillResignActive(_ application: UIApplication) {
-        
-        // Stop scanning before entering background
-//        mainViewController?.stopScan()
-        
-        //TEST NOTIFICATION
-//        let note = UILocalNotification()
-//        note.fireDate = NSDate().dateByAddingTimeInterval(5.0)
-//        note.alertBody = "THIS IS A TEST"
-//        note.soundName =  UILocalNotificationDefaultSoundName
-//        application.scheduleLocalNotification(note)
-        
+        // Stop scanning
+        if UIApplication.shared.keyWindow?.rootViewController is DeviceListViewController {
+            let devList = UIApplication.shared.keyWindow?.rootViewController as! DeviceListViewController
+            devList.stopScan()
+        }
     }
     
     
@@ -90,142 +84,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
 //    }
     
     
-    //WatchKit request
-    
+    // TODO: implement the watch
+
     func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
-        
-        if let request = message["type"] as? String {
-            if request == "isConnected" {
-                //                    NSLog("app received connection status request")
-                
-                //check connection status
-                if HomeViewController.singleton.connectedInControllerMode() {
-                    replyHandler(["connected":true])
-                }
-                else {
-                    replyHandler(["connected":false])
-                }
-                return
-            }
-            else if request == "command" {
-                if let command = message["command"] as? String {
-                    if command == "disconnect" {
-                        //                            NSLog("BLEAppDelegate -> Disconnect command received")
-                        
-                        //disconnect device
-                        HomeViewController.singleton.disconnectviaWatch()
-                        
-                        replyHandler(["connected":false])
-                    }
-                }
-                
-            }
-            else if request == "sendData"{
-                //check send data type - button or color
-                if let red = message["red"] as? Int, let green = message["green"] as? Int, let blue = message["blue"] as? Int {
-                    //                        NSLog("color request received")
-                    
-                    //forward data to mainviewController
-                    if HomeViewController.singleton.connectedInControllerMode() {
-//                        HomeViewController.singleton.controllerViewController.sendColor(UInt8(red), green: UInt8(green), blue: UInt8(blue))
-                        replyHandler(["connected":true])
-                    }
-                    else {
-                        replyHandler(["connected":false])
-                    }
-                    return
-                }
-                else if let button = message["button"] as? Int {
-                    
-                    //                        NSLog("button request " + button)
-                    //forward data to mainviewController
-                    if HomeViewController.singleton.connectedInControllerMode() {
-//                        HomeViewController.singleton.controllerViewController.controlPadButtonTappedWithTag(button)
-                        replyHandler(["connected":true])
-                    }
-                    else {
-                        replyHandler(["connected":false])
-                    }
-                    return
-                }
-                
-            }
-                
-            else {
-                //blank reply
-                replyHandler([:])
-            }
-        }
+
         
     }
     
     func application(_ application: UIApplication,
         handleWatchKitExtensionRequest userInfo: [AnyHashable: Any]?,
         reply: (@escaping ([AnyHashable: Any]?) -> Void)) {
-            
-            // 1
-            if let userInfo = userInfo, let request = userInfo["type"] as? String {
-                if request == "isConnected" {
-//                    NSLog("app received connection status request")
-                    
-                    //check connection status
-                    if HomeViewController.singleton.connectedInControllerMode() {
-                        reply(["connected":true])
-                    }
-                    else {
-                        reply(["connected":false])
-                    }
-                    return
-                }
-                else if request == "command" {
-                    if let command = userInfo["command"] as? String {
-                        if command == "disconnect" {
-//                            NSLog("BLEAppDelegate -> Disconnect command received")
-                            
-                            //disconnect device
-                            HomeViewController.singleton.disconnectviaWatch()
-                            
-                            reply(["connected":false])
-                        }
-                    }
-                    
-                }
-                else if request == "sendData"{
-                    //check send data type - button or color
-                    if let red = userInfo["red"] as? Int, let green = userInfo["green"] as? Int, let blue = userInfo["blue"] as? Int {
-//                        NSLog("color request received")
-                        
-                        //forward data to mainviewController
-                        if HomeViewController.singleton.connectedInControllerMode() {
-//                            HomeViewController.singleton.controllerViewController.sendColor(UInt8(red), green: UInt8(green), blue: UInt8(blue))
-                            reply(["connected":true])
-                        }
-                        else {
-                            reply(["connected":false])
-                        }
-                        return
-                    }
-                    else if let button = userInfo["button"] as? Int {
-                        
-//                        NSLog("button request " + button)
-                        //forward data to mainviewController
-                        if HomeViewController.singleton.connectedInControllerMode() {
-//                            HomeViewController.singleton.controllerViewController.controlPadButtonTappedWithTag(button)
-                            reply(["connected":true])
-                        }
-                        else {
-                            reply(["connected":false])
-                        }
-                        return
-                    }
-                    
-                }
-                
-                else {
-                    //blank reply
-                    reply([:])
-                }
-            }
+
     }
 
     // TODO: Implement these

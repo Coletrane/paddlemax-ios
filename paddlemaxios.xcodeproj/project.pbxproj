@@ -34,7 +34,6 @@
 		791CD6A41FC31D4900F09089 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 791CD69F1FC31D4900F09089 /* Bolts.framework */; };
 		791CD6A51FC31D4900F09089 /* AccountKitStrings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 791CD6A01FC31D4900F09089 /* AccountKitStrings.bundle */; };
 		793B2D371FB8AAF8002D407E /* engebrechtre bd it.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 793B2D361FB8AAF8002D407E /* engebrechtre bd it.ttf */; };
-		794CBF9E1FB8990400E10F08 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7984B8D41FAD341B00C911E8 /* Info.plist */; };
 		7984B8D01FAD341B00C911E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7984B8CF1FAD341B00C911E8 /* Assets.xcassets */; };
 		7984B8DE1FAD341B00C911E8 /* paddlemaxiosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7984B8DD1FAD341B00C911E8 /* paddlemaxiosTests.swift */; };
 		7984B8E91FAD341B00C911E8 /* paddlemaxiosUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7984B8E81FAD341B00C911E8 /* paddlemaxiosUITests.swift */; };
@@ -342,7 +341,6 @@
 				791CD5251FC316A100F09089 /* SplashViewController.xib in Resources */,
 				648F28DD237CF47DB27480AE /* GATT-characteristics.plist in Resources */,
 				648F2EB963F71E4339E50FB3 /* PinIOViewController.xib in Resources */,
-				794CBF9E1FB8990400E10F08 /* Info.plist in Resources */,
 				648F22F3A88D0225E4E394D4 /* HomeViewController.xib in Resources */,
 				648F226D3BBCAF8E184F0826 /* DeviceListViewController.xib in Resources */,
 			);

@@ -10,13 +10,17 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
 
     var delegate: DeviceListViewControllerDelegate?
 
+    // Navigation bar outlets
+    @IBOutlet var navBar: UINavigationBar!
+    @IBOutlet var barItem: UINavigationItem!
+    @IBOutlet var cancelButton: UIBarButtonItem!
+    @IBOutlet var settingsButton: UIBarButtonItem!
 
     // Outlets
     @IBOutlet var tableView: UITableView!
     //    @IBOutlet var helpViewController: HelpViewController!
     @IBOutlet var deviceCell: DeviceCell!
     @IBOutlet var warningLabel: UILabel!
-    var infoButton: UIButton!
 
     // Alert Views
     fileprivate var connectingAlertView: UIAlertController!
@@ -31,7 +35,7 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
     fileprivate var infoBarButton: UIBarButtonItem!
     fileprivate var scanIndicator: UIActivityIndicatorView!
     fileprivate var scanIndicatorItem: UIBarButtonItem!
-    fileprivate var scanButtonItem: UIBarButtonItem!
+    fileprivate var scanningItem: UIBarButtonItem!
     fileprivate var connectionTimeOutIntvl: TimeInterval! = 30.0
     var connectionTimer: Timer?
 
@@ -41,17 +45,15 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
         self.init(nibName: "DeviceListViewController", bundle: Bundle.main)
 
         delegate = aDelegate
-
-        title = "Connect to Paddle"
-        warningLabel = UILabel()
-        warningLabel.isHidden = true
-
-        infoButton = UIButton()
     }
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        title = "Connect to Paddle"
+        warningLabel = UILabel()
+        warningLabel.isHidden = true
 
         tableView.delegate = self
         tableView.dataSource = self
@@ -64,6 +66,18 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
         let refresh = UIRefreshControl()
         refresh.addTarget(self, action: #selector(self.refreshWasPulled(_:)), for: UIControlEvents.valueChanged)
         tvc.refreshControl = refresh
+
+        // Add scanning indicator to toolbar
+        scanIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.white)
+        scanIndicator!.hidesWhenStopped = false
+        scanIndicatorItem = UIBarButtonItem(customView: scanIndicator!)
+        scanningItem = UIBarButtonItem(
+                title: "Scanning",
+                style: UIBarButtonItemStyle.plain,
+                target: nil,
+                action: nil)
+        navigationController?.toolbarItems = [scanIndicatorItem, scanningItem]
+        navigationController?.toolbar.isHidden = false
 
         warningLabel.isHidden = true
         if (delegate?.cm?.state == CBManagerState.poweredOff) {
@@ -106,7 +120,6 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
         tableView.isHidden = false
     }
 
@@ -152,7 +165,25 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
             self.connectInMode(CONNECTION_MODE, peripheral: device.peripheral)
         }
     }
-
+    
+    @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
+        printLog(self,
+                funcName: #function,
+                logString: "Cancel pressed, stopping scan and going back to the home screen")
+        stopScan()
+        self.dismiss(animated: true)
+    }
+    
+    @IBAction func settingsButtonPressed(_ sender: UIBarButtonItem) {
+        let settingsUrl = URL(string: UIApplicationOpenSettingsURLString)
+        if settingsUrl != nil && UIApplication.shared.canOpenURL(settingsUrl!) {
+            printLog(self,
+                    funcName: #function,
+                    logString: "Going to system settings")
+            UIApplication.shared.open(settingsUrl!)
+        }
+    }
+    
     // MARK: view manipulation
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .default
@@ -224,7 +255,7 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
         self.stopScan()
 
         tableView.beginUpdates()
-        tableView.deleteSections(IndexSet(integersIn: NSMakeRange(0, tableView.numberOfSections).toRange()!), with: UITableViewRowAnimation.fade)
+        tableView.deleteSections(IndexSet(integersIn: 0...tableView.numberOfSections), with: UITableViewRowAnimation.fade)
         devices.removeAll(keepingCapacity: false)
         tableView.endUpdates()
 
@@ -248,7 +279,7 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
         self.stopScan()
 
         tableView.beginUpdates()
-        tableView.deleteSections(IndexSet(integersIn: NSMakeRange(0, tableView.numberOfSections).toRange()!), with: UITableViewRowAnimation.fade)
+        tableView.deleteSections(IndexSet(integersIn: 0...tableView.numberOfSections), with: UITableViewRowAnimation.fade)
         devices.removeAll(keepingCapacity: false)
         tableView.endUpdates()
 
@@ -401,15 +432,10 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
             delegate?.cm?.stopScan()
             scanIndicator?.stopAnimating()
 
-            for i in 0...toolbarItems!.count - 1 {
-                if toolbarItems?[i] === scanIndicatorItem {
-                    toolbarItems?.remove(at: i)
-                    break
-                }
-            }
+            navigationController?.toolbarItems = []
 
             delegate?.connectionStatus = ConnectionStatus.idle
-            scanButtonItem?.title = "Scan for peripherals"
+            scanningItem?.title = "Scan for peripherals"
         }
 
     }
@@ -422,21 +448,11 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
         }
 
         delegate?.cm?.scanForPeripherals(withServices: nil, options: [CBCentralManagerScanOptionAllowDuplicatesKey: true])
-        //Check if scan indicator is in toolbar items
-        var indicatorShown = false
-        for i in toolbarItems! {
-            if i === scanIndicatorItem {
-                indicatorShown = true
-            }
-        }
-        //Insert scan indicator if not already in toolbar items
-        if indicatorShown == false {
-            toolbarItems?.insert(scanIndicatorItem!, at: 1)
-        }
 
+        navigationController?.toolbarItems = [scanIndicatorItem, scanningItem]
         scanIndicator?.startAnimating()
+
         delegate?.connectionStatus = ConnectionStatus.scanning
-        scanButtonItem?.title = "Scanning"
     }
 
     func connectPeripheral(_ peripheral: CBPeripheral, mode: ConnectionMode) {

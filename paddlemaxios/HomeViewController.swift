@@ -124,20 +124,6 @@ class HomeViewController: UIViewController,
         super.init(coder: aDecoder)!
     }
 
-    //for Objective-C delegate compatibility
-    func setDelegate(_ newDelegate:AnyObject){
-
-        if newDelegate.responds(to: Selector("onDeviceConnectionChange:")){
-            delegate = newDelegate as? HomeViewControllerDelegate
-        }
-        else {
-            printLog(self,
-                    funcName: "setDelegate",
-                    logString: "failed to set delegate")
-        }
-
-    }
-
     // MARK: view lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -306,28 +292,6 @@ class HomeViewController: UIViewController,
         logoImage.isHidden = true
     }
 
-    func alertBluetoothPowerOff() {
-
-        //Respond to system's bluetooth disabled
-
-        let title = "Bluetooth Power"
-        let message = "You must turn on Bluetooth in Settings in order to connect to a device"
-        let alertView = UIAlertView(title: title, message: message, delegate: nil, cancelButtonTitle: "OK")
-        alertView.show()
-    }
-
-
-    func alertFailedConnection() {
-
-        //Respond to unsuccessful connection
-
-        let title = "Unable to connect"
-        let message = "Please check power & wiring,\nthen reset your Arduino"
-        let alertView = UIAlertView(title: title, message: message, delegate: nil, cancelButtonTitle: "OK")
-        alertView.show()
-
-    }
-
     // UIPickerViewDelegate functions
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -392,19 +356,26 @@ class HomeViewController: UIViewController,
         }
 
         if currentPeripheral == nil {
-            printLog(self, funcName: "didConnectPeripheral", logString: "No current peripheral found, unable to connect")
+            printLog(self,
+                    funcName: "didConnectPeripheral",
+                    logString: "No current peripheral found, unable to connect")
             return
         }
 
 
         if currentPeripheral!.currentPeripheral == peripheral {
 
-            printLog(self, funcName: "didConnectPeripheral", logString: "\(peripheral.name)")
+            printLog(self,
+                    funcName: "didConnectPeripheral",
+                    logString: "\(peripheral.name ?? "N/A")")
 
             //Discover Services for device
             if((peripheral.services) != nil){
-                printLog(self, funcName: "didConnectPeripheral", logString: "Did connect to existing peripheral \(peripheral.name)")
-                currentPeripheral!.peripheral(peripheral, didDiscoverServices: nil)  //already discovered services, DO NOT re-discover. Just pass along the peripheral.
+                printLog(self,
+                        funcName: "didConnectPeripheral",
+                        logString: "Did connect to existing peripheral \(peripheral.name ?? "N/A")")
+                //already discovered services, DO NOT re-discover. Just pass along the peripheral.
+                currentPeripheral!.peripheral(peripheral, didDiscoverServices: nil)
             }
             else {
                 currentPeripheral!.didConnect(connectionMode!)
@@ -482,24 +453,20 @@ class HomeViewController: UIViewController,
 
 
     func respondToUnexpectedDisconnect() {
-
-//        self.self.navigationController?.popToRootViewController(animated: true)
-
         //display disconnect alert
-        let alert = UIAlertView(title:"Disconnected",
-            message:"BlE device disconnected",
-            delegate:self,
-            cancelButtonTitle:"OK")
+        let alert = UIAlertController(
+                title: "Disconnected",
+                message: "Paddle was disconnected",
+                preferredStyle: UIAlertControllerStyle.alert)
 
-        let note = UILocalNotification()
-        note.fireDate = Date().addingTimeInterval(0.0)
-        note.alertBody = "BLE device disconnected"
-        note.soundName =  UILocalNotificationDefaultSoundName
-        UIApplication.shared.scheduleLocalNotification(note)
+        // TODO: decide if a notification is neeeded here
+//        let note = UILocalNotification()
+//        note.fireDate = Date().addingTimeInterval(0.0)
+//        note.alertBody = "BLE device disconnected"
+//        note.soundName =  UILocalNotificationDefaultSoundName
+//        UIApplication.shared.scheduleLocalNotification(note)
 
-        alert.show()
-
-
+        present(alert, animated: true)
     }
 
     func launchPinIOViewController() {
@@ -546,15 +513,17 @@ class HomeViewController: UIViewController,
 
     func sendData(_ newData: Data) {
 
-        //Output data to UART peripheral
-
         let hexString = newData.hexRepresentationWithSpaces(true)
 
-        printLog(self, funcName: "sendData", logString: "\(hexString)")
+        printLog(self,
+                funcName: "sendData",
+                logString: "\(hexString)")
 
 
-        if currentPeripheral! == nil {
-            printLog(self, funcName: "sendData", logString: "No current peripheral found, unable to send data")
+        if currentPeripheral?.currentPeripheral! == nil {
+            printLog(self,
+                    funcName: "sendData",
+                    logString: "No current peripheral found, unable to send data")
             return
         }
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -7,12 +7,17 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DeviceListViewController" customModule="paddlemaxios" customModuleProvider="target">
             <connections>
+                <outlet property="barItem" destination="k0y-52-IC5" id="iaS-XZ-NaK"/>
+                <outlet property="cancelButton" destination="Zpa-Qd-7Nd" id="D36-YS-AHG"/>
                 <outlet property="deviceCell" destination="9hq-Hj-3DE" id="bbI-jq-Fea"/>
+                <outlet property="navBar" destination="fNp-vM-Khr" id="MFt-LD-60L"/>
+                <outlet property="settingsButton" destination="zYs-p3-9yc" id="XYe-vr-VdF"/>
                 <outlet property="tableView" destination="q4d-iJ-RdI" id="uRM-dk-MRS"/>
                 <outlet property="view" destination="4pg-hr-bCM" id="pAR-ne-Pj0"/>
                 <outlet property="warningLabel" destination="1ll-uR-BLg" id="6uj-e3-iiq"/>
@@ -23,48 +28,65 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" style="grouped" allowsSelection="NO" rowHeight="50" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="q4d-iJ-RdI" userLabel="Device List Table">
-                    <rect key="frame" x="0.0" y="83" width="320" height="584"/>
-                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                    <inset key="scrollIndicatorInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="44"/>
-                    <color key="separatorColor" red="0.27058823529999998" green="0.52941176469999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <connections>
-                        <outlet property="dataSource" destination="-1" id="iYC-le-OVb"/>
-                        <outlet property="delegate" destination="-1" id="hvd-XP-PvI"/>
-                    </connections>
-                </tableView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1ll-uR-BLg">
-                    <rect key="frame" x="97" y="206" width="181" height="21"/>
+                    <rect key="frame" x="70" y="206" width="181" height="21"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="21" id="hYL-aD-alZ"/>
+                        <constraint firstAttribute="height" constant="21" id="zXm-cW-2eK"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connect to paddle" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jdx-Vd-y2a">
-                    <rect key="frame" x="25" y="27" width="257" height="48"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="48" id="9ui-yi-Jp6"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fNp-vM-Khr">
+                    <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                    <items>
+                        <navigationItem id="k0y-52-IC5">
+                            <barButtonItem key="leftBarButtonItem" title="Cancel" id="Zpa-Qd-7Nd">
+                                <connections>
+                                    <action selector="cancelButtonPressed:" destination="-1" id="4DF-PX-Nip"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem key="rightBarButtonItem" title="Settings" id="zYs-p3-9yc">
+                                <connections>
+                                    <action selector="settingsButtonPressed_" destination="-1" id="SrU-qd-5KE"/>
+                                </connections>
+                            </barButtonItem>
+                        </navigationItem>
+                    </items>
+                </navigationBar>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" style="grouped" allowsSelection="NO" rowHeight="50" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="q4d-iJ-RdI" userLabel="Device List Table">
+                    <rect key="frame" x="0.0" y="64" width="320" height="603"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                    <inset key="scrollIndicatorInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="44"/>
+                    <color key="separatorColor" red="0.27058823529999998" green="0.52941176469999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <label key="tableHeaderView" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connect to paddle" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jdx-Vd-y2a">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="48"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="iYC-le-OVb"/>
+                        <outlet property="delegate" destination="-1" id="hvd-XP-PvI"/>
+                    </connections>
+                </tableView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="1ll-uR-BLg" secondAttribute="trailing" constant="42" id="NJp-31-YHV"/>
-                <constraint firstAttribute="bottom" secondItem="q4d-iJ-RdI" secondAttribute="bottom" constant="-99" id="P9j-0H-rJu"/>
-                <constraint firstAttribute="trailing" secondItem="q4d-iJ-RdI" secondAttribute="trailing" id="dXu-be-G8z"/>
-                <constraint firstItem="1ll-uR-BLg" firstAttribute="leading" secondItem="4pg-hr-bCM" secondAttribute="leading" constant="97" id="eeF-hU-pdW"/>
-                <constraint firstItem="q4d-iJ-RdI" firstAttribute="leading" secondItem="4pg-hr-bCM" secondAttribute="leading" id="i3h-Mf-3zC"/>
-                <constraint firstItem="jdx-Vd-y2a" firstAttribute="top" secondItem="4pg-hr-bCM" secondAttribute="top" constant="27" id="j6A-pv-32Z"/>
-                <constraint firstItem="jdx-Vd-y2a" firstAttribute="leading" secondItem="4pg-hr-bCM" secondAttribute="leading" constant="25" id="klQ-8c-wMz"/>
-                <constraint firstItem="1ll-uR-BLg" firstAttribute="top" secondItem="4pg-hr-bCM" secondAttribute="top" constant="206" id="qKV-ge-4Kr"/>
-                <constraint firstItem="q4d-iJ-RdI" firstAttribute="top" secondItem="jdx-Vd-y2a" secondAttribute="bottom" constant="8" symbolic="YES" id="xSW-Z8-2bq"/>
+                <constraint firstItem="q4d-iJ-RdI" firstAttribute="top" secondItem="fNp-vM-Khr" secondAttribute="bottom" id="8bK-We-rwP"/>
+                <constraint firstItem="fNp-vM-Khr" firstAttribute="leading" secondItem="4pg-hr-bCM" secondAttribute="leading" id="9qu-Rd-DJm"/>
+                <constraint firstItem="fNp-vM-Khr" firstAttribute="leading" secondItem="q4d-iJ-RdI" secondAttribute="leading" id="P5C-TK-7lR"/>
+                <constraint firstItem="fNp-vM-Khr" firstAttribute="centerX" secondItem="1ll-uR-BLg" secondAttribute="centerX" id="SeW-JI-Fjb"/>
+                <constraint firstItem="fNp-vM-Khr" firstAttribute="trailing" secondItem="q4d-iJ-RdI" secondAttribute="trailing" id="h7h-6l-wns"/>
+                <constraint firstItem="dNJ-tO-1uQ" firstAttribute="bottom" secondItem="1ll-uR-BLg" secondAttribute="bottom" constant="341" id="jtt-q2-zu2"/>
+                <constraint firstAttribute="bottom" secondItem="q4d-iJ-RdI" secondAttribute="bottom" constant="-99" id="kw2-Dz-Gii"/>
+                <constraint firstItem="fNp-vM-Khr" firstAttribute="top" secondItem="dNJ-tO-1uQ" secondAttribute="top" id="prW-6P-uNq"/>
+                <constraint firstItem="1ll-uR-BLg" firstAttribute="leading" secondItem="dNJ-tO-1uQ" secondAttribute="leading" constant="70" id="uWn-sr-kpp"/>
+                <constraint firstAttribute="trailing" secondItem="fNp-vM-Khr" secondAttribute="trailing" id="xjV-GS-zoY"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
+            <viewLayoutGuide key="safeArea" id="dNJ-tO-1uQ"/>
             <point key="canvasLocation" x="-225" y="111"/>
         </view>
         <tableViewCell opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="48" id="9hq-Hj-3DE" customClass="DeviceCell" customModule="paddlemaxios" customModuleProvider="target">
@@ -103,6 +125,7 @@
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <viewLayoutGuide key="safeArea" id="8eb-FL-cMR"/>
             <connections>
                 <outlet property="connectButton" destination="tUM-il-9VE" id="nIy-xQ-pzP"/>
                 <outlet property="nameLabel" destination="HC8-BS-Yeq" id="ORI-dZ-Y5m"/>
