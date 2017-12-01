@@ -168,6 +168,7 @@ class HomeViewController: UIViewController,
     // MARK: view controller navigation
     @IBAction func connectButtonPressed(_ sender: UIButton) {
         deviceListViewController = DeviceListViewController(aDelegate: self)
+        deviceListViewController.initTitleAndBars()
         present(deviceListViewController, animated: true, completion: { () -> Void in
             self.deviceListViewController.startScan()
         })
