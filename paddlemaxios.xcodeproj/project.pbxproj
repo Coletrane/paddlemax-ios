@@ -16,6 +16,7 @@
 		648F22F3A88D0225E4E394D4 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 648F2054998EEAE80E920DAA /* HomeViewController.xib */; };
 		648F265935B891A9E87C49A8 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F225A24F1A688F30BC824 /* Extensions.swift */; };
 		648F266C818C3C1BAB766AFD /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F2DE5E40B46459A71B405 /* HomeViewController.swift */; };
+		648F26E9C153B6EFBB2AEAC6 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F2598B81A8E13F7A93375 /* UserService.swift */; };
 		648F26EED99FC774535AD6B5 /* PinIOViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F2E3A85ED450362C60362 /* PinIOViewController.swift */; };
 		648F28DD237CF47DB27480AE /* GATT-characteristics.plist in Resources */ = {isa = PBXBuildFile; fileRef = 648F2EBCCB4C689400F5B991 /* GATT-characteristics.plist */; };
 		648F2B1207EAB22054FCD2A7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F20C93AFC396D372BDAE0 /* AppDelegate.swift */; };
@@ -37,6 +38,15 @@
 		7984B8DE1FAD341B00C911E8 /* paddlemaxiosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7984B8DD1FAD341B00C911E8 /* paddlemaxiosTests.swift */; };
 		7984B8E91FAD341B00C911E8 /* paddlemaxiosUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7984B8E81FAD341B00C911E8 /* paddlemaxiosUITests.swift */; };
 		79BE69A71FC31F5200FA46B8 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79BE69A61FC31F5200FA46B8 /* MapKit.framework */; };
+		79BE69AF1FD1081500FA46B8 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 79BE69AD1FD1081500FA46B8 /* Interface.storyboard */; };
+		79BE69B11FD1081500FA46B8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 79BE69B01FD1081500FA46B8 /* Assets.xcassets */; };
+		79BE69B81FD1081500FA46B8 /* paddlemaxwatchos Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 79BE69B71FD1081500FA46B8 /* paddlemaxwatchos Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		79BE69BD1FD1081500FA46B8 /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BE69BC1FD1081500FA46B8 /* InterfaceController.swift */; };
+		79BE69BF1FD1081500FA46B8 /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BE69BE1FD1081500FA46B8 /* ExtensionDelegate.swift */; };
+		79BE69C11FD1081500FA46B8 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BE69C01FD1081500FA46B8 /* NotificationController.swift */; };
+		79BE69C31FD1081500FA46B8 /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BE69C21FD1081500FA46B8 /* ComplicationController.swift */; };
+		79BE69C51FD1081500FA46B8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 79BE69C41FD1081500FA46B8 /* Assets.xcassets */; };
+		79BE69CB1FD1081500FA46B8 /* paddlemaxwatchos.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 79BE69AB1FD1081500FA46B8 /* paddlemaxwatchos.app */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,7 +64,46 @@
 			remoteGlobalIDString = 7984B8C41FAD341B00C911E8;
 			remoteInfo = paddlemaxios;
 		};
+		79BE69B91FD1081500FA46B8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7984B8BD1FAD341B00C911E8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 79BE69B61FD1081500FA46B8;
+			remoteInfo = "paddlemaxwatchos Extension";
+		};
+		79BE69C81FD1081500FA46B8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7984B8BD1FAD341B00C911E8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 79BE69AA1FD1081500FA46B8;
+			remoteInfo = paddlemaxwatchos;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		79BE69CA1FD1081500FA46B8 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				79BE69CB1FD1081500FA46B8 /* paddlemaxwatchos.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		79BE69CF1FD1081500FA46B8 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				79BE69B81FD1081500FA46B8 /* paddlemaxwatchos Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		648F2004577F9C5362D328A6 /* BLEDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEDevice.swift; sourceTree = "<group>"; };
@@ -62,6 +111,7 @@
 		648F20C93AFC396D372BDAE0 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		648F225A24F1A688F30BC824 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		648F25803D43C33B0CD7A922 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		648F2598B81A8E13F7A93375 /* UserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		648F25E287FA3A89F8A2B318 /* BLESensorButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLESensorButton.swift; sourceTree = "<group>"; };
 		648F2A1DE9D9B0D84544ECC0 /* PinIOViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PinIOViewController.xib; sourceTree = "<group>"; };
 		648F2A9C35C6B713B656919A /* DeviceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceCell.swift; sourceTree = "<group>"; };
@@ -94,6 +144,18 @@
 		7984B8EA1FAD341B00C911E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7984B8F61FAD38E900C911E8 /* paddlemaxios-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "paddlemaxios-Bridging-Header.h"; sourceTree = "<group>"; };
 		79BE69A61FC31F5200FA46B8 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		79BE69AB1FD1081500FA46B8 /* paddlemaxwatchos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = paddlemaxwatchos.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		79BE69AE1FD1081500FA46B8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
+		79BE69B01FD1081500FA46B8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		79BE69B21FD1081500FA46B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		79BE69B71FD1081500FA46B8 /* paddlemaxwatchos Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "paddlemaxwatchos Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		79BE69BC1FD1081500FA46B8 /* InterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceController.swift; sourceTree = "<group>"; };
+		79BE69BE1FD1081500FA46B8 /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
+		79BE69C01FD1081500FA46B8 /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
+		79BE69C21FD1081500FA46B8 /* ComplicationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplicationController.swift; sourceTree = "<group>"; };
+		79BE69C41FD1081500FA46B8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		79BE69C61FD1081500FA46B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		79BE69C71FD1081500FA46B8 /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,9 +185,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		79BE69B41FD1081500FA46B8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		648F28B46E68F29B86EAF8B9 /* services */ = {
+			isa = PBXGroup;
+			children = (
+				648F2598B81A8E13F7A93375 /* UserService.swift */,
+			);
+			path = services;
+			sourceTree = "<group>";
+		};
 		791CD5261FC318C500F09089 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -150,6 +227,8 @@
 		7984B8BC1FAD341B00C911E8 = {
 			isa = PBXGroup;
 			children = (
+				79BE69AC1FD1081500FA46B8 /* paddlemaxwatchos */,
+				79BE69BB1FD1081500FA46B8 /* paddlemaxwatchos Extension */,
 				791CD5261FC318C500F09089 /* Frameworks */,
 				793B2D351FB8AA47002D407E /* Resources */,
 				7984B8C71FAD341B00C911E8 /* paddlemaxios */,
@@ -165,6 +244,8 @@
 				7984B8C51FAD341B00C911E8 /* paddlemaxios.app */,
 				7984B8D91FAD341B00C911E8 /* paddlemaxiosTests.xctest */,
 				7984B8E41FAD341B00C911E8 /* paddlemaxiosUITests.xctest */,
+				79BE69AB1FD1081500FA46B8 /* paddlemaxwatchos.app */,
+				79BE69B71FD1081500FA46B8 /* paddlemaxwatchos Extension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -195,6 +276,7 @@
 				648F2F87270CEAA4B2E3DF4C /* TabBarController.swift */,
 				791CD5241FC316A100F09089 /* SplashViewController.xib */,
 				648F2D988D3B725A3A2706A1 /* SplashViewController.swift */,
+				648F28B46E68F29B86EAF8B9 /* services */,
 			);
 			path = paddlemaxios;
 			sourceTree = "<group>";
@@ -217,6 +299,30 @@
 			path = paddlemaxiosUITests;
 			sourceTree = "<group>";
 		};
+		79BE69AC1FD1081500FA46B8 /* paddlemaxwatchos */ = {
+			isa = PBXGroup;
+			children = (
+				79BE69AD1FD1081500FA46B8 /* Interface.storyboard */,
+				79BE69B01FD1081500FA46B8 /* Assets.xcassets */,
+				79BE69B21FD1081500FA46B8 /* Info.plist */,
+			);
+			path = paddlemaxwatchos;
+			sourceTree = "<group>";
+		};
+		79BE69BB1FD1081500FA46B8 /* paddlemaxwatchos Extension */ = {
+			isa = PBXGroup;
+			children = (
+				79BE69BC1FD1081500FA46B8 /* InterfaceController.swift */,
+				79BE69BE1FD1081500FA46B8 /* ExtensionDelegate.swift */,
+				79BE69C01FD1081500FA46B8 /* NotificationController.swift */,
+				79BE69C21FD1081500FA46B8 /* ComplicationController.swift */,
+				79BE69C41FD1081500FA46B8 /* Assets.xcassets */,
+				79BE69C61FD1081500FA46B8 /* Info.plist */,
+				79BE69C71FD1081500FA46B8 /* PushNotificationPayload.apns */,
+			);
+			path = "paddlemaxwatchos Extension";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -227,10 +333,12 @@
 				7984B8C11FAD341B00C911E8 /* Sources */,
 				7984B8C21FAD341B00C911E8 /* Frameworks */,
 				7984B8C31FAD341B00C911E8 /* Resources */,
+				79BE69CA1FD1081500FA46B8 /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				79BE69C91FD1081500FA46B8 /* PBXTargetDependency */,
 			);
 			name = paddlemaxios;
 			productName = paddlemaxios;
@@ -273,13 +381,47 @@
 			productReference = 7984B8E41FAD341B00C911E8 /* paddlemaxiosUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		79BE69AA1FD1081500FA46B8 /* paddlemaxwatchos */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 79BE69D01FD1081500FA46B8 /* Build configuration list for PBXNativeTarget "paddlemaxwatchos" */;
+			buildPhases = (
+				79BE69A91FD1081500FA46B8 /* Resources */,
+				79BE69CF1FD1081500FA46B8 /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				79BE69BA1FD1081500FA46B8 /* PBXTargetDependency */,
+			);
+			name = paddlemaxwatchos;
+			productName = paddlemaxwatchos;
+			productReference = 79BE69AB1FD1081500FA46B8 /* paddlemaxwatchos.app */;
+			productType = "com.apple.product-type.application.watchapp2";
+		};
+		79BE69B61FD1081500FA46B8 /* paddlemaxwatchos Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 79BE69CC1FD1081500FA46B8 /* Build configuration list for PBXNativeTarget "paddlemaxwatchos Extension" */;
+			buildPhases = (
+				79BE69B31FD1081500FA46B8 /* Sources */,
+				79BE69B41FD1081500FA46B8 /* Frameworks */,
+				79BE69B51FD1081500FA46B8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "paddlemaxwatchos Extension";
+			productName = "paddlemaxwatchos Extension";
+			productReference = 79BE69B71FD1081500FA46B8 /* paddlemaxwatchos Extension.appex */;
+			productType = "com.apple.product-type.watchkit2-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		7984B8BD1FAD341B00C911E8 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0830;
+				LastSwiftUpdateCheck = 0910;
 				LastUpgradeCheck = 0910;
 				ORGANIZATIONNAME = "Paddle Max";
 				TargetAttributes = {
@@ -305,6 +447,16 @@
 						ProvisioningStyle = Automatic;
 						TestTargetID = 7984B8C41FAD341B00C911E8;
 					};
+					79BE69AA1FD1081500FA46B8 = {
+						CreatedOnToolsVersion = 9.1;
+						DevelopmentTeam = 3K7MWNCT43;
+						ProvisioningStyle = Automatic;
+					};
+					79BE69B61FD1081500FA46B8 = {
+						CreatedOnToolsVersion = 9.1;
+						DevelopmentTeam = 3K7MWNCT43;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = 7984B8C01FAD341B00C911E8 /* Build configuration list for PBXProject "paddlemaxios" */;
@@ -323,6 +475,8 @@
 				7984B8C41FAD341B00C911E8 /* paddlemaxios */,
 				7984B8D81FAD341B00C911E8 /* paddlemaxiosTests */,
 				7984B8E31FAD341B00C911E8 /* paddlemaxiosUITests */,
+				79BE69AA1FD1081500FA46B8 /* paddlemaxwatchos */,
+				79BE69B61FD1081500FA46B8 /* paddlemaxwatchos Extension */,
 			);
 		};
 /* End PBXProject section */
@@ -357,6 +511,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		79BE69A91FD1081500FA46B8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				79BE69B11FD1081500FA46B8 /* Assets.xcassets in Resources */,
+				79BE69AF1FD1081500FA46B8 /* Interface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		79BE69B51FD1081500FA46B8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				79BE69C51FD1081500FA46B8 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -379,6 +550,7 @@
 				648F266C818C3C1BAB766AFD /* HomeViewController.swift in Sources */,
 				648F215FBA10BFA8F31ECB9F /* TabBarController.swift in Sources */,
 				648F2EBE2AE2CBF67B3BD796 /* SplashViewController.swift in Sources */,
+				648F26E9C153B6EFBB2AEAC6 /* UserService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -398,6 +570,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		79BE69B31FD1081500FA46B8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				79BE69C11FD1081500FA46B8 /* NotificationController.swift in Sources */,
+				79BE69C31FD1081500FA46B8 /* ComplicationController.swift in Sources */,
+				79BE69BF1FD1081500FA46B8 /* ExtensionDelegate.swift in Sources */,
+				79BE69BD1FD1081500FA46B8 /* InterfaceController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -411,7 +594,28 @@
 			target = 7984B8C41FAD341B00C911E8 /* paddlemaxios */;
 			targetProxy = 7984B8E51FAD341B00C911E8 /* PBXContainerItemProxy */;
 		};
+		79BE69BA1FD1081500FA46B8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 79BE69B61FD1081500FA46B8 /* paddlemaxwatchos Extension */;
+			targetProxy = 79BE69B91FD1081500FA46B8 /* PBXContainerItemProxy */;
+		};
+		79BE69C91FD1081500FA46B8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 79BE69AA1FD1081500FA46B8 /* paddlemaxwatchos */;
+			targetProxy = 79BE69C81FD1081500FA46B8 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		79BE69AD1FD1081500FA46B8 /* Interface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				79BE69AE1FD1081500FA46B8 /* Base */,
+			);
+			name = Interface.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		7984B8EB1FAD341C00C911E8 /* Debug */ = {
@@ -617,6 +821,94 @@
 			};
 			name = Release;
 		};
+		79BE69CD1FD1081500FA46B8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3K7MWNCT43;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "paddlemaxwatchos Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.paddlemax.paddlemaxios.watchkitapp.watchkitextension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 4.1;
+			};
+			name = Debug;
+		};
+		79BE69CE1FD1081500FA46B8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3K7MWNCT43;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "paddlemaxwatchos Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.paddlemax.paddlemaxios.watchkitapp.watchkitextension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 4.1;
+			};
+			name = Release;
+		};
+		79BE69D11FD1081500FA46B8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3K7MWNCT43;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				IBSC_MODULE = paddlemaxwatchos_Extension;
+				INFOPLIST_FILE = paddlemaxwatchos/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = com.paddlemax.paddlemaxios.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 4.1;
+			};
+			name = Debug;
+		};
+		79BE69D21FD1081500FA46B8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3K7MWNCT43;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				IBSC_MODULE = paddlemaxwatchos_Extension;
+				INFOPLIST_FILE = paddlemaxwatchos/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = com.paddlemax.paddlemaxios.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 4.1;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -652,6 +944,24 @@
 			buildConfigurations = (
 				7984B8F41FAD341C00C911E8 /* Debug */,
 				7984B8F51FAD341C00C911E8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		79BE69CC1FD1081500FA46B8 /* Build configuration list for PBXNativeTarget "paddlemaxwatchos Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				79BE69CD1FD1081500FA46B8 /* Debug */,
+				79BE69CE1FD1081500FA46B8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		79BE69D01FD1081500FA46B8 /* Build configuration list for PBXNativeTarget "paddlemaxwatchos" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				79BE69D11FD1081500FA46B8 /* Debug */,
+				79BE69D21FD1081500FA46B8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

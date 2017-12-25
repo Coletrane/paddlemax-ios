@@ -2,6 +2,8 @@ import Foundation
 import UIKit
 import CoreBluetooth
 
+let API_ROOT = "paddle-max.com/api"
+
 let PIN = 14
 let ANALOG_PIN = 0
 let NAME = "BLE_Firmata"
@@ -16,9 +18,12 @@ let LIGHT_PURPLE = UIColor(0x746eff)
 let GREY = UIColor(0x5c5e5c)
 
 // User settings keys
-let USER_LOGIN = "userLogin"
+let USER = "user"
 let QUICK_STAT_TIME = "quickStatTime"
 let QUICK_STAT_SETTING = "quickStatSetting"
+
+// oAuth stuff
+let FB_APP_ID = "203845030160162"
 
 //System Variables
 let CURRENT_DEVICE = UIDevice.current

@@ -2,6 +2,7 @@ import Foundation
 import UIKit
 import WatchConnectivity
 import UserNotifications
+import FBSDKCoreKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
@@ -16,18 +17,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
     }
     
     
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
+    func application(
+            _ application: UIApplication,
+            didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+
+        FBSDKApplicationDelegate.sharedInstance().application(
+                application,
+                didFinishLaunchingWithOptions: launchOptions)
+
         window = UIWindow(frame: UIScreen.main.bounds)
 
         tabBarController = TabBarController()
         splashViewController = SplashViewController()
 
-//        if let loggedIn = UserDefaults.standard.string(forKey: USER_LOGIN) {
-//            window!.rootViewController = tabBarController
-//        } else {
-//            window!.rootViewController = splashViewController
-//        }
+        if UserDefaults.standard.string(forKey: USER_PASSWORD) != nil {
+            window!.rootViewController = tabBarController
+        } else {
+            window!.rootViewController = splashViewController
+        }
         window!.rootViewController = tabBarController
 
         window!.makeKeyAndVisible()
@@ -60,7 +67,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
         }
         
         return true
-        
+    }
+
+    func application(_ application: UIApplication,
+                     open url: URL,
+                     sourceApplication: String?,
+                     annotation: Any) -> Bool {
+
+        let handled = FBSDKApplicationDelegate.sharedInstance().application(
+                application,
+                open: url,
+                sourceApplication: sourceApplication,
+                annotation: annotation)
+
+        return handled
     }
     
     

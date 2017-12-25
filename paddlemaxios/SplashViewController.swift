@@ -1,9 +1,12 @@
 import Foundation
 import UIKit
+import FBSDKCoreKit
+import FBSDKLoginKit
 
 class SplashViewController: UIViewController {
 
     @IBOutlet var logo: UILabel!
+    @IBOutlet var fbLoginButton: FBSDKLoginButton!
 
     convenience init() {
         self.init(
@@ -11,18 +14,28 @@ class SplashViewController: UIViewController {
                 bundle: Bundle.main)
     }
 
-    override init(nibName nib: String?, bundle nibBundle: Bundle?) {
-        super.init(nibName: nib, bundle: nibBundle)
-    }
-
-    required init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)!
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
         logo.isHidden = true
+
+        fbLoginButton.readPermissions = [
+            "public_profile",
+            "email",
+            // These require review, might get rid of them
+            "user_birthday",
+            "user_location",
+        ]
+
+        if (FBSDKAccessToken.current() == nil) {
+
+        } else {
+            UserDefaults.standard.set(
+                    "FB_\(FBSDKAccessToken.current().userID)",
+                    forKey: USER_ID)
+
+
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
