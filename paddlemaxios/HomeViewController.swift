@@ -33,39 +33,24 @@ enum QuickStatValue: String {
 }
 
 protocol HomeViewControllerDelegate: AnyObject {
-    var connectionMode: ConnectionMode? { get set }
-    var connectionStatus: ConnectionStatus? { get set }
-    var currentPeripheral: BLEPeripheral? { get set }
     var alertView: UIAlertController! { get set }
-    var cm: CBCentralManager? { get set }
     func dismissDeviceList()
-//    func onDeviceConnectionChange(_ peripheral:CBPeripheral)
 }
 
 
 class HomeViewController: UIViewController,
         DeviceListViewControllerDelegate,
-        CBCentralManagerDelegate,
         PinIOViewControllerDelegate,
         UIPickerViewDelegate {
 
-    static let singleton = HomeViewController()
-
-    var cm: CBCentralManager?
-    fileprivate let cbcmQueue = DispatchQueue(
-            label: "com.paddlemax.paddlemaxios.cbcmqueue",
-            attributes: DispatchQueue.Attributes.concurrent)
+    // Services
+    let bluetoothService = BluetoothService.sharedInstance
 
     // View controllers
     var deviceListViewController: DeviceListViewController!
     var pinIoViewController:PinIOViewController!
 
     var delegate: HomeViewControllerDelegate?
-
-    // Enum values
-    var connectionMode: ConnectionMode?
-    var connectionStatus: ConnectionStatus?
-    var currentPeripheral: BLEPeripheral?
 
     // Quick stat variables
     fileprivate var timePeriod: TimePeriod!
@@ -103,8 +88,6 @@ class HomeViewController: UIViewController,
                 bundle: Bundle.main)
 
         // TODO: check if device is already connected
-        connectionMode = ConnectionMode.none
-        connectionStatus = ConnectionStatus.idle
 
         connectedLabel = UILabel()
         connectButton = UIButton()
@@ -127,10 +110,6 @@ class HomeViewController: UIViewController,
     // MARK: view lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        if (cm == nil) {
-            cm = CBCentralManager(delegate: self, queue: cbcmQueue)
-        }
 
         connectButton.layer.cornerRadius = 8
         connectButton.layer.borderWidth = 1
@@ -334,141 +313,10 @@ class HomeViewController: UIViewController,
     }
 
 
-    func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-
-        if connectionMode == ConnectionMode.none {
-            DispatchQueue.main.sync(execute: { () -> Void in
-                self.deviceListViewController.didFindPeripheral(peripheral, advertisementData: advertisementData, RSSI:RSSI)
-            })
-        }
-//        deviceListViewController.warningLabel.text = "No paddles found!"
-    }
 
 
-    func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
-
-        if (delegate != nil) {
-//            delegate!.onDeviceConnectionChange(peripheral)
-        }
-
-        //Connecting in DFU mode, discover specific services
-        if connectionMode == ConnectionMode.dfu {
-            peripheral.discoverServices([dfuServiceUUID(), deviceInformationServiceUUID()])
-        }
-
-        if currentPeripheral == nil {
-            printLog(self,
-                    funcName: "didConnectPeripheral",
-                    logString: "No current peripheral found, unable to connect")
-            return
-        }
 
 
-        if currentPeripheral!.currentPeripheral == peripheral {
-
-            printLog(self,
-                    funcName: "didConnectPeripheral",
-                    logString: "\(peripheral.name ?? "N/A")")
-
-            //Discover Services for device
-            if((peripheral.services) != nil){
-                printLog(self,
-                        funcName: "didConnectPeripheral",
-                        logString: "Did connect to existing peripheral \(peripheral.name ?? "N/A")")
-                //already discovered services, DO NOT re-discover. Just pass along the peripheral.
-                currentPeripheral!.peripheral(peripheral, didDiscoverServices: nil)
-            }
-            else {
-                currentPeripheral!.didConnect(connectionMode!)
-            }
-
-        }
-    }
-
-
-    func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
-
-
-        if (delegate != nil) {
-//            delegate!.onDeviceConnectionChange(peripheral)
-        }
-
-        if connectionMode == ConnectionMode.dfu {
-            connectionStatus = ConnectionStatus.idle
-            return
-        }
-
-        printLog(self, funcName: "didDisconnectPeripheral", logString: "")
-
-        if currentPeripheral == nil {
-            printLog(self, funcName: "didDisconnectPeripheral", logString: "No current peripheral found, unable to disconnect")
-            return
-        }
-
-        //if we were in the process of scanning/connecting, dismiss alert
-        if (alertView != nil) {
-            deviceListViewController.uartDidEncounterError("Paddle disconnected")
-        }
-
-        //if status was connected, then disconnect was unexpected by the user, show alert
-        //TODO: add record controller here
-//        if  connectionStatus == ConnectionStatus.connected && topVC!) {
-        if connectionStatus == ConnectionStatus.connected {
-            printLog(self, funcName: "centralManager:didDisconnectPeripheral", logString: "unexpected disconnect while connected")
-
-            //return to main view
-            DispatchQueue.main.async(execute: { () -> Void in
-                self.respondToUnexpectedDisconnect()
-            })
-        }
-
-        // Disconnected while connecting
-        else if connectionStatus == ConnectionStatus.connecting {
-
-            deviceListViewController.abortConnection()
-
-            printLog(self, funcName: "centralManager:didDisconnectPeripheral", logString: "unexpected disconnect while connecting")
-
-            //return to main view
-            DispatchQueue.main.async(execute: { () -> Void in
-                self.respondToUnexpectedDisconnect()
-            })
-
-        }
-
-        connectionStatus = ConnectionStatus.idle
-        connectionMode = ConnectionMode.none
-//        currentPeripheral = nil
-
-//        recordViewController = nil
-    }
-
-
-    func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
-
-        if (delegate != nil) {
-//            delegate!.onDeviceConnectionChange(peripheral)
-        }
-
-    }
-
-
-    func respondToUnexpectedDisconnect() {
-        //display disconnect alert
-        let alert = UIAlertController(
-                title: "Disconnected",
-                message: "Paddle was disconnected",
-                preferredStyle: UIAlertControllerStyle.alert)
-
-        // TODO: decide if a notification is neeeded here
-//        let note = UILocalNotification()
-//        note.fireDate = Date().addingTimeInterval(0.0)
-//        note.alertBody = "BLE device disconnected"
-//        note.soundName =  UILocalNotificationDefaultSoundName
-//        UIApplication.shared.scheduleLocalNotification(note)
-
-        present(alert, animated: true)
-    }
 
     func launchPinIOViewController() {
         pinIoViewController = PinIOViewController(delegate: self)

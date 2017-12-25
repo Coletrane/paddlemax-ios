@@ -33,15 +33,10 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
     fileprivate var genericErrorAlertView: UIAlertController!
 
     // Variables
-    var devices: [BLEDevice] = []
     fileprivate var tableIsLoading = false
     fileprivate var signalImages: [UIImage]!
     fileprivate var scanIndicator: UIActivityIndicatorView!
     fileprivate var refreshControl: UIRefreshControl!
-    fileprivate var connectionTimeOutIntvl: TimeInterval! = 30.0
-    var connectionTimer: Timer?
-
-    fileprivate let CONNECTION_MODE = ConnectionMode.pinIO
 
     convenience init(aDelegate: DeviceListViewControllerDelegate) {
         self.init(nibName: "DeviceListViewController", bundle: Bundle.main)
@@ -274,51 +269,6 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
 
     }
 
-    func didFindPeripheral(_ peripheral: CBPeripheral!, advertisementData: [AnyHashable: Any]!, RSSI: NSNumber!) {
-
-        //If device is already listed, just update RSSI
-        let newID = peripheral.identifier
-        for device in devices {
-            if device.identifier == newID {
-//                println("   \(self.classForCoder.description()) updating device RSSI")
-                device.RSSI = RSSI
-                return
-            }
-        }
-
-        //Add reference to new device
-        let newDevice = BLEDevice(peripheral: peripheral, advertisementData: advertisementData! as [NSObject: AnyObject], RSSI: RSSI)
-        newDevice.printAdData()
-
-        let alreadyInDevices = devices.filter {
-            $0.name == newDevice.name
-        }
-        if newDevice.name == NAME && alreadyInDevices.isEmpty {
-            devices.append(newDevice)
-        }
-
-        //Reload tableview to show new device
-        if (tableView != nil) {
-            tableIsLoading = true
-            tableView.reloadData()
-            tableIsLoading = false
-        }
-
-        if (devices.count == 0) {
-            warningLabel.text = "No Paddles Found"
-            warningLabel.isHidden = false
-        } else {
-            warningLabel.isHidden = true
-        }
-    }
-
-
-    func didConnectPeripheral(_ peripheral: CBPeripheral!) {
-
-
-    }
-
-
     func clearDevices() {
 
         self.stopScan()
@@ -471,132 +421,39 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
     }
 
 
-    func stopScan() {
-
-        if (delegate?.connectionMode == ConnectionMode.none) {
-            delegate?.cm?.stopScan()
-            scanIndicator?.stopAnimating()
-
-            delegate?.connectionStatus = ConnectionStatus.idle
-            scanningItem?.title = "Scan"
-            setToolbarItemsNotScanning()
-        }
-
-    }
-
     func startScan() {
-        if delegate?.cm?.state == CBManagerState.poweredOff {
-            onBluetoothDisabled()
-            return
-        }
-
-        delegate?.cm?.scanForPeripherals(withServices: nil, options: [CBCentralManagerScanOptionAllowDuplicatesKey: true])
-
-        scanIndicator?.startAnimating()
+        scanIndicator.startAnimating()
         scanningItem.title = "Scanning"
         setToolbarItemsScanning()
-        delegate?.connectionStatus = ConnectionStatus.scanning
     }
 
-    func connectPeripheral(_ peripheral: CBPeripheral, mode: ConnectionMode) {
+    func stopScan() {
+        scanIndicator?.stopAnimating()
+        scanningItem?.title = "Scan"
+        setToolbarItemsNotScanning()
+    }
 
-        //Check if Bluetooth is enabled
-        if delegate?.cm?.state == CBManagerState.poweredOff {
-            onBluetoothDisabled()
-            return
-        }
-
-        printLog(self, funcName: "connectPeripheral", logString: "")
-
-        connectionTimer?.invalidate()
-
-        stopScan()
-
+    func connectPeripheral() {
         //Show connection activity alert view
         self.present(connectingAlertView, animated: true, completion: nil)
-
-        //Cancel any current or pending connection to the peripheral
-        if peripheral.state == CBPeripheralState.connected || peripheral.state == CBPeripheralState.connecting {
-            delegate?.cm?.cancelPeripheralConnection(peripheral)
-        }
-
-        //Connect
-        delegate?.currentPeripheral = BLEPeripheral(peripheral: peripheral, delegate: self)
-        delegate?.cm?.connect(peripheral, options: [CBConnectPeripheralOptionNotifyOnDisconnectionKey: NSNumber(value: true as Bool)])
-
-        delegate?.connectionMode = CONNECTION_MODE
-        delegate?.connectionStatus = ConnectionStatus.connecting
-
-        // Start connection timeout timer
-        connectionTimer = Timer.scheduledTimer(timeInterval: connectionTimeOutIntvl, target: self, selector: #selector(self.connectionTimedOut(_:)), userInfo: nil, repeats: false)
     }
 
-    func onBluetoothDisabled(){
-
-
+    func onBluetoothDisabled() {
         self.present(noBluetoothAlertView, animated: true, completion: nil)
     }
 
-    @objc func toggleScan(_ sender:UIBarButtonItem?){
-
-        if delegate?.connectionStatus == ConnectionStatus.scanning {
-            stopScan()
-        }
-        else {
-            startScan()
-        }
-
-    }
-
-    @objc func connectionTimedOut(_ timer:Timer) {
-
-        if delegate?.connectionStatus != ConnectionStatus.connecting {
-            return
-        }
-
+    func onConnectionTimedOut() {
         if delegate?.alertView != nil {
             delegate?.alertView.dismiss(animated: true, completion: nil)
         }
 
-        abortConnection()
-
         self.present(timedOutAlertView, animated: true) { () -> Void in }
+
     }
 
-
-    func abortConnection() {
-
-        connectionTimer?.invalidate()
-
-        if (delegate?.cm != nil) && (delegate?.currentPeripheral != nil) {
-            delegate?.cm?.cancelPeripheralConnection((delegate?.currentPeripheral?.currentPeripheral!)!)
-        }
-
-        delegate?.connectionMode = ConnectionMode.none
-        delegate?.connectionStatus = ConnectionStatus.idle
-    }
-
-
-    func disconnect() {
-
-        printLog(self, funcName: (#function), logString: "")
-
-        if delegate?.cm == nil {
-            printLog(self, funcName: (#function), logString: "No central Manager found, unable to disconnect peripheral")
-            return
-        }
-
-        else if delegate?.currentPeripheral == nil {
-            printLog(self, funcName: (#function), logString: "No current peripheral found, unable to disconnect peripheral")
-            return
-        }
-
-        //Cancel any current or pending connection to the peripheral
-        let peripheralState = delegate?.currentPeripheral!.currentPeripheral.state
-        if peripheralState == CBPeripheralState.connected || peripheralState == CBPeripheralState.connecting {
-            delegate?.cm?.cancelPeripheralConnection((delegate?.currentPeripheral?.currentPeripheral!)!)
-        }
-
+    func connectionFinalized() {
+        delegate?.alertView.dismiss(animated: true)
+        delegate?.dismissDeviceList()
     }
 
 
@@ -620,46 +477,4 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
         //alert dismisses automatically @ return
     }
 
-    // MARK: BLEPeripheral delegate
-
-    func didReceiveData(_ newData: Data) {
-        printLog(self, funcName: "didReceiveData", logString: "\(newData.hexRepresentationWithSpaces(true))")
-
-        if (delegate?.connectionStatus == ConnectionStatus.connected ) {
-//            delegate?.pinIoViewController.receiveData(newData)
-        }
-        else {
-            printLog(self, funcName: "didReceiveData", logString: "Received data without connection")
-        }
-    }
-
-    func connectionFinalized() {
-
-        //Bail if we aren't in the process of connecting
-        if delegate?.connectionStatus != ConnectionStatus.connecting {
-            printLog(self, funcName: "connectionFinalized", logString: "with incorrect state")
-            return
-        }
-
-        if (delegate?.currentPeripheral == nil) {
-            printLog(self, funcName: "connectionFinalized", logString: "Unable to start info w nil delegate?.currentPeripheral")
-            return
-        }
-
-        connectionTimer?.invalidate()
-
-        delegate?.connectionStatus = ConnectionStatus.connecting
-
-        delegate?.alertView.dismiss(animated: true)
-        delegate?.dismissDeviceList()
-    }
-
-    func uartDidEncounterError(_ error: NSString) {
-
-        delegate?.alertView.dismiss(animated: true, completion: { () -> Void in
-            self.alertDismissedOnError()
-        })
-
-        self.present(genericErrorAlertView, animated: true, completion: nil)
-    }
 }
