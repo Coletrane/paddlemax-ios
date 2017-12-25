@@ -13,11 +13,11 @@ class BluetoothService: CBCentralManagerDelegate, BLEPeripheralDelegate {
 //            attributes: DispatchQueue.Attributes.concurrent)
 
     // Variables
-    var connectionStatus = ConnectionStatus.idle
-    var devices: [BLEDevice] = []
-    var currentPeripheral: BLEPeripheral?
+    fileprivate(set) var connectionStatus = ConnectionStatus.idle
+    fileprivate(set) var devices: [BLEDevice] = []
+    fileprivate(set) var currentPeripheral: BLEPeripheral?
     fileprivate var connectionTimeOutIntvl: TimeInterval! = 30.0
-    var connectionTimer: Timer?
+    fileprivate(set) var connectionTimer: Timer?
 
     required init() {
         centralManager = CBCentralManager(delegate: self, queue: nil)
@@ -187,7 +187,7 @@ class BluetoothService: CBCentralManagerDelegate, BLEPeripheralDelegate {
 
     }
 
-    func toggleScan(){
+    @objc func toggleScan() {
         if connectionStatus == ConnectionStatus.scanning {
             stopScan()
         }
@@ -267,5 +267,25 @@ class BluetoothService: CBCentralManagerDelegate, BLEPeripheralDelegate {
         connectionTimer?.invalidate()
 
         connectionStatus = ConnectionStatus.connecting
+    }
+
+    func sendData(_ newData: Data) {
+
+        let hexString = newData.hexRepresentationWithSpaces(true)
+
+        printLog(self,
+                funcName: "sendData",
+                logString: "\(hexString)")
+
+
+        if currentPeripheral?.currentPeripheral! == nil {
+            printLog(
+                    self,
+                    funcName: "sendData",
+                    logString: "No current peripheral found, unable to send data")
+            return
+        }
+
+        currentPeripheral!.writeRawData(newData)
     }
 }

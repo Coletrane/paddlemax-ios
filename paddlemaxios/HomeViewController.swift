@@ -37,7 +37,6 @@ protocol HomeViewControllerDelegate: AnyObject {
     func dismissDeviceList()
 }
 
-
 class HomeViewController: UIViewController,
         DeviceListViewControllerDelegate,
         PinIOViewControllerDelegate,
@@ -159,13 +158,14 @@ class HomeViewController: UIViewController,
     }
 
     func alertDismissedOnError() {
-        if (connectionStatus == ConnectionStatus.connected) {
-            deviceListViewController.disconnect()
+        if (bluetoothService.connectionStatus == ConnectionStatus.connected) {
+            bluetoothService.disconnect()
         }
-        else if (connectionStatus == ConnectionStatus.scanning){
+        else if (bluetoothService.connectionStatus == ConnectionStatus.scanning){
 
-            if cm == nil {
-                printLog(self,
+            if bluetoothService.centralManager == nil {
+                printLog(
+                        self,
                         funcName: "alertView clickedButtonAtIndex",
                         logString: "No central Manager found, unable to stop scan")
                 return
@@ -174,14 +174,12 @@ class HomeViewController: UIViewController,
             deviceListViewController.stopScan()
         }
 
-        connectionStatus = ConnectionStatus.idle
-        connectionMode = ConnectionMode.none
-
         alertView = nil
     }
 
     // MARK: quick stat helpers
     func setQuickStatValues(timePeriod time: TimePeriod, quickStat stat: Double) {
+
         // Figure out if the user has already set a preference for quick stats
         if let userTimePeriod = UserDefaults.standard.string(forKey: QUICK_STAT_TIME) {
             timePeriod = TimePeriod(rawValue: userTimePeriod)
@@ -189,6 +187,7 @@ class HomeViewController: UIViewController,
             UserDefaults.standard.set(TimePeriod.oneWeek.rawValue, forKey: QUICK_STAT_TIME)
             timePeriod = TimePeriod.oneWeek
         }
+
         timePeriodPickerValue = timePeriodPickerItems.index(of: timePeriod.rawValue)
         timePeriodLabel.text = "\(timePeriod.rawValue):"
 
@@ -207,12 +206,12 @@ class HomeViewController: UIViewController,
     // MARK: view manipulation
     func refreshConnectionStatusComponents() {
 
-        if (cm?.state == CBManagerState.poweredOff) {
+        if (bluetoothService.centralManager.state == CBManagerState.poweredOff) {
             bluetoothDisabledComponents()
-        } else if (connectionStatus == ConnectionStatus.idle) {
+        } else if (bluetoothService.connectionStatus == ConnectionStatus.idle) {
             notConnectedComponents()
-        } else if (connectionStatus == ConnectionStatus.connected
-            || connectionStatus == ConnectionStatus.connecting) {
+        } else if (bluetoothService.connectionStatus == ConnectionStatus.connected
+            || bluetoothService.connectionStatus == ConnectionStatus.connecting) {
             connectedComponents()
         }
     }
@@ -313,11 +312,6 @@ class HomeViewController: UIViewController,
     }
 
 
-
-
-
-
-
     func launchPinIOViewController() {
         pinIoViewController = PinIOViewController(delegate: self)
         pinIoViewController.didConnect()
@@ -327,65 +321,23 @@ class HomeViewController: UIViewController,
 
     func peripheralDidDisconnect() {
 
-        //respond to device disconnecting
+        printLog(
+                self,
+                funcName: #function,
+                logString: "Disconnecting peripheral")
 
-        printLog(self, funcName: "peripheralDidDisconnect", logString: "")
-
-        //if we were in the process of scanning/connecting, dismiss alert
-        if (alertView != nil) {
-            deviceListViewController.uartDidEncounterError("Paddle disconnected")
-        }
 
         //if status was connected, then disconnect was unexpected by the user, show alert
 //        let topVC = self.navigationController?.topViewController
         //TODO: implement record controller
-//        if  connectionStatus == ConnectionStatus.connected && isModuleController(topVC!) {
-        if connectionStatus == ConnectionStatus.connected {
-            printLog(self, funcName: "peripheralDidDisconnect", logString: "unexpected disconnect while connected")
-
-            //return to main view
-            DispatchQueue.main.async(execute: { () -> Void in
-                self.respondToUnexpectedDisconnect()
-            })
-        }
-
-        connectionStatus = ConnectionStatus.idle
-        connectionMode = ConnectionMode.none
-//        currentPeripheral = nil
-
-        // Dereference mode controllers
-//        dereferenceModeController()
-
+//        if  bluetoothService.connectionStatus == ConnectionStatus.connected && isModuleController(topVC!) {
     }
-
-    //MARK: UartViewControllerDelegate / PinIOViewControllerDelegate methods
-
-    func sendData(_ newData: Data) {
-
-        let hexString = newData.hexRepresentationWithSpaces(true)
-
-        printLog(self,
-                funcName: "sendData",
-                logString: "\(hexString)")
-
-
-        if currentPeripheral?.currentPeripheral! == nil {
-            printLog(self,
-                    funcName: "sendData",
-                    logString: "No current peripheral found, unable to send data")
-            return
-        }
-
-        currentPeripheral!.writeRawData(newData)
-
-    }
-
 
     //WatchKit requests
 
     func connectedInControllerMode()->Bool {
 
-//        if connectionStatus == ConnectionStatus.connected &&
+//        if bluetoothService.connectionStatus == ConnectionStatus.connected &&
 //               connectionMode == ConnectionMode.controller   &&
 ////               controllerViewController != nil {
 //            return true

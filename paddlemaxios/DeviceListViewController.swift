@@ -10,11 +10,15 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
 
     var delegate: DeviceListViewControllerDelegate?
 
+    // Services
+    let bluetoothService = BluetoothService.sharedInstance
+
     // Navigation bar outlets
     @IBOutlet var navBar: UINavigationBar!
     @IBOutlet var barItem: UINavigationItem!
     @IBOutlet var cancelButton: UIBarButtonItem!
     @IBOutlet var settingsButton: UIBarButtonItem!
+
     // Outlets
     @IBOutlet var tableView: UITableView!
     //    @IBOutlet var helpViewController: HelpViewController!
@@ -56,7 +60,7 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
         tableView.isHidden = true
 
         warningLabel.isHidden = true
-        if (delegate?.cm?.state == CBManagerState.poweredOff) {
+        if (bluetoothService.centralManager.state == CBManagerState.poweredOff) {
             warningLabel.text = "Bluetooth is disabled, tap settings to turn it on"
             warningLabel.isHidden = false
         }
@@ -78,7 +82,7 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
                 title: "Scanning",
                 style: UIBarButtonItemStyle.plain,
                 target: self,
-                action: #selector(toggleScan(_:)))
+                action: #selector(bluetoothService.toggleScan()))
         scanIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
         scanIndicator.hidesWhenStopped = true
         scanningIndicatorItem = UIBarButtonItem(customView: scanIndicator!)

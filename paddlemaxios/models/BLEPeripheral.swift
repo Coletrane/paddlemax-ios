@@ -170,19 +170,6 @@ class BLEPeripheral: NSObject, CBPeripheralDelegate {
                     uartService = s
                     peripheral.discoverCharacteristics([txCharacteristicUUID(), rxCharacteristicUUID()], for: uartService!)
             }
-                
-            // Info mode
-            else if HomeViewController.singleton.connectionMode == ConnectionMode.info {
-                knownServices.append(s)
-                peripheral.discoverCharacteristics(nil, for: s)
-            }
-            
-            //DFU / Firmware Updater mode
-            else if HomeViewController.singleton.connectionMode == ConnectionMode.dfu {
-                knownServices.append(s)
-                peripheral.discoverCharacteristics(nil, for: s)
-            }
-            
         }
         
         printLog(self, funcName: "didDiscoverServices", logString: "all top-level services discovered")
@@ -266,9 +253,7 @@ class BLEPeripheral: NSObject, CBPeripheralDelegate {
 //                println("found characteristic index \(idx)")
                 if (idx + 1) == allCharacteristics.count {
 //                    println("found last characteristic")
-                    if HomeViewController.singleton.connectionMode == ConnectionMode.info {
-                        delegate.connectionFinalized()
-                    }
+                    bluetoothService.connectionFinalized()
                 }
             }
         }
