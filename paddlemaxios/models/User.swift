@@ -1,4 +1,6 @@
-struct User {
+import Foundation
+
+class User {
     let id: Int64?
     let firstName: String
     let lastName: String
@@ -8,22 +10,22 @@ struct User {
     let weightLbs: Int?
     let location: String?
 
-    // TODO: might need inheritance?
-//    init(id uId: Int64?,
-//         firstName fname: String!,
-//         lastName lname: String!,
-//         email eml: String!,
-//         password pass: String!,
-//         birthday bday: Date?,
-//         weightLbs weight: String?,
-//         location loc: String?) {
-//
-//        id = uId
-//        firstName = fname
-//        lastName = lname
-//        email = eml
-//        password = pass
-//        birthday = bday
-//
-//    }
+    init(_ id: Int64?,
+         _ firstName: String,
+         _ lastName: String,
+         _ email: String,
+         _ password: String,
+         _ birthday: Date?,
+         _ weightLbs: Int?,
+         _ location: String?) {
+
+        self.id = id
+        self.firstName = firstName
+        self.lastName = lastName
+        self.email = email
+        self.password = password
+        self.birthday = birthday
+        self.weightLbs = weightLbs
+        self.location = location
+    }
 }

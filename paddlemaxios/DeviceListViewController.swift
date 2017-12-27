@@ -6,7 +6,7 @@ protocol DeviceListViewControllerDelegate: HomeViewControllerDelegate {
 
 }
 
-class DeviceListViewController : UIViewController, UITableViewDelegate, UITableViewDataSource, BLEPeripheralDelegate, UINavigationControllerDelegate, DeviceCellDelegate {
+class DeviceListViewController : UIViewController, UITableViewDelegate, UITableViewDataSource, UINavigationControllerDelegate, DeviceCellDelegate {
 
     var delegate: DeviceListViewControllerDelegate?
 
@@ -82,7 +82,7 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
                 title: "Scanning",
                 style: UIBarButtonItemStyle.plain,
                 target: self,
-                action: #selector(bluetoothService.toggleScan()))
+                action: nil)
         scanIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
         scanIndicator.hidesWhenStopped = true
         scanningIndicatorItem = UIBarButtonItem(customView: scanIndicator!)
@@ -114,7 +114,7 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
                     style: UIAlertActionStyle.cancel,
                     handler: { (aa: UIAlertAction!) -> Void in
                         self.delegate?.alertView.dismiss(animated: true)
-                        self.abortConnection()
+                        self.bluetoothService.abortConnection()
                     }))
 
         noBluetoothAlertView = UIAlertController(
@@ -143,7 +143,6 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
         tableView.isHidden = false
     }
 
-
 //    @objc func cellButtonTapped(_ sender: UIButton) {
 //        if tableIsLoading == true {
 //            printLog(self, funcName: "cellButtonTapped", logString: "ignoring tap during table load")
@@ -153,7 +152,7 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
 //        //find relevant indexPaths
 //        let indexPath: IndexPath = indexPathForSubview(sender)
 //        var attributePathArray: [IndexPath] = []
-//        for i in 1...(devices[indexPath.section].advertisementArray.count) {
+//        for i in 1...(bluetoothService.devices[indexPath.section].advertisementArray.count) {
 //            attributePathArray.append(IndexPath(row: i, section: indexPath.section))
 //        }
 //
@@ -176,14 +175,13 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
 
     // MARK: event handlers
     @IBAction func connectButtonPressed(_ sender: UIButton) {
-        let device = devices[sender.tag]
-        printLog(self,
-                funcName: #function,
-                logString: "Connect button pressed, connecting to \(device.peripheral)")
+        let device = bluetoothService.devices[sender.tag]
+        printLog(
+            self,
+            funcName: #function,
+            logString: "Connect button pressed, connecting to \(device.peripheral)")
 
-        if (device.isUART) {
-            self.connectInMode(CONNECTION_MODE, peripheral: device.peripheral)
-        }
+        bluetoothService.connectPeripheral(device.peripheral)
     }
     
     @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
@@ -204,6 +202,8 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
             UIApplication.shared.open(settingsUrl!)
         }
     }
+    
+    @IBAction
 
     @objc func handleRefresh(_ sender: UIRefreshControl) {
         stopScan()
@@ -211,7 +211,7 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
         if (tableView.numberOfSections > 0) {
             tableView.beginUpdates()
             tableView.deleteSections(IndexSet(integersIn: 0...tableView.numberOfSections - 1), with: UITableViewRowAnimation.fade)
-            devices.removeAll(keepingCapacity: false)
+            bluetoothService.removeAllDevices()
             tableView.endUpdates()
         }
 
@@ -234,11 +234,8 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
     }
 
     func connectButtonTapped(_ sender: UIButton) {
-        let device = devices[sender.tag]
-        print("CONNECT TAPPED \(device) \(device.isUART)")
-        if (device.isUART) {
-            self.connectInMode(CONNECTION_MODE, peripheral: device.peripheral)
-        }
+        let peripheral = bluetoothService.devices[sender.tag].peripheral!
+        bluetoothService.connectPeripheral(peripheral)
     }
 
     func setToolbarItemsScanning() {
@@ -259,19 +256,6 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
     }
 
     // MARK: connection helpers
-    func connectInMode(_ mode: ConnectionMode, peripheral: CBPeripheral) {
-        self.connectPeripheral(peripheral, mode: mode)
-//        switch mode {
-//        case delegate?.connectionMode.uart,
-//             delegate?.connectionMode.pinIO,
-//             delegate?.connectionMode.info,
-//             delegate?.connectionMode.controller:
-//            self.connectPeripheral(peripheral, mode: mode)
-//        default:
-//            break
-//        }
-
-    }
 
     func clearDevices() {
 
@@ -279,7 +263,7 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
 
         tableView.beginUpdates()
         tableView.deleteSections(IndexSet(integersIn: 0...tableView.numberOfSections), with: UITableViewRowAnimation.fade)
-        devices.removeAll(keepingCapacity: false)
+        bluetoothService.removeAllDevices()
         tableView.endUpdates()
 
         tableIsLoading = true
@@ -303,7 +287,7 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
         //Device Cell
         if indexPath.row == 0 {
             //Check if cell already exists
-            let testCell = devices[indexPath.section].deviceCell
+            let testCell = bluetoothService.devices[indexPath.section].deviceCell
             if testCell != nil {
                 return testCell!
             }
@@ -324,8 +308,8 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
 
 
             //Ensure cell is within device array range
-            if indexPath.section <= (devices.count - 1) {
-                devices[indexPath.section].deviceCell = cell
+            if indexPath.section <= (bluetoothService.devices.count - 1) {
+                bluetoothService.devices[indexPath.section].deviceCell = cell
             }
 
             return cell
@@ -337,13 +321,13 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
-        let device: BLEDevice? = devices[section]
+        let device: BLEDevice? = bluetoothService.devices[section]
         let cell = device?.deviceCell
 
         if (cell == nil) || (cell?.isOpen == false) {  //When table is first loaded
             return 1
         } else {
-            let rows = devices[section].advertisementArray.count + 1
+            let rows = bluetoothService.devices[section].advertisementArray.count + 1
             return rows
         }
 
@@ -353,7 +337,7 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
     func numberOfSections(in tableView: UITableView) -> Int {
 
         //Each DeviceCell gets its own section
-        return devices.count
+        return bluetoothService.devices.count
     }
 
 
@@ -378,7 +362,7 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
 
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
 
-        if section == (devices.count - 1) {
+        if section == (bluetoothService.devices.count - 1) {
             return 22.0
         } else {
             return 0.5
@@ -462,23 +446,11 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
 
 
     func alertDismissedOnError() {
-        if (delegate?.connectionStatus == ConnectionStatus.connected) {
-            disconnect()
-        }
-        else if (delegate?.connectionStatus == ConnectionStatus.scanning){
-
-            if delegate?.cm == nil {
-                printLog(self, funcName: "alertView clickedButtonAtIndex", logString: "No central Manager found, unable to stop scan")
-                return
-            }
-
+        if (bluetoothService.connectionStatus == ConnectionStatus.connected) {
+            bluetoothService.disconnect()
+        } else if (bluetoothService.connectionStatus == ConnectionStatus.scanning) {
             stopScan()
         }
-
-        delegate?.connectionStatus = ConnectionStatus.idle
-        delegate?.connectionMode = ConnectionMode.none
-
-        //alert dismisses automatically @ return
     }
 
 }

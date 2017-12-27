@@ -2,12 +2,25 @@ import Foundation
 
 class UserService {
 
-    func getuser() -> User? {
+    // Singleton
+    static let sharedInstance = UserService()
+
+    // Variables
+    var currentUser: User?
+
+    required init() {
+        currentUser = getUserFromPrefs()
+        if currentUser != nil {
+            currentUser = getUser()
+        }
+    }
+
+    func getUser() -> User? {
 
         let authStr = String(
                 format: "%@:%@",
-                self.user().email,
-                self.user().password)
+                (currentUser?.email)!,
+                (currentUser?.password)!)
         let authData = authStr.data(using: String.Encoding.utf8)!
         let authBase64 = authData.base64EncodedString()
 
@@ -61,7 +74,7 @@ class UserService {
                     printLog(self,
                             funcName: #function,
                             logString: "User registration was successful with user: \(user)")
-                    self.save(user)
+                    self.saveUserInPrefs(user)
                 }
             }
         } catch {
@@ -71,13 +84,13 @@ class UserService {
         }
     }
 
-    func save(_: User) {
+    func saveUserInPrefs(_ user: User) {
         let encoded: Data = NSKeyedArchiver.archivedData(withRootObject: user)
         UserDefaults.standard.set(encoded, forKey: USER)
         UserDefaults.standard.synchronize()
     }
 
-    func user() -> User {
+    func getUserFromPrefs() -> User {
         let decoded = UserDefaults.standard.object(forKey: USER) as! Data
         return NSKeyedUnarchiver.unarchiveObject(with: decoded) as! User
     }

@@ -1,18 +1,13 @@
 import Foundation
 import CoreBluetooth
 
-protocol BLEPeripheralDelegate: AnyObject {
-    
-    func didReceiveData(_ newData:Data)
-    func connectionFinalized()
-    func uartDidEncounterError(_ error:NSString)
-    
-}
-
 class BLEPeripheral: NSObject, CBPeripheralDelegate {
-    
+
+    // Services
+    let bluetoothService = BluetoothService.sharedInstance
+
+    // Variables
     var currentPeripheral:CBPeripheral!
-    var delegate:BLEPeripheralDelegate!
     var uartService:CBService?
     var rxCharacteristic:CBCharacteristic?
     var txCharacteristic:CBCharacteristic?
@@ -20,46 +15,34 @@ class BLEPeripheral: NSObject, CBPeripheralDelegate {
     
     //MARK: Utility methods
     
-    init(peripheral:CBPeripheral, delegate:BLEPeripheralDelegate){
+    init(peripheral:CBPeripheral){
         
         super.init()
         
-        self.currentPeripheral = peripheral
-        self.currentPeripheral.delegate = self
-        self.delegate = delegate
+        currentPeripheral = peripheral
+        currentPeripheral.delegate = self
     }
     
     
-    func didConnect(_ withMode:ConnectionMode) {
+    func didConnect() {
         
         //Respond to peripheral connection
         
         //Already discovered services
         if currentPeripheral.services != nil{
-            printLog(self, funcName: "didConnect", logString: "Skipping service discovery")
-            peripheral(currentPeripheral, didDiscoverServices: nil)  //already discovered services, DO NOT re-discover. Just pass along the peripheral.
+            printLog(
+                    self,
+                    funcName: #function,
+                    logString: "Skipping service discovery")
+
+            peripheral(currentPeripheral, didDiscoverServices: nil)
             return
         }
         
-        printLog(self, funcName: "didConnect", logString: "Starting service discovery")
-        
-        switch withMode.rawValue {
-        case ConnectionMode.uart.rawValue,
-             ConnectionMode.pinIO.rawValue,
-             ConnectionMode.controller.rawValue,
-            ConnectionMode.dfu.rawValue:
-            currentPeripheral.discoverServices([uartServiceUUID(), dfuServiceUUID(), deviceInformationServiceUUID()])       // Discover dfu and dis (needed to check if update is available)
-        case ConnectionMode.info.rawValue:
-            currentPeripheral.discoverServices(nil)
-            break
-        default:
-            printLog(self, funcName: "didConnect", logString: "non-matching mode")
-            break
-        }
-        
-        //        currentPeripheral.discoverServices([BLEPeripheral.uartServiceUUID(), BLEPeripheral.deviceInformationServiceUUID()])
-        //        currentPeripheral.discoverServices(nil)
-        
+        printLog(
+                self,
+                funcName: #function,
+                logString: "Starting service discovery")
     }
     
     
@@ -211,7 +194,7 @@ class BLEPeripheral: NSObject, CBPeripheralDelegate {
             
             if rxCharacteristic != nil && txCharacteristic != nil {
                 DispatchQueue.main.async(execute: { () -> Void in
-                    self.delegate.connectionFinalized()
+                    self.bluetoothService.connectionFinalized()
                 })
             }
 
@@ -287,35 +270,6 @@ class BLEPeripheral: NSObject, CBPeripheralDelegate {
             printLog(self, funcName: "didUpdateValueForCharacteristic", logString: "\(error.debugDescription)")
             return
         }
-        
-        //UART mode
-        if HomeViewController.singleton.connectionMode == ConnectionMode.uart || HomeViewController.singleton.connectionMode == ConnectionMode.pinIO || HomeViewController.singleton.connectionMode == ConnectionMode.controller {
-            
-            if (characteristic == self.rxCharacteristic){
-                
-                DispatchQueue.main.async(execute: { () -> Void in
-                    self.delegate.didReceiveData(characteristic.value!)
-                })
-                
-            }
-                //TODO: Finalize for info mode
-            else if UUIDsAreEqual(characteristic.uuid, secondID: softwareRevisionStringUUID()) {
-                
-//                var swRevision = NSString(string: "")
-//                let bytes:UnsafePointer<Void> = characteristic.value!.bytes
-//                for i in 0...characteristic.value!.length {
-//                    
-//                    swRevision = NSString(format: "0x%x", UInt8(bytes[i]) )
-//                }
-                
-                DispatchQueue.main.async(execute: { () -> Void in
-                    self.delegate.connectionFinalized()
-                })
-            }
-            
-        }
-        
-        
     }
     
     
@@ -347,10 +301,6 @@ class BLEPeripheral: NSObject, CBPeripheralDelegate {
     func handleError(_ errorString:String) {
         
         printLog(self, funcName: "Error", logString: "\(errorString)")
-        
-        DispatchQueue.main.async(execute: { () -> Void in
-            self.delegate.uartDidEncounterError(errorString as NSString)
-        })
         
     }
     

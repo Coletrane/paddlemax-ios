@@ -39,7 +39,6 @@ protocol HomeViewControllerDelegate: AnyObject {
 
 class HomeViewController: UIViewController,
         DeviceListViewControllerDelegate,
-        PinIOViewControllerDelegate,
         UIPickerViewDelegate {
 
     // Services
@@ -155,26 +154,6 @@ class HomeViewController: UIViewController,
     func dismissDeviceList() {
         deviceListViewController.dismiss(animated: true)
         refreshConnectionStatusComponents()
-    }
-
-    func alertDismissedOnError() {
-        if (bluetoothService.connectionStatus == ConnectionStatus.connected) {
-            bluetoothService.disconnect()
-        }
-        else if (bluetoothService.connectionStatus == ConnectionStatus.scanning){
-
-            if bluetoothService.centralManager == nil {
-                printLog(
-                        self,
-                        funcName: "alertView clickedButtonAtIndex",
-                        logString: "No central Manager found, unable to stop scan")
-                return
-            }
-
-            deviceListViewController.stopScan()
-        }
-
-        alertView = nil
     }
 
     // MARK: quick stat helpers
@@ -313,8 +292,8 @@ class HomeViewController: UIViewController,
 
 
     func launchPinIOViewController() {
-        pinIoViewController = PinIOViewController(delegate: self)
-        pinIoViewController.didConnect()
+//        pinIoViewController = PinIOViewController(delegate: self)
+//        pinIoViewController.didConnect()
 //        pinIoViewController.navigationItem.rightBarButtonItem = infoBarButton
 //        self.navigationController?.pushViewController(pinIoViewController, animated: true)
     }

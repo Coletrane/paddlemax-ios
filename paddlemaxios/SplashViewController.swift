@@ -30,10 +30,6 @@ class SplashViewController: UIViewController {
         if (FBSDKAccessToken.current() == nil) {
 
         } else {
-            UserDefaults.standard.set(
-                    "FB_\(FBSDKAccessToken.current().userID)",
-                    forKey: USER_ID)
-
 
         }
     }

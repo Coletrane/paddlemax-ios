@@ -1,7 +1,7 @@
 import Foundation
 import CoreBluetooth
 
-class BluetoothService: CBCentralManagerDelegate, BLEPeripheralDelegate {
+class BluetoothService: NSObject, CBCentralManagerDelegate {
 
     // Singleton
     static let sharedInstance = BluetoothService()
@@ -19,8 +19,10 @@ class BluetoothService: CBCentralManagerDelegate, BLEPeripheralDelegate {
     fileprivate var connectionTimeOutIntvl: TimeInterval! = 30.0
     fileprivate(set) var connectionTimer: Timer?
 
-    required init() {
-        centralManager = CBCentralManager(delegate: self, queue: nil)
+    override required init() {
+        centralManager = CBCentralManager(delegate: nil, queue: nil)
+        super.init()
+        centralManager.delegate = self  // I've got a bad feeling about this
     }
 
     // MARK: CBCentralManager delegate
@@ -108,6 +110,10 @@ class BluetoothService: CBCentralManagerDelegate, BLEPeripheralDelegate {
         currentPeripheral = nil
     }
 
+    func centralManagerDidUpdateState(_ central: CBCentralManager) {
+        //
+    }
+
     func didFindPeripheral(_ peripheral: CBPeripheral!, advertisementData: [AnyHashable: Any]!, RSSI: NSNumber!) {
 
         //If device is already listed, just update RSSI
@@ -164,7 +170,7 @@ class BluetoothService: CBCentralManagerDelegate, BLEPeripheralDelegate {
             }
 
             //Connect
-            currentPeripheral = BLEPeripheral(peripheral: peripheral, delegate: self)
+            currentPeripheral = BLEPeripheral(peripheral: peripheral)
             centralManager.connect(
                     peripheral,
                     options: [CBConnectPeripheralOptionNotifyOnDisconnectionKey: NSNumber(value: true as Bool)])
@@ -287,5 +293,9 @@ class BluetoothService: CBCentralManagerDelegate, BLEPeripheralDelegate {
         }
 
         currentPeripheral!.writeRawData(newData)
+    }
+
+    func removeAllDevices() {
+        devices.removeAll(keepingCapacity: false)
     }
 }
