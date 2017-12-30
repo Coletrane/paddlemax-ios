@@ -1,4 +1,6 @@
 import Foundation
+import FBSDKCoreKit
+import FBSDKLoginKit
 
 class UserService {
 
@@ -8,6 +10,13 @@ class UserService {
     // Variables
     var currentUser: User?
 
+    // Facebook auth token observer
+    var fbToken = FBSDKAccessToken.current().tokenString {
+        didSet {
+            // Update user
+        }
+    }
+
     required init() {
         currentUser = getUserFromPrefs()
         if currentUser != nil {
@@ -15,7 +24,17 @@ class UserService {
         }
     }
 
+    // MARK: PaddleMax API calls
+
     func getUser() -> User? {
+
+        guard currentUser != nil else {
+            printLog(
+                    self,
+                    funcName: #function,
+                    logString: "No Current User found, aborting API call")
+            return nil
+        }
 
         let authStr = String(
                 format: "%@:%@",
@@ -84,14 +103,71 @@ class UserService {
         }
     }
 
+    // MARK: Facebook API calls
+
+    func getUserFb(birthday bday: Bool, location loc: Bool) {
+
+        // Build reqest based on user acceping birthday and location perms
+        var fields = "email, first_name, last_name"
+        if (bday) {
+            fields.append(",birthday ")
+        }
+        if (loc) {
+            fields.append(",location ")
+        }
+
+        let req = FBSDKGraphRequest(
+                graphPath: "me",
+                parameters: ["fields": fields],
+                tokenString: FBSDKAccessToken.current().tokenString,
+                version: nil,
+                httpMethod: "GET")
+        req?.start(completionHandler: { (conn, res, err) -> Void in
+
+            if (err != nil) {
+                printLog(
+                        self,
+                        funcName: #function,
+                        logString: "Error making graph request")
+            } else {
+                let data = res as! NSDictionary
+
+                let formatter = DateFormatter()
+                formatter.dateFormat = "MM/dd/yyyy"
+                let birthday = formatter.date(from: data["birthday"] as! String)
+
+                let locDict = data["location"] as! NSDictionary
+                let location =  "id:  \(locDict["id"] as! String) name: \(locDict["name"] as! String)"
+
+                self.currentUser = User(
+                        nil,
+                        data["first_name"] as! String,
+                        data["last_name"] as! String,
+                        data["email"] as! String,
+                        FBSDKAccessToken.current().tokenString,   // Not sure best practices on this
+                        birthday,
+                        nil,
+                        location)
+
+                self.saveUserInPrefs(self.currentUser!)
+            }
+        })
+    }
+
     func saveUserInPrefs(_ user: User) {
         let encoded: Data = NSKeyedArchiver.archivedData(withRootObject: user)
         UserDefaults.standard.set(encoded, forKey: USER)
         UserDefaults.standard.synchronize()
     }
 
-    func getUserFromPrefs() -> User {
-        let decoded = UserDefaults.standard.object(forKey: USER) as! Data
-        return NSKeyedUnarchiver.unarchiveObject(with: decoded) as! User
+    func getUserFromPrefs() -> User? {
+        var user: User?
+
+        if var raw = UserDefaults.standard.object(forKey: USER) {
+            let decoded = raw as! Data
+            user = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! User
+        }
+
+        return user
     }
 }

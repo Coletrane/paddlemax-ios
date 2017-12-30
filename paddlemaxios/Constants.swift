@@ -22,8 +22,9 @@ let USER = "user"
 let QUICK_STAT_TIME = "quickStatTime"
 let QUICK_STAT_SETTING = "quickStatSetting"
 
-// oAuth stuff
+// Facebook stuff
 let FB_APP_ID = "203845030160162"
+let FB_GRAPH_API_VERSION = "2.11"
 
 //System Variables
 let CURRENT_DEVICE = UIDevice.current

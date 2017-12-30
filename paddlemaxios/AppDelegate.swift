@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
         } else {
             window!.rootViewController = splashViewController
         }
-        window!.rootViewController = tabBarController
+//        window!.rootViewController = tabBarController
 
         window!.makeKeyAndVisible()
 
