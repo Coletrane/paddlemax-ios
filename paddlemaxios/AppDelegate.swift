@@ -30,12 +30,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
         tabBarController = TabBarController()
         splashViewController = SplashViewController()
 
-        if UserDefaults.standard.string(forKey: USER) != nil {
-            window!.rootViewController = tabBarController
-        } else {
-            window!.rootViewController = splashViewController
-        }
-//        window!.rootViewController = tabBarController
+//        if (UserDefaults.standard.string(forKey: USER_EMAIL) != nil
+//        && UserDefaults.standard.string(forKey: USER_PASSWORD) != nil) {
+//            window!.rootViewController = tabBarController
+//        } else {
+//            window!.rootViewController = splashViewController
+//        }
+        window!.rootViewController = tabBarController
 
         window!.makeKeyAndVisible()
 

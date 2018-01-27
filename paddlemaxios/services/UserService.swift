@@ -11,11 +11,11 @@ class UserService {
     var currentUser: User?
 
     // Facebook auth token observer
-    var fbToken = FBSDKAccessToken.current().tokenString {
-        didSet {
-            // Update user
-        }
-    }
+//    var fbToken = FBSDKAccessToken.current().tokenString {
+//        didSet {
+//            // Update user
+//        }
+//    }
 
     required init() {
         currentUser = getUserFromPrefs()
@@ -155,19 +155,55 @@ class UserService {
     }
 
     func saveUserInPrefs(_ user: User) {
-        let encoded: Data = NSKeyedArchiver.archivedData(withRootObject: user)
-        UserDefaults.standard.set(encoded, forKey: USER)
-        UserDefaults.standard.synchronize()
+        UserDefaults.standard.set(user.id, forKey: USER_ID)
+        UserDefaults.standard.set(user.email, forKey: USER_EMAIL)
+        UserDefaults.standard.set(user.password, forKey: USER_EMAIL)
+        UserDefaults.standard.set(user.firstName, forKey: USER_FIRST_NAME)
+        UserDefaults.standard.set(user.lastName, forKey: USER_LAST_NAME)
+        UserDefaults.standard.set(user.birthday, forKey: USER_BIRTHDAY)
+        UserDefaults.standard.set(user.weightLbs, forKey: USER_WEIGHT)
+        UserDefaults.standard.set(user.location, forKey: USER_LOCATION)
     }
 
     func getUserFromPrefs() -> User? {
         var user: User?
+        var userId: Int64? = nil
 
-        if var raw = UserDefaults.standard.object(forKey: USER) {
-            let decoded = raw as! Data
-            user = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! User
+        if let id = UserDefaults.standard.object(forKey: USER_ID) as? Int64 {
+            userId = id
         }
 
-        return user
+        guard let firstName = UserDefaults.standard.string(forKey: USER_FIRST_NAME) else {
+            print("No first name")
+            return nil
+        }
+        guard let lastName = UserDefaults.standard.string(forKey: USER_LAST_NAME) else {
+            print("No last name")
+            return nil
+        }
+        guard let email = UserDefaults.standard.string(forKey: USER_EMAIL) else {
+            print("No email")
+            return nil
+        }
+        guard let password = UserDefaults.standard.string(forKey: USER_PASSWORD) else {
+            print("No password")
+            return nil
+        }
+
+        var birthday: Date? = nil
+        if let bDay = UserDefaults.standard.object(forKey: USER_BIRTHDAY) as? Date {
+            birthday = bDay
+        }
+
+        return User(
+                userId,
+                firstName,
+                lastName,
+                email,
+                password,
+                birthday,
+                UserDefaults.standard.integer(forKey: USER_WEIGHT),
+                UserDefaults.standard.string(forKey: USER_LOCATION))
+
     }
 }
