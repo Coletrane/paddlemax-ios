@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 import CoreBluetooth
 
 class BluetoothService: NSObject, CBCentralManagerDelegate {
@@ -19,6 +20,9 @@ class BluetoothService: NSObject, CBCentralManagerDelegate {
     fileprivate var connectionTimeOutIntvl: TimeInterval! = 30.0
     fileprivate(set) var connectionTimer: Timer?
 
+    // Callbacks
+    var tableViewCallback: (() -> Void)?
+
     override required init() {
         centralManager = CBCentralManager(delegate: nil, queue: nil)
         super.init()
@@ -32,11 +36,7 @@ class BluetoothService: NSObject, CBCentralManagerDelegate {
                         advertisementData: [String : Any],
                         rssi RSSI: NSNumber) {
 
-        if connectionStatus == ConnectionStatus.idle {
-            DispatchQueue.main.sync(execute: { () -> Void in
-                didFindPeripheral(peripheral, advertisementData: advertisementData, RSSI:RSSI)
-            })
-        }
+        didFindPeripheral(peripheral, advertisementData: advertisementData, RSSI: RSSI)
     }
 
 
@@ -72,6 +72,15 @@ class BluetoothService: NSObject, CBCentralManagerDelegate {
         }
     }
 
+    func centralManager(_ central :CBCentralManager,
+                        didFailToConnect peripheral: CBPeripheral,
+                        error: Error?) {
+        // TODO: avoid printlogs in delegate methods, do them in the custom methods called instead
+        printLog(
+                self,
+                funcName: #function,
+                logString: error?.localizedDescription)
+    }
 
     func centralManager(_ central: CBCentralManager,
                         didDisconnectPeripheral peripheral: CBPeripheral,
@@ -116,11 +125,14 @@ class BluetoothService: NSObject, CBCentralManagerDelegate {
 
     func didFindPeripheral(_ peripheral: CBPeripheral!, advertisementData: [AnyHashable: Any]!, RSSI: NSNumber!) {
 
+        printLog(
+                self,
+                funcName: #function,
+                logString: peripheral.name)
         //If device is already listed, just update RSSI
         let newID = peripheral.identifier
         for device in devices {
             if device.identifier == newID {
-//                println("   \(self.classForCoder.description()) updating device RSSI")
                 device.RSSI = RSSI
                 return
             }
@@ -139,6 +151,7 @@ class BluetoothService: NSObject, CBCentralManagerDelegate {
         if newDevice.name == NAME && alreadyInDevices.isEmpty {
             devices.append(newDevice)
         }
+        tableViewCallback?()
     }
 
     func startScan() {

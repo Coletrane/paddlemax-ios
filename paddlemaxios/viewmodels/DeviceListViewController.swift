@@ -42,6 +42,7 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
     fileprivate var scanIndicator: UIActivityIndicatorView!
     fileprivate var refreshControl: UIRefreshControl!
 
+
     convenience init(aDelegate: DeviceListViewControllerDelegate) {
         self.init(nibName: "DeviceListViewController", bundle: Bundle.main)
 
@@ -68,7 +69,7 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         if (scanningIndicatorItem == nil) {
             initTitleAndBars()
         }
@@ -299,12 +300,12 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
 
 //            cell.nameLabel = cell.viewWithTag(100) as! UILabel
 //            cell.connectButton = cell.viewWithTag(102) as! UIButton
-//            cell.connectButton.addTarget(self, action: #selector(self.connectButtonTapped(_:)), for: UIControlEvents.touchUpInside)
+////            cell.connectButton.addTarget(self, action: #selector(self.connectButtonTapped(_:)), for: UIControlEvents.touchUpInside)
 //            cell.connectButton.layer.cornerRadius = 4.0
 //            cell.signalImageView = cell.viewWithTag(104) as! UIImageView
 //            //set tag to indicate digital pin number
 //            cell.connectButton.tag = indexPath.section
-//            cell.signalImages = signalImages
+            cell.signalImages = signalImages
 
 
             //Ensure cell is within device array range
@@ -410,9 +411,17 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
 
 
     func startScan() {
+        guard bluetoothService.centralManager.state != CBManagerState.poweredOff else {
+            setToolbarItemsNotScanning()
+            return
+        }
         scanIndicator.startAnimating()
         scanningItem.title = "Scanning"
         setToolbarItemsScanning()
+        bluetoothService.tableViewCallback = { [weak self] () in
+            self?.tableView.reloadData()
+        }
+        bluetoothService.startScan()
     }
 
     func stopScan() {
