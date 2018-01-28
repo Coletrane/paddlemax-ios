@@ -282,7 +282,7 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
     //MARK: TableView functions
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let device = bluetoothService.devices[indexPath.section]
+        let device = bluetoothService.devices[indexPath.row]
 
         let existingCell = device.deviceCell
         if (existingCell != nil) {
@@ -293,7 +293,9 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
         let cell: DeviceCell = NSKeyedUnarchiver.unarchiveObject(with: cellData) as! DeviceCell
 
         cell.nameLabel.text = device.name
-        device.deviceCell = cell
+        if (indexPath.row < bluetoothService.devices.count) {
+            device.deviceCell = cell
+        }
 
         return cell
     }
@@ -305,18 +307,25 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
 
 
     func numberOfSections(in tableView: UITableView) -> Int {
-
-        //Each DeviceCell gets its own section
-        return bluetoothService.devices.count
+        return 1
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+         return "Devices"
+    }
 
-        if (section == 0) {
-            return "Peripherals"
-        } else {
-            return nil
-        }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50.0
+    }
+
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 46.0
+    }
+
+
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 22.0
     }
 
 

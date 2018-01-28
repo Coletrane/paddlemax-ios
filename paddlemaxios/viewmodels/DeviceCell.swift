@@ -35,15 +35,7 @@ class DeviceCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        print("AWAKE MOTHERFUCKER")
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-    
     
     func updateSignalImage(_ RSSI:NSNumber) {
 
