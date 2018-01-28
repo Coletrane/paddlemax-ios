@@ -11,8 +11,6 @@
 		648F2106DD7A0CDA59F3352D /* BLEPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F20B7AD4C938CB40F567A /* BLEPeripheral.swift */; };
 		648F2108F030DB9905968EC7 /* BluetoothService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F24D2131CA3045E8E8897 /* BluetoothService.swift */; };
 		648F2158BF01E1E767A9D60A /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F2268D5F2169AA6C65B46 /* SplashViewController.swift */; };
-		648F216F3C7AE84BBDF6E521 /* PinCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F223E46F2AA12210B6334 /* PinCell.swift */; };
-		648F221DDFAA1FE9622A6AFD /* DeviceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F287013C5DD31242F6A0F /* DeviceCell.swift */; };
 		648F223E2F4779FA0201F9C9 /* BLEDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F2EFA1E732907ACFAD273 /* BLEDevice.swift */; };
 		648F228C63BAE0D16F893C34 /* PinIOViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F2B795904C4A7B3111374 /* PinIOViewController.swift */; };
 		648F24E7468CCF50AF289263 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 648F2E509990E246B1CA4730 /* HomeViewController.xib */; };
@@ -20,6 +18,8 @@
 		648F265935B891A9E87C49A8 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F225A24F1A688F30BC824 /* Extensions.swift */; };
 		648F26E9C153B6EFBB2AEAC6 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F2598B81A8E13F7A93375 /* UserService.swift */; };
 		648F272B9A6579D793C0EC74 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F28FDE5563857FC33231D /* HomeViewController.swift */; };
+		648F2736255FB10A3E60B66F /* DeviceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F2227560089272DC29D2E /* DeviceCell.swift */; };
+		648F2811740E26E31142FDD0 /* PinCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F2A8CC4D8CBED268B18D5 /* PinCell.swift */; };
 		648F28DD237CF47DB27480AE /* GATT-characteristics.plist in Resources */ = {isa = PBXBuildFile; fileRef = 648F2EBCCB4C689400F5B991 /* GATT-characteristics.plist */; };
 		648F295BB09B7FC506D8E4C1 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F20F8054C7963B53BD633 /* TabBarController.swift */; };
 		648F2B1207EAB22054FCD2A7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F20C93AFC396D372BDAE0 /* AppDelegate.swift */; };
@@ -111,18 +111,18 @@
 		648F20B7AD4C938CB40F567A /* BLEPeripheral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEPeripheral.swift; sourceTree = "<group>"; };
 		648F20C93AFC396D372BDAE0 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		648F20F8054C7963B53BD633 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
-		648F223E46F2AA12210B6334 /* PinCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinCell.swift; sourceTree = "<group>"; };
+		648F2227560089272DC29D2E /* DeviceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceCell.swift; sourceTree = "<group>"; };
 		648F225A24F1A688F30BC824 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		648F2268D5F2169AA6C65B46 /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		648F24D2131CA3045E8E8897 /* BluetoothService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BluetoothService.swift; sourceTree = "<group>"; };
 		648F25803D43C33B0CD7A922 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		648F2598B81A8E13F7A93375 /* UserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		648F25E287FA3A89F8A2B318 /* BLESensorButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLESensorButton.swift; sourceTree = "<group>"; };
-		648F287013C5DD31242F6A0F /* DeviceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceCell.swift; sourceTree = "<group>"; };
 		648F28FDE5563857FC33231D /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		648F29521C21A9F8F5AD86D3 /* BLEInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEInfo.swift; sourceTree = "<group>"; };
 		648F29B7201A6AF11020C024 /* PinIOViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PinIOViewController.xib; sourceTree = "<group>"; };
 		648F2A349A5FD36AF5C835EE /* SplashViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SplashViewController.xib; sourceTree = "<group>"; };
+		648F2A8CC4D8CBED268B18D5 /* PinCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinCell.swift; sourceTree = "<group>"; };
 		648F2B11D24FDA3CF78B4977 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		648F2B795904C4A7B3111374 /* PinIOViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinIOViewController.swift; sourceTree = "<group>"; };
 		648F2E509990E246B1CA4730 /* HomeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
@@ -222,17 +222,17 @@
 		648F29CD0FB9963B49E3DE12 /* viewmodels */ = {
 			isa = PBXGroup;
 			children = (
-				648F287013C5DD31242F6A0F /* DeviceCell.swift */,
 				648F2FE38B22FE56190C65EE /* DeviceListViewController.swift */,
 				648F2E69D601E3BA655201F3 /* DeviceListViewController.xib */,
 				648F28FDE5563857FC33231D /* HomeViewController.swift */,
 				648F2E509990E246B1CA4730 /* HomeViewController.xib */,
-				648F223E46F2AA12210B6334 /* PinCell.swift */,
 				648F2B795904C4A7B3111374 /* PinIOViewController.swift */,
 				648F29B7201A6AF11020C024 /* PinIOViewController.xib */,
 				648F2268D5F2169AA6C65B46 /* SplashViewController.swift */,
 				648F2A349A5FD36AF5C835EE /* SplashViewController.xib */,
 				648F20F8054C7963B53BD633 /* TabBarController.swift */,
+				648F2227560089272DC29D2E /* DeviceCell.swift */,
+				648F2A8CC4D8CBED268B18D5 /* PinCell.swift */,
 			);
 			path = viewmodels;
 			sourceTree = "<group>";
@@ -568,13 +568,13 @@
 				648F2106DD7A0CDA59F3352D /* BLEPeripheral.swift in Sources */,
 				648F2BA142316DE9E1CE96F8 /* User.swift in Sources */,
 				648F2C03541379922ABD11C5 /* DeviceListViewController.swift in Sources */,
-				648F221DDFAA1FE9622A6AFD /* DeviceCell.swift in Sources */,
 				648F272B9A6579D793C0EC74 /* HomeViewController.swift in Sources */,
-				648F216F3C7AE84BBDF6E521 /* PinCell.swift in Sources */,
 				648F295BB09B7FC506D8E4C1 /* TabBarController.swift in Sources */,
 				648F2158BF01E1E767A9D60A /* SplashViewController.swift in Sources */,
 				648F228C63BAE0D16F893C34 /* PinIOViewController.swift in Sources */,
 				648F2E4F60446D0CC3E6887A /* BLEInfo.swift in Sources */,
+				648F2736255FB10A3E60B66F /* DeviceCell.swift in Sources */,
+				648F2811740E26E31142FDD0 /* PinCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
