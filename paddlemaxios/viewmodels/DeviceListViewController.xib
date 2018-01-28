@@ -15,7 +15,6 @@
             <connections>
                 <outlet property="barItem" destination="k0y-52-IC5" id="iaS-XZ-NaK"/>
                 <outlet property="cancelButton" destination="Zpa-Qd-7Nd" id="D36-YS-AHG"/>
-                <outlet property="deviceCell" destination="9hq-Hj-3DE" id="bbI-jq-Fea"/>
                 <outlet property="leftSpace" destination="bki-c3-FPj" id="wWF-dI-U2c"/>
                 <outlet property="navBar" destination="fNp-vM-Khr" id="MFt-LD-60L"/>
                 <outlet property="rightSpace" destination="IpC-8R-AId" id="JYa-YP-p9h"/>
@@ -67,16 +66,12 @@
                     <label key="tableFooterView" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1ll-uR-BLg">
                         <rect key="frame" x="0.0" y="1034.5" width="320" height="54"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="21" id="XVQ-S6-YcO"/>
-                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <connections>
-                        <outlet property="dataSource" destination="-1" id="iYC-le-OVb"/>
-                        <outlet property="delegate" destination="-1" id="hvd-XP-PvI"/>
+                        <outlet property="delegate" destination="-1" id="nxA-nD-IwP"/>
                     </connections>
                 </tableView>
                 <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vbo-SF-UoM">
@@ -93,65 +88,21 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="fNp-vM-Khr" firstAttribute="leading" secondItem="4pg-hr-bCM" secondAttribute="leading" id="2GE-zu-vMq"/>
-                <constraint firstItem="fNp-vM-Khr" firstAttribute="leading" secondItem="q4d-iJ-RdI" secondAttribute="leading" id="Mtf-aY-GgM"/>
-                <constraint firstItem="q4d-iJ-RdI" firstAttribute="leading" secondItem="Vbo-SF-UoM" secondAttribute="leading" id="TRM-63-RUp"/>
-                <constraint firstItem="Vbo-SF-UoM" firstAttribute="bottom" secondItem="dNJ-tO-1uQ" secondAttribute="bottom" id="XVz-Id-jjX"/>
-                <constraint firstItem="Vbo-SF-UoM" firstAttribute="top" secondItem="q4d-iJ-RdI" secondAttribute="bottom" id="Xu8-KM-ppW"/>
-                <constraint firstItem="q4d-iJ-RdI" firstAttribute="trailing" secondItem="Vbo-SF-UoM" secondAttribute="trailing" id="eGm-ky-ztw"/>
-                <constraint firstAttribute="trailing" secondItem="fNp-vM-Khr" secondAttribute="trailing" id="edp-K3-PLV"/>
-                <constraint firstItem="fNp-vM-Khr" firstAttribute="top" secondItem="dNJ-tO-1uQ" secondAttribute="top" id="oah-bB-LWY"/>
-                <constraint firstItem="fNp-vM-Khr" firstAttribute="trailing" secondItem="q4d-iJ-RdI" secondAttribute="trailing" id="piT-Zd-Km0"/>
-                <constraint firstItem="q4d-iJ-RdI" firstAttribute="top" secondItem="fNp-vM-Khr" secondAttribute="bottom" id="zuV-kd-7ZV"/>
+                <constraint firstAttribute="trailing" secondItem="fNp-vM-Khr" secondAttribute="trailing" id="71G-1h-OfT"/>
+                <constraint firstItem="q4d-iJ-RdI" firstAttribute="top" secondItem="fNp-vM-Khr" secondAttribute="bottom" id="H0M-TP-3Zf"/>
+                <constraint firstItem="Vbo-SF-UoM" firstAttribute="top" secondItem="q4d-iJ-RdI" secondAttribute="bottom" id="H8y-a9-4oM"/>
+                <constraint firstItem="fNp-vM-Khr" firstAttribute="top" secondItem="dNJ-tO-1uQ" secondAttribute="top" id="N0x-Yn-zx1"/>
+                <constraint firstItem="q4d-iJ-RdI" firstAttribute="trailing" secondItem="Vbo-SF-UoM" secondAttribute="trailing" id="l3c-Z9-ygc"/>
+                <constraint firstItem="fNp-vM-Khr" firstAttribute="trailing" secondItem="q4d-iJ-RdI" secondAttribute="trailing" id="pJ9-Xf-osV"/>
+                <constraint firstItem="fNp-vM-Khr" firstAttribute="leading" secondItem="q4d-iJ-RdI" secondAttribute="leading" id="qNu-dw-bpd"/>
+                <constraint firstItem="Vbo-SF-UoM" firstAttribute="bottom" secondItem="dNJ-tO-1uQ" secondAttribute="bottom" id="wHT-av-fSp"/>
+                <constraint firstItem="q4d-iJ-RdI" firstAttribute="leading" secondItem="Vbo-SF-UoM" secondAttribute="leading" id="z6E-hs-E5I"/>
+                <constraint firstItem="fNp-vM-Khr" firstAttribute="leading" secondItem="4pg-hr-bCM" secondAttribute="leading" id="zfk-82-b36"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <viewLayoutGuide key="safeArea" id="dNJ-tO-1uQ"/>
             <point key="canvasLocation" x="-225" y="111"/>
         </view>
-        <tableViewCell opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="48" id="9hq-Hj-3DE" customClass="DeviceCell" customModule="paddlemaxios" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="299" height="48"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9hq-Hj-3DE" id="qHX-Dw-Jr8">
-                <rect key="frame" x="0.0" y="0.0" width="299" height="47.5"/>
-                <autoresizingMask key="autoresizingMask"/>
-                <subviews>
-                    <label autoresizesSubviews="NO" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="100" contentMode="left" misplaced="YES" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HC8-BS-Yeq" userLabel="nameLabel">
-                        <rect key="frame" x="48" y="11" width="55" height="24"/>
-                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                        <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    </label>
-                    <imageView userInteractionEnabled="NO" tag="104" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="signalStrength-0.png" translatesAutoresizingMaskIntoConstraints="NO" id="xxO-YE-opn">
-                        <rect key="frame" x="16" y="14" width="24" height="21"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="24" id="vcM-4n-PXG"/>
-                            <constraint firstAttribute="height" constant="21" id="xmX-fw-ESb"/>
-                        </constraints>
-                    </imageView>
-                    <button opaque="NO" tag="102" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tUM-il-9VE" userLabel="connectButton">
-                        <rect key="frame" x="0.0" y="0.0" width="299" height="48"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <connections>
-                            <action selector="connectButtonTapped:" destination="9hq-Hj-3DE" eventType="touchUpInside" id="ACg-mN-TzL"/>
-                        </connections>
-                    </button>
-                </subviews>
-                <constraints>
-                    <constraint firstAttribute="centerY" secondItem="HC8-BS-Yeq" secondAttribute="centerY" constant="4" id="0Wp-6J-rkg"/>
-                    <constraint firstItem="xxO-YE-opn" firstAttribute="leading" secondItem="qHX-Dw-Jr8" secondAttribute="leadingMargin" id="C7b-4N-ZTc"/>
-                    <constraint firstItem="xxO-YE-opn" firstAttribute="top" secondItem="qHX-Dw-Jr8" secondAttribute="topMargin" id="eYl-ve-78h"/>
-                    <constraint firstItem="HC8-BS-Yeq" firstAttribute="leading" secondItem="qHX-Dw-Jr8" secondAttribute="leadingMargin" constant="34" id="uPC-PD-87G"/>
-                </constraints>
-            </tableViewCellContentView>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-            <viewLayoutGuide key="safeArea" id="8eb-FL-cMR"/>
-            <connections>
-                <outlet property="connectButton" destination="tUM-il-9VE" id="nIy-xQ-pzP"/>
-                <outlet property="nameLabel" destination="HC8-BS-Yeq" id="ORI-dZ-Y5m"/>
-                <outlet property="signalImageView" destination="xxO-YE-opn" id="8SN-MZ-bqB"/>
-            </connections>
-            <point key="canvasLocation" x="-225.5" y="-298"/>
-        </tableViewCell>
         <barButtonItem title="Item" id="uai-ZT-4KO"/>
         <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" id="Dcl-8r-hLZ">
             <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
@@ -163,6 +114,38 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <point key="canvasLocation" x="-141" y="463"/>
         </activityIndicatorView>
+        <tableViewCell opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="DeviceCell" rowHeight="48" id="9hq-Hj-3DE" customClass="DeviceCell" customModule="paddlemaxios" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="299" height="48"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9hq-Hj-3DE" id="qHX-Dw-Jr8">
+                <rect key="frame" x="0.0" y="0.0" width="299" height="47.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" tag="104" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="signalStrength-0.png" translatesAutoresizingMaskIntoConstraints="NO" id="xxO-YE-opn">
+                        <rect key="frame" x="259" y="13" width="24" height="21"/>
+                    </imageView>
+                    <label autoresizesSubviews="NO" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="100" contentMode="left" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HC8-BS-Yeq" userLabel="nameLabel">
+                        <rect key="frame" x="16" y="11" width="55" height="24"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="HC8-BS-Yeq" firstAttribute="top" secondItem="qHX-Dw-Jr8" secondAttribute="topMargin" id="2bw-qU-5QW"/>
+                    <constraint firstItem="xxO-YE-opn" firstAttribute="trailing" secondItem="qHX-Dw-Jr8" secondAttribute="trailingMargin" id="X3g-fq-b5l"/>
+                    <constraint firstItem="HC8-BS-Yeq" firstAttribute="centerY" secondItem="xxO-YE-opn" secondAttribute="centerY" id="n3x-r3-66D"/>
+                    <constraint firstItem="HC8-BS-Yeq" firstAttribute="leading" secondItem="qHX-Dw-Jr8" secondAttribute="leadingMargin" id="oSA-8j-kKD"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <viewLayoutGuide key="safeArea" id="8eb-FL-cMR"/>
+            <connections>
+                <outlet property="nameLabel" destination="HC8-BS-Yeq" id="ORI-dZ-Y5m"/>
+                <outlet property="signalImageView" destination="xxO-YE-opn" id="8SN-MZ-bqB"/>
+            </connections>
+            <point key="canvasLocation" x="-225.5" y="-298"/>
+        </tableViewCell>
     </objects>
     <resources>
         <image name="signalStrength-0.png" width="24" height="21"/>

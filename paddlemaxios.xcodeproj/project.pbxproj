@@ -35,7 +35,6 @@
 		791CD6A31FC31D4900F09089 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 791CD69E1FC31D4900F09089 /* FBSDKLoginKit.framework */; };
 		791CD6A41FC31D4900F09089 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 791CD69F1FC31D4900F09089 /* Bolts.framework */; };
 		791CD6A51FC31D4900F09089 /* AccountKitStrings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 791CD6A01FC31D4900F09089 /* AccountKitStrings.bundle */; };
-		793B2D371FB8AAF8002D407E /* engebrechtre bd it.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 793B2D361FB8AAF8002D407E /* engebrechtre bd it.ttf */; };
 		7984B8D01FAD341B00C911E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7984B8CF1FAD341B00C911E8 /* Assets.xcassets */; };
 		7984B8DE1FAD341B00C911E8 /* paddlemaxiosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7984B8DD1FAD341B00C911E8 /* paddlemaxiosTests.swift */; };
 		7984B8E91FAD341B00C911E8 /* paddlemaxiosUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7984B8E81FAD341B00C911E8 /* paddlemaxiosUITests.swift */; };
@@ -49,6 +48,8 @@
 		79BE69C31FD1081500FA46B8 /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BE69C21FD1081500FA46B8 /* ComplicationController.swift */; };
 		79BE69C51FD1081500FA46B8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 79BE69C41FD1081500FA46B8 /* Assets.xcassets */; };
 		79BE69CB1FD1081500FA46B8 /* paddlemaxwatchos.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 79BE69AB1FD1081500FA46B8 /* paddlemaxwatchos.app */; };
+		79C0FA6A201D7DB100142423 /* engebrechtre bd it.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 79C0FA69201D7DB100142423 /* engebrechtre bd it.ttf */; };
+		79C0FA6E201DA3A200142423 /* DeviceList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 79C0FA6D201DA3A200142423 /* DeviceList.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -136,7 +137,6 @@
 		791CD69E1FC31D4900F09089 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		791CD69F1FC31D4900F09089 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		791CD6A01FC31D4900F09089 /* AccountKitStrings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AccountKitStrings.bundle; sourceTree = "<group>"; };
-		793B2D361FB8AAF8002D407E /* engebrechtre bd it.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "engebrechtre bd it.ttf"; path = "../../paddle-max-server/static/engebrechtre/engebrechtre bd it.ttf"; sourceTree = "<group>"; };
 		7984B8C51FAD341B00C911E8 /* paddlemaxios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = paddlemaxios.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7984B8CF1FAD341B00C911E8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7984B8D41FAD341B00C911E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -160,6 +160,8 @@
 		79BE69C41FD1081500FA46B8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		79BE69C61FD1081500FA46B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		79BE69C71FD1081500FA46B8 /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
+		79C0FA69201D7DB100142423 /* engebrechtre bd it.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "engebrechtre bd it.ttf"; sourceTree = "<group>"; };
+		79C0FA6D201DA3A200142423 /* DeviceList.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DeviceList.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -233,6 +235,7 @@
 				648F20F8054C7963B53BD633 /* TabBarController.swift */,
 				648F2227560089272DC29D2E /* DeviceCell.swift */,
 				648F2A8CC4D8CBED268B18D5 /* PinCell.swift */,
+				79C0FA6D201DA3A200142423 /* DeviceList.storyboard */,
 			);
 			path = viewmodels;
 			sourceTree = "<group>";
@@ -253,7 +256,7 @@
 		793B2D351FB8AA47002D407E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				793B2D361FB8AAF8002D407E /* engebrechtre bd it.ttf */,
+				79C0FA69201D7DB100142423 /* engebrechtre bd it.ttf */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -508,11 +511,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				793B2D371FB8AAF8002D407E /* engebrechtre bd it.ttf in Resources */,
 				7984B8D01FAD341B00C911E8 /* Assets.xcassets in Resources */,
 				791CD6A51FC31D4900F09089 /* AccountKitStrings.bundle in Resources */,
 				648F28DD237CF47DB27480AE /* GATT-characteristics.plist in Resources */,
+				79C0FA6A201D7DB100142423 /* engebrechtre bd it.ttf in Resources */,
 				648F2D0448381FABCDBE7F0C /* DeviceListViewController.xib in Resources */,
+				79C0FA6E201DA3A200142423 /* DeviceList.storyboard in Resources */,
 				648F24E7468CCF50AF289263 /* HomeViewController.xib in Resources */,
 				648F262079D1C856A3487DAF /* SplashViewController.xib in Resources */,
 				648F20D0A5AA87EB853944D8 /* PinIOViewController.xib in Resources */,

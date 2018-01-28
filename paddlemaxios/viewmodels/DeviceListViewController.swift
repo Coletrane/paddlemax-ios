@@ -6,7 +6,7 @@ protocol DeviceListViewControllerDelegate: HomeViewControllerDelegate {
 
 }
 
-class DeviceListViewController : UIViewController, UITableViewDelegate, UITableViewDataSource, UINavigationControllerDelegate, DeviceCellDelegate {
+class DeviceListViewController : UIViewController, UITableViewDelegate, UITableViewDataSource, UINavigationControllerDelegate {
 
     var delegate: DeviceListViewControllerDelegate?
 
@@ -42,19 +42,24 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
     fileprivate var scanIndicator: UIActivityIndicatorView!
     fileprivate var refreshControl: UIRefreshControl!
 
+    // Constants
+    fileprivate let cellReuseId = "DeviceCell"
 
-    convenience init(aDelegate: DeviceListViewControllerDelegate) {
-        self.init(nibName: "DeviceListViewController", bundle: Bundle.main)
-
-        delegate = aDelegate
-    }
+//    convenience init(aDelegate: DeviceListViewControllerDelegate) {
+//        self.init(nibName: "DeviceListViewController", bundle: Bundle.main)
+//
+//        delegate = aDelegate
+//    }
 
     func initTitleAndBars() {
         title = "Connect to Paddle"
         warningLabel = UILabel()
         warningLabel.isHidden = true
 
-        tableView = UITableView()
+//        tableView = UITableView()
+        tableView.register(
+                DeviceCell.self,
+                forCellReuseIdentifier: cellReuseId)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = UITableViewCellSeparatorStyle.none
@@ -281,57 +286,36 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        // Each device has its own section
-        // row 0 is the device cell
-        // additional rows are advertisement attributes
+        var cell: DeviceCell! = tableView.dequeueReusableCell(
+                withIdentifier: cellReuseId) as? DeviceCell
 
-        //Device Cell
-        if indexPath.row == 0 {
-            //Check if cell already exists
-            let testCell = bluetoothService.devices[indexPath.section].deviceCell
-            if testCell != nil {
-                return testCell!
+        let device = bluetoothService.devices[indexPath.section]
+        if (cell == nil) {
+            cell = DeviceCell(labelText: device.name)
+            device.signalImageUpdateCallback =  { () in
+                cell.updateSignalImage(device.RSSI)
             }
+        }
 
-//            //Create Device Cell from NIB
-//            let cellData = NSKeyedArchiver.archivedData(withRootObject: deviceCell)
-//            let cell: DeviceCell = NSKeyedUnarchiver.unarchiveObject(with: cellData) as! DeviceCell
-            let cell = DeviceCell(aDelegate: self)
-
-//            cell.nameLabel = cell.viewWithTag(100) as! UILabel
 //            cell.connectButton = cell.viewWithTag(102) as! UIButton
 ////            cell.connectButton.addTarget(self, action: #selector(self.connectButtonTapped(_:)), for: UIControlEvents.touchUpInside)
 //            cell.connectButton.layer.cornerRadius = 4.0
 //            cell.signalImageView = cell.viewWithTag(104) as! UIImageView
 //            //set tag to indicate digital pin number
 //            cell.connectButton.tag = indexPath.section
-            cell.signalImages = signalImages
 
 
-            //Ensure cell is within device array range
-            if indexPath.section <= (bluetoothService.devices.count - 1) {
-                bluetoothService.devices[indexPath.section].deviceCell = cell
-            }
-
-            return cell
-        } else {
-            return UITableViewCell()
-        }
+        //Ensure cell is within device array range
+//        if indexPath.section <= (bluetoothService.devices.count - 1) {
+//            bluetoothService.devices[indexPath.section].deviceCell = cell
+//        }
+        print("CELL", cell.nameLabel.text)
+        return cell
     }
 
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
-        let device: BLEDevice? = bluetoothService.devices[section]
-        let cell = device?.deviceCell
-
-        if (cell == nil) || (cell?.isOpen == false) {  //When table is first loaded
-            return 1
-        } else {
-            let rows = bluetoothService.devices[section].advertisementArray.count + 1
-            return rows
-        }
-
+        return bluetoothService.devices[section].advertisementArray.count
     }
 
 
@@ -340,36 +324,6 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
         //Each DeviceCell gets its own section
         return bluetoothService.devices.count
     }
-
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 0 {
-            return 50.0
-        } else {
-            return 24.0
-        }
-    }
-
-
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-
-        if section == 0 {
-            return 46.0
-        } else {
-            return 0.5
-        }
-    }
-
-
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-
-        if section == (bluetoothService.devices.count - 1) {
-            return 22.0
-        } else {
-            return 0.5
-        }
-    }
-
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 

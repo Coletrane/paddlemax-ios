@@ -7,9 +7,11 @@ class BLEDevice {
     var isUART:Bool = false
 //    var isDFU:Bool = false
     fileprivate var advertisementData: [AnyHashable: Any]
+
+    var signalImageUpdateCallback: (() -> Void)?
     var RSSI:NSNumber {
         didSet {
-            self.deviceCell?.updateSignalImage(RSSI)
+            signalImageUpdateCallback?()
         }
     }
     fileprivate let nilString = "nil"
@@ -24,13 +26,11 @@ class BLEDevice {
     }
     var name:String = ""
     
-    var deviceCell:DeviceCell? {
-        didSet {
-            deviceCell?.nameLabel.text = self.name
-            deviceCell?.connectButton.isHidden = !(self.connectableBool)
-            deviceCell?.updateSignalImage(RSSI)
-        }
-    }
+//    var deviceCell:DeviceCell {
+//        didSet {
+//
+//        }
+//    }
     
     var localName:String {
         var nameString = advertisementData[CBAdvertisementDataLocalNameKey] as? NSString
@@ -91,11 +91,11 @@ class BLEDevice {
                 return nilString
             }
             let verdict = num!.boolValue
-        
+
         //Enable connect button according to connectable value
-        if self.deviceCell?.connectButton != nil {
-            deviceCell?.connectButton.isEnabled = verdict
-        }
+//        if self.deviceCell.connectButton != nil {
+//            deviceCell.connectButton.isEnabled = verdict
+//        }
             
             return verdict.description
     }
@@ -137,8 +137,11 @@ class BLEDevice {
     var advertisementArray:[[String]] = []
     
 
-    init(peripheral:CBPeripheral!, advertisementData:[AnyHashable: Any]!, RSSI:NSNumber!) {
-        
+    init(peripheral:CBPeripheral!,
+         advertisementData:[AnyHashable: Any]!,
+         RSSI:NSNumber!) {
+
+
         self.peripheral = peripheral
         self.advertisementData = advertisementData
         self.RSSI = RSSI
@@ -176,7 +179,7 @@ class BLEDevice {
             nameString = "N/A"
         }
         self.name = nameString!
-        
+
         //Check for UART & DFU services
         for id in completServiceUUIDs {
             if uartServiceUUID().equalsString(id, caseSensitive: false, omitDashes: true) {

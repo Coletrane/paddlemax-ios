@@ -148,7 +148,7 @@ class BluetoothService: NSObject, CBCentralManagerDelegate {
         let alreadyInDevices = devices.filter {
             $0.name == newDevice.name
         }
-        if newDevice.name == NAME && alreadyInDevices.isEmpty {
+        if alreadyInDevices.isEmpty {
             devices.append(newDevice)
         }
         tableViewCallback?()

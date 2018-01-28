@@ -1,14 +1,10 @@
 import UIKit
 
-protocol DeviceCellDelegate: AnyObject {
-
-}
 
 class DeviceCell: UITableViewCell {
 
     // Outlets
     @IBOutlet var nameLabel:UILabel!
-    @IBOutlet var connectButton:UIButton!
     @IBOutlet var signalImageView:UIImageView!
 
     // Variables
@@ -16,25 +12,21 @@ class DeviceCell: UITableViewCell {
     fileprivate var lastSigIndex = -1
     fileprivate var lastSigUpdate:Double = Date.timeIntervalSinceReferenceDate
     fileprivate let updateIntvl = 3.0
-    var isOpen:Bool = false
 
 
     // MARK: constructors
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    init(labelText text: String) {
+        super.init(style: UITableViewCellStyle.default, reuseIdentifier: nil)
 
         nameLabel = UILabel()
-        connectButton = UIButton()
+        nameLabel.text = text
         signalImageView = UIImageView()
         self.signalImages = [UIImage](arrayLiteral: UIImage(named: "signalStrength-0.png")!,
-            UIImage(named: "signalStrength-1.png")!,
-            UIImage(named: "signalStrength-2.png")!,
-            UIImage(named: "signalStrength-3.png")!,
-            UIImage(named: "signalStrength-4.png")!)
-    }
+                UIImage(named: "signalStrength-1.png")!,
+                UIImage(named: "signalStrength-2.png")!,
+                UIImage(named: "signalStrength-3.png")!,
+                UIImage(named: "signalStrength-4.png")!)
 
-    convenience init(aDelegate: DeviceCellDelegate) {
-        self.init(style: UITableViewCellStyle.default, reuseIdentifier: nil)
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -43,9 +35,9 @@ class DeviceCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+
         // Initialization code
-        
+
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -56,7 +48,7 @@ class DeviceCell: UITableViewCell {
     
     
     func updateSignalImage(_ RSSI:NSNumber) {
-        
+
         // Only update every few seconds
         let now = Date.timeIntervalSinceReferenceDate
         if lastSigIndex != -1 && (now - lastSigUpdate) < updateIntvl {
