@@ -6,7 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -15,6 +14,7 @@
             <connections>
                 <outlet property="barItem" destination="k0y-52-IC5" id="iaS-XZ-NaK"/>
                 <outlet property="cancelButton" destination="Zpa-Qd-7Nd" id="D36-YS-AHG"/>
+                <outlet property="deviceCell" destination="2pn-U6-Uod" id="A4A-6p-v8H"/>
                 <outlet property="leftSpace" destination="bki-c3-FPj" id="wWF-dI-U2c"/>
                 <outlet property="navBar" destination="fNp-vM-Khr" id="MFt-LD-60L"/>
                 <outlet property="rightSpace" destination="IpC-8R-AId" id="JYa-YP-p9h"/>
@@ -71,7 +71,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <connections>
-                        <outlet property="delegate" destination="-1" id="nxA-nD-IwP"/>
+                        <outlet property="dataSource" destination="-1" id="Rct-zh-V6x"/>
                     </connections>
                 </tableView>
                 <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vbo-SF-UoM">
@@ -114,40 +114,27 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <point key="canvasLocation" x="-141" y="463"/>
         </activityIndicatorView>
-        <tableViewCell opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="DeviceCell" rowHeight="48" id="9hq-Hj-3DE" customClass="DeviceCell" customModule="paddlemaxios" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="299" height="48"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9hq-Hj-3DE" id="qHX-Dw-Jr8">
-                <rect key="frame" x="0.0" y="0.0" width="299" height="47.5"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="2pn-U6-Uod" customClass="DeviceCell" customModule="paddlemaxios" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2pn-U6-Uod" id="hOI-Nz-kGO">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" tag="104" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="signalStrength-0.png" translatesAutoresizingMaskIntoConstraints="NO" id="xxO-YE-opn">
-                        <rect key="frame" x="259" y="13" width="24" height="21"/>
-                    </imageView>
-                    <label autoresizesSubviews="NO" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="100" contentMode="left" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HC8-BS-Yeq" userLabel="nameLabel">
-                        <rect key="frame" x="16" y="11" width="55" height="24"/>
-                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                        <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T1g-gq-dxY">
+                        <rect key="frame" x="27" y="12" width="72" height="21"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
                     </label>
+                    <imageView userInteractionEnabled="NO" tag="102" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="chv-nw-Zy9">
+                        <rect key="frame" x="225" y="0.0" width="127" height="44"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
                 </subviews>
-                <constraints>
-                    <constraint firstItem="HC8-BS-Yeq" firstAttribute="top" secondItem="qHX-Dw-Jr8" secondAttribute="topMargin" id="2bw-qU-5QW"/>
-                    <constraint firstItem="xxO-YE-opn" firstAttribute="trailing" secondItem="qHX-Dw-Jr8" secondAttribute="trailingMargin" id="X3g-fq-b5l"/>
-                    <constraint firstItem="HC8-BS-Yeq" firstAttribute="centerY" secondItem="xxO-YE-opn" secondAttribute="centerY" id="n3x-r3-66D"/>
-                    <constraint firstItem="HC8-BS-Yeq" firstAttribute="leading" secondItem="qHX-Dw-Jr8" secondAttribute="leadingMargin" id="oSA-8j-kKD"/>
-                </constraints>
             </tableViewCellContentView>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-            <viewLayoutGuide key="safeArea" id="8eb-FL-cMR"/>
-            <connections>
-                <outlet property="nameLabel" destination="HC8-BS-Yeq" id="ORI-dZ-Y5m"/>
-                <outlet property="signalImageView" destination="xxO-YE-opn" id="8SN-MZ-bqB"/>
-            </connections>
-            <point key="canvasLocation" x="-225.5" y="-298"/>
+            <point key="canvasLocation" x="-232.5" y="-311"/>
         </tableViewCell>
     </objects>
-    <resources>
-        <image name="signalStrength-0.png" width="24" height="21"/>
-    </resources>
 </document>

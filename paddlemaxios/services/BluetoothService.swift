@@ -150,8 +150,8 @@ class BluetoothService: NSObject, CBCentralManagerDelegate {
         }
         if alreadyInDevices.isEmpty {
             devices.append(newDevice)
+            tableViewCallback?()
         }
-        tableViewCallback?()
     }
 
     func startScan() {

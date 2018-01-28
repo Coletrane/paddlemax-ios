@@ -49,7 +49,6 @@
 		79BE69C51FD1081500FA46B8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 79BE69C41FD1081500FA46B8 /* Assets.xcassets */; };
 		79BE69CB1FD1081500FA46B8 /* paddlemaxwatchos.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 79BE69AB1FD1081500FA46B8 /* paddlemaxwatchos.app */; };
 		79C0FA6A201D7DB100142423 /* engebrechtre bd it.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 79C0FA69201D7DB100142423 /* engebrechtre bd it.ttf */; };
-		79C0FA6E201DA3A200142423 /* DeviceList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 79C0FA6D201DA3A200142423 /* DeviceList.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -161,7 +160,6 @@
 		79BE69C61FD1081500FA46B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		79BE69C71FD1081500FA46B8 /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
 		79C0FA69201D7DB100142423 /* engebrechtre bd it.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "engebrechtre bd it.ttf"; sourceTree = "<group>"; };
-		79C0FA6D201DA3A200142423 /* DeviceList.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DeviceList.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -235,7 +233,6 @@
 				648F20F8054C7963B53BD633 /* TabBarController.swift */,
 				648F2227560089272DC29D2E /* DeviceCell.swift */,
 				648F2A8CC4D8CBED268B18D5 /* PinCell.swift */,
-				79C0FA6D201DA3A200142423 /* DeviceList.storyboard */,
 			);
 			path = viewmodels;
 			sourceTree = "<group>";
@@ -516,7 +513,6 @@
 				648F28DD237CF47DB27480AE /* GATT-characteristics.plist in Resources */,
 				79C0FA6A201D7DB100142423 /* engebrechtre bd it.ttf in Resources */,
 				648F2D0448381FABCDBE7F0C /* DeviceListViewController.xib in Resources */,
-				79C0FA6E201DA3A200142423 /* DeviceList.storyboard in Resources */,
 				648F24E7468CCF50AF289263 /* HomeViewController.xib in Resources */,
 				648F262079D1C856A3487DAF /* SplashViewController.xib in Resources */,
 				648F20D0A5AA87EB853944D8 /* PinIOViewController.xib in Resources */,

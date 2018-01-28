@@ -43,23 +43,20 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
     fileprivate var refreshControl: UIRefreshControl!
 
     // Constants
-    fileprivate let cellReuseId = "DeviceCell"
+    fileprivate let cellReuseId = "Device Cell"
 
-//    convenience init(aDelegate: DeviceListViewControllerDelegate) {
-//        self.init(nibName: "DeviceListViewController", bundle: Bundle.main)
-//
-//        delegate = aDelegate
-//    }
+    convenience init(aDelegate: DeviceListViewControllerDelegate) {
+        self.init(nibName: "DeviceListViewController", bundle: Bundle.main)
+
+        delegate = aDelegate
+    }
 
     func initTitleAndBars() {
         title = "Connect to Paddle"
         warningLabel = UILabel()
         warningLabel.isHidden = true
 
-//        tableView = UITableView()
-        tableView.register(
-                DeviceCell.self,
-                forCellReuseIdentifier: cellReuseId)
+        tableView = UITableView()
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = UITableViewCellSeparatorStyle.none
@@ -285,37 +282,25 @@ class DeviceListViewController : UIViewController, UITableViewDelegate, UITableV
     //MARK: TableView functions
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
-        var cell: DeviceCell! = tableView.dequeueReusableCell(
-                withIdentifier: cellReuseId) as? DeviceCell
-
         let device = bluetoothService.devices[indexPath.section]
-        if (cell == nil) {
-            cell = DeviceCell(labelText: device.name)
-            device.signalImageUpdateCallback =  { () in
-                cell.updateSignalImage(device.RSSI)
-            }
+
+        let existingCell = device.deviceCell
+        if (existingCell != nil) {
+            return existingCell!
         }
 
-//            cell.connectButton = cell.viewWithTag(102) as! UIButton
-////            cell.connectButton.addTarget(self, action: #selector(self.connectButtonTapped(_:)), for: UIControlEvents.touchUpInside)
-//            cell.connectButton.layer.cornerRadius = 4.0
-//            cell.signalImageView = cell.viewWithTag(104) as! UIImageView
-//            //set tag to indicate digital pin number
-//            cell.connectButton.tag = indexPath.section
+        let cellData = NSKeyedArchiver.archivedData(withRootObject: deviceCell)
+        let cell: DeviceCell = NSKeyedUnarchiver.unarchiveObject(with: cellData) as! DeviceCell
 
+        cell.nameLabel.text = device.name
+        device.deviceCell = cell
 
-        //Ensure cell is within device array range
-//        if indexPath.section <= (bluetoothService.devices.count - 1) {
-//            bluetoothService.devices[indexPath.section].deviceCell = cell
-//        }
-        print("CELL", cell.nameLabel.text)
         return cell
     }
 
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return bluetoothService.devices[section].advertisementArray.count
+        return bluetoothService.devices.count
     }
 
 

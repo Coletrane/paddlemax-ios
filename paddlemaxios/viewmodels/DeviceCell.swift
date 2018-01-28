@@ -4,8 +4,8 @@ import UIKit
 class DeviceCell: UITableViewCell {
 
     // Outlets
-    @IBOutlet var nameLabel:UILabel!
-    @IBOutlet var signalImageView:UIImageView!
+    var nameLabel: UILabel!
+    var signalImageView: UIImageView!
 
     // Variables
     var signalImages:[UIImage]!
@@ -15,29 +15,27 @@ class DeviceCell: UITableViewCell {
 
 
     // MARK: constructors
-    init(labelText text: String) {
+    init() {
         super.init(style: UITableViewCellStyle.default, reuseIdentifier: nil)
 
-        nameLabel = UILabel()
-        nameLabel.text = text
-        signalImageView = UIImageView()
-        self.signalImages = [UIImage](arrayLiteral: UIImage(named: "signalStrength-0.png")!,
-                UIImage(named: "signalStrength-1.png")!,
-                UIImage(named: "signalStrength-2.png")!,
-                UIImage(named: "signalStrength-3.png")!,
-                UIImage(named: "signalStrength-4.png")!)
 
     }
 
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
+
+        nameLabel = viewWithTag(101) as! UILabel
+        signalImageView = viewWithTag(102) as! UIImageView
+        signalImages = [UIImage](arrayLiteral: UIImage(named: "signalStrength-0.png")!,
+                UIImage(named: "signalStrength-1.png")!,
+                UIImage(named: "signalStrength-2.png")!,
+                UIImage(named: "signalStrength-3.png")!,
+                UIImage(named: "signalStrength-4.png")!)
     }
 
     override func awakeFromNib() {
         super.awakeFromNib()
-
-        // Initialization code
-
+        print("AWAKE MOTHERFUCKER")
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

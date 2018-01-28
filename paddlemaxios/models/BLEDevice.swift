@@ -8,10 +8,9 @@ class BLEDevice {
 //    var isDFU:Bool = false
     fileprivate var advertisementData: [AnyHashable: Any]
 
-    var signalImageUpdateCallback: (() -> Void)?
     var RSSI:NSNumber {
         didSet {
-            signalImageUpdateCallback?()
+            self.deviceCell?.updateSignalImage(RSSI)
         }
     }
     fileprivate let nilString = "nil"
@@ -26,11 +25,11 @@ class BLEDevice {
     }
     var name:String = ""
     
-//    var deviceCell:DeviceCell {
-//        didSet {
-//
-//        }
-//    }
+    var deviceCell: DeviceCell? {
+        didSet {
+
+        }
+    }
     
     var localName:String {
         var nameString = advertisementData[CBAdvertisementDataLocalNameKey] as? NSString
